@@ -1,0 +1,18 @@
+FROM node:17.8-alpine
+
+WORKDIR /home/node/ui
+
+ENV NODE_ENV development
+
+COPY ./ ./
+
+RUN chown node:node -R /home/node/ui
+
+USER node
+
+RUN rm -rf node_modules
+
+RUN yarn install
+
+RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
+
