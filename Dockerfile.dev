@@ -1,16 +1,16 @@
 FROM node:17.8-alpine
 
-USER node
-
 WORKDIR /home/node/ui
 
 ENV NODE_ENV development
 
-RUN mkdir -p /home/node/ui
+COPY ./ ./
+
+RUN chown node:node -R /home/node/ui
+
+USER node
 
 RUN rm -rf node_modules
-
-COPY ./ ./
 
 RUN yarn install
 
