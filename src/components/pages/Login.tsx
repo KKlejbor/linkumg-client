@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { InputAdornment, Box, Typography, TextField } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
-import PasswordIcon from '@mui/icons-material/Password';
 import { darkBlueColor, whiteColor } from 'assets/constants';
 import { Link } from 'react-router-dom';
+import TextInput from 'components/atoms/TextInput';
+import PasswordInput from 'components/atoms/PasswordInput';
 
 const ColorButton = styled(Button)<ButtonProps>(() => ({
   color: whiteColor,
@@ -42,31 +43,8 @@ function Login() {
         }}
       >
         <Typography variant="h6">Zaloguj się do LinkUMG</Typography>
-        <TextField
-          id="email"
-          label="Email"
-          variant="standard"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <EmailIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        <TextField
-          id="password"
-          type="password"
-          label="Hasło"
-          variant="standard"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <PasswordIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+        <TextInput id="email" label="Email" Icon={EmailIcon} />
+        <PasswordInput />
         <ColorButton variant="contained">Zaloguj się</ColorButton>
         <LinkStyled to="/register">Zarejestruj się na LinkUMG</LinkStyled>
       </Box>
