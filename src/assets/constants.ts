@@ -1,13 +1,13 @@
 // Colors
-export const darkBlue = '#111E2B';
-export const blue = '#0A2C4E';
-export const darkYelow = '#F0B400';
-export const yelow = '#FEC827';
-export const brown = '#78613C';
-export const grey = '#DBDBDB';
-export const black = '#000000';
-export const white = '#FFFFFF';
-export const green = '#4C8836';
+export const darkBlueColor = '#111E2B';
+export const blueColor = '#0A2C4E';
+export const darkYelowColor = '#F0B400';
+export const yellowColor = '#FEC827';
+export const brownColor = '#78613C';
+export const greyColor = '#DBDBDB';
+export const blackColor = '#000000';
+export const whiteColor = '#FFFFFF';
+export const greenColor = '#4C8836';
 
 // Font sizes
 export const formInputsDesktop = '16px';
