@@ -15,10 +15,10 @@ function FormsContainer(params: FullScreenContainerType) {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        gap: '30px',
+        gap: '20px',
         border: '2px solid black',
         borderRadius: '20px',
-        padding: '40px',
+        padding: '40px 60px',
         backgroundColor: whiteColor,
       }}
     >

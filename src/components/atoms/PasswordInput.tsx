@@ -2,7 +2,7 @@ import React from 'react';
 import { TextField, InputAdornment } from '@mui/material';
 import PasswordIcon from '@mui/icons-material/Password';
 
-function TextInput() {
+function PasswordInput() {
   return (
     <TextField
       id="password"
@@ -20,4 +20,4 @@ function TextInput() {
   );
 }
 
-export default TextInput;
+export default PasswordInput;
