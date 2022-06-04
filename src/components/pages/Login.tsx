@@ -1,24 +1,12 @@
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
-import Button, { ButtonProps } from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
-import { darkBlueColor, whiteColor } from 'assets/constants';
-import { Link } from 'react-router-dom';
 import TextInput from 'components/atoms/TextInput';
 import PasswordInput from 'components/atoms/PasswordInput';
 import FullScreenContainer from 'components/atoms/FullScreenContainer';
 import FormsContainer from 'components/atoms/FormsContainer';
-
-const ColorButton = styled(Button)<ButtonProps>(() => ({
-  color: whiteColor,
-  backgroundColor: darkBlueColor,
-}));
-
-const LinkStyled = styled(Link)(() => ({
-  textDecoration: 'none',
-  color: darkBlueColor,
-}));
+import { ColorButton } from 'components/atoms/ColorButton';
+import { LinkStyled } from 'components/atoms/LinkStyled';
 
 function Login() {
   return (
