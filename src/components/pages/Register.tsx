@@ -11,6 +11,8 @@ import { Typography } from '@mui/material';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import { LinkStyled } from 'components/atoms/LinkStyled';
 import { ColorButton } from 'components/atoms/ColorButton';
+import { GlobalStyle } from 'styles/GlobalStyle';
+import registerPhoto from 'assets/images/rejestacja.png';
 
 function Register() {
   const [kind, setKind] = useState<string>('student');
@@ -39,41 +41,44 @@ function Register() {
   ];
 
   return (
-    <FullScreenContainer>
-      <FormsContainer>
-        <Typography variant="h6">Zarejestruj się do LinkUMG</Typography>
-        <TextInput id="name" label="Imię" Icon={PersonIcon} />
-        <TextInput id="lastname" label="Nazwisko" Icon={PersonIcon} />
-        <TextInput id="email" label="Email" Icon={EmailIcon} />
-        <PasswordInput />
-        <SelectAtom
-          id="role"
-          label="Rodzaj użytkownika"
-          value={kind}
-          onChange={handleKindAccount}
-          options={optionsUser}
-        />
-        {kind === 'student' ? (
-          <>
-            <TextInput id="index" label="Numer indeksu" Icon={PersonIcon} />
-            <SelectAtom
-              id="college-sector"
-              label="Wydział"
-              value={collegeSector}
-              onChange={handleCollegeSector}
-              options={optionsCollegeSector}
-            />
-          </>
-        ) : (
-          <>
-            <TextInput id="company-name" label="Nazwa firmy" Icon={ApartmentIcon} />
-            <TextInput id="NIP" label="Numer NIP" Icon={ApartmentIcon} />
-          </>
-        )}
-        <LinkStyled to="/login">Masz konto? Zaloguj się</LinkStyled>
-        <ColorButton variant="contained">Zarejestruj się</ColorButton>
-      </FormsContainer>
-    </FullScreenContainer>
+    <>
+      <GlobalStyle url={registerPhoto} />
+      <FullScreenContainer>
+        <FormsContainer>
+          <Typography variant="h6">Zarejestruj się do LinkUMG</Typography>
+          <TextInput id="name" label="Imię" Icon={PersonIcon} />
+          <TextInput id="lastname" label="Nazwisko" Icon={PersonIcon} />
+          <TextInput id="email" label="Email" Icon={EmailIcon} />
+          <PasswordInput />
+          <SelectAtom
+            id="role"
+            label="Rodzaj użytkownika"
+            value={kind}
+            onChange={handleKindAccount}
+            options={optionsUser}
+          />
+          {kind === 'student' ? (
+            <>
+              <TextInput id="index" label="Numer indeksu" Icon={PersonIcon} />
+              <SelectAtom
+                id="college-sector"
+                label="Wydział"
+                value={collegeSector}
+                onChange={handleCollegeSector}
+                options={optionsCollegeSector}
+              />
+            </>
+          ) : (
+            <>
+              <TextInput id="company-name" label="Nazwa firmy" Icon={ApartmentIcon} />
+              <TextInput id="NIP" label="Numer NIP" Icon={ApartmentIcon} />
+            </>
+          )}
+          <LinkStyled to="/login">Masz konto? Zaloguj się</LinkStyled>
+          <ColorButton variant="contained">Zarejestruj się</ColorButton>
+        </FormsContainer>
+      </FullScreenContainer>
+    </>
   );
 }
 
