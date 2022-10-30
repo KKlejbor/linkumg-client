@@ -27,6 +27,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-static": "^1.0.0-next.46"
+		"@sveltejs/adapter-static": "^1.0.0-next.46",
+		"vite-tsconfig-paths": "^3.5.2"
 	}
 }
