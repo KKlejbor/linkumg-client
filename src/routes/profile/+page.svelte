@@ -4,6 +4,13 @@
 	import linkedin from '$lib/images/linkedin.svg';
 	import github from '$lib/images/github.svg';
 	import facebook from '$lib/images/facebook.svg';
+	import Input from 'src/components/Input.svelte';
+
+	let isEditProfileActive = false;
+
+	const activeEditProfileMode = () => {
+		isEditProfileActive = !isEditProfileActive;
+	};
 </script>
 
 <span class="heading">Profile</span>
@@ -21,14 +28,22 @@
 	</div>
 	<div class="user-details">
 		<img src={user} alt="user" />
-		<button class="button">Edytuj profil</button>
+		<button on:click={activeEditProfileMode} class="button">Edytuj profil</button>
 	</div>
 	<div class="user-details">
-		<UserDetailsProperty heading="Imię" value="Jan" />
-		<UserDetailsProperty heading="Nazwisko" value="Kowalski" />
-		<UserDetailsProperty heading="Wiek" value="23 lat" />
-		<UserDetailsProperty heading="Lokalizacja" value="Gdynia" />
-		<UserDetailsProperty heading="Kontkt" value="569034436" />
+		{#if !isEditProfileActive}
+			<UserDetailsProperty heading="Imię" value="Jan" />
+			<UserDetailsProperty heading="Nazwisko" value="Kowalski" />
+			<UserDetailsProperty heading="Wiek" value="23 lat" />
+			<UserDetailsProperty heading="Lokalizacja" value="Gdynia" />
+			<UserDetailsProperty heading="Kontkt" value="569034436" />
+		{:else}
+			<Input label="Imię" />
+			<Input label="Nazwisko" />
+			<Input label="Wiek" />
+			<Input label="Lokalizacja" />
+			<Input label="Kontakt" />
+		{/if}
 		<div class="socials">
 			<img src={linkedin} alt="linkedin" />
 			<img src={github} alt="github" />
