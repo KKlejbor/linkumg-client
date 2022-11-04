@@ -9,6 +9,8 @@
 <div class="upper-navbar">
 	<img src={logo} alt="logo" />
 	<div class="user-wrapper">
+		<a href="/login"> <span>Login</span></a>
+		<a href="/register"> <span>Register</span></a>
 		<a href="/profile"> <span>Jan Kowalski</span></a>
 		<img src={placeholder} alt="placeholder" />
 	</div>
