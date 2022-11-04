@@ -4,16 +4,22 @@
 	import trash from '$lib/images/trash.svg';
 	import edit from '$lib/images/edit.svg';
 	import Modal from './Modal.svelte';
+	import Button from './Button.svelte';
 
 	let editModal = false;
 	let deleteModal = false;
+	let showMoreModal = false;
 
 	const deleteForm = () => {
 		deleteModal = !deleteModal;
 	};
+
+	const showMore = () => {
+		showMoreModal = !showMoreModal;
+	};
 </script>
 
-<div class="container">
+<div class="container" on:click={showMore}>
 	<div class="wrapper">
 		<img src={user} alt="user" />
 		<span>Figma Sp. z o. o</span>
@@ -54,7 +60,87 @@
 	</Modal>
 {/if}
 
+{#if showMoreModal}
+	<Modal heading="Konserwator powierzchni płaskich" open={showMoreModal}>
+		<div class="more-info-container">
+			<div>
+				<img class="photo" src={user} alt="user" />
+				<div class="info-wrapper">
+					<span>Figma Sp. z.o.o</span>
+					<span>Email: nanana@gmail.com</span>
+					<span>Nr tel.: 123456789</span>
+				</div>
+			</div>
+			<div class="long-details">
+				<span>Typ umowy: Umowa o prace</span>
+				<span>Etat: Pełen etat</span>
+				<span
+					>Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
+					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
+					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien
+					być z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny
+					nastrój w moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy
+					znaleźć sobie ciekawe zajęcie.</span
+				>
+				<Button value="Zamknij" error bind:open={showMoreModal} />
+			</div>
+			<div class="price">
+				<span class="salary">4000 - 6000 zł</span>
+				<span class="date">29.10.2020 | 21:34</span>
+			</div>
+		</div>
+	</Modal>
+{/if}
+
 <style>
+	.salary {
+		font-size: 40px;
+	}
+
+	.date {
+		font-size: 14px;
+	}
+	.more-info-container {
+		display: grid;
+		max-width: 1000px;
+		grid-template-areas: 'a b c';
+		grid-column-gap: 25px;
+		grid-template-columns: 300px 1fr 300px;
+		grid-auto-rows: minmax(100px, auto);
+	}
+
+	.more-info-container > div:first-child {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		justify-content: center;
+	}
+
+	.more-info-container > div:nth-child(2) {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		justify-content: space-around;
+	}
+
+	.more-info-container > div:nth-child(3) {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		justify-content: space-around;
+		align-items: flex-end;
+	}
+
+	.info-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.photo {
+		width: 250px;
+		height: 250px;
+	}
 	.container {
 		width: 800px;
 		height: 150px;
