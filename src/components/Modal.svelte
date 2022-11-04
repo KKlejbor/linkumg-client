@@ -1,5 +1,26 @@
 <script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
+
 	export let heading: string;
+	export let open = false;
+
+	onMount(() => {
+		const body = document.querySelector<HTMLElement>('body');
+		if (body != null) {
+			if (open) {
+				body.style.overflow = 'hidden';
+			}
+		}
+	});
+
+	onDestroy(() => {
+		const body = document.querySelector<HTMLElement>('body');
+		if (body != null) {
+			if (open) {
+				body.style.overflow = 'scroll';
+			}
+		}
+	});
 </script>
 
 <div class="background">

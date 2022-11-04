@@ -28,6 +28,7 @@
 		color: rgba(0, 0, 0, 0.7);
 		padding: 7px 7px 7px 0;
 		background-color: transparent;
+		width: 200px;
 	}
 
 	input:focus {

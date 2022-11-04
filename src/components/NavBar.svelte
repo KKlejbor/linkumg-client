@@ -14,9 +14,15 @@
 	</div>
 </div>
 <div class="left-navbar">
-	<img src={annoucements} alt="annoucements" />
-	<img src={work} alt="work" />
-	<img src={tutor} alt="tutor" />
+	<a href="/annoucements">
+		<img src={annoucements} alt="annoucements" />
+	</a>
+	<a href="/board">
+		<img src={work} alt="work" />
+	</a>
+	<a href="/tutor">
+		<img src={tutor} alt="tutor" />
+	</a>
 </div>
 
 <style>
@@ -48,7 +54,7 @@
 
 	.left-navbar {
 		z-index: 5;
-		position: absolute;
+		position: fixed;
 		height: 100%;
 		width: 100px;
 		display: flex;
