@@ -5,11 +5,17 @@
 	import github from '$lib/images/github.svg';
 	import facebook from '$lib/images/facebook.svg';
 	import Input from 'src/components/Input.svelte';
+	import Modal from 'src/components/Modal.svelte';
 
 	let isEditProfileActive = false;
+	let editSocial = false;
 
 	const activeEditProfileMode = () => {
 		isEditProfileActive = !isEditProfileActive;
+	};
+
+	const editSocials = () => {
+		editSocial = !editSocial;
 	};
 </script>
 
@@ -45,12 +51,22 @@
 			<Input label="Kontakt" />
 		{/if}
 		<div class="socials">
-			<img src={linkedin} alt="linkedin" />
-			<img src={github} alt="github" />
-			<img src={facebook} alt="facebook" />
+			<img on:click={editSocials} src={linkedin} alt="linkedin" />
+			<img on:click={editSocials} src={github} alt="github" />
+			<img on:click={editSocials} src={facebook} alt="facebook" />
 		</div>
 	</div>
 </div>
+{#if editSocial}
+	<Modal heading="Edytuj">
+		<Input label="Link do Facebooka" />
+		<div class="button-panel">
+			<button class="control-button red">Usuń</button>
+			<button on:click={editSocials} class="control-button">Anuluj</button>
+			<button class="control-button">Potwierdź</button>
+		</div>
+	</Modal>
+{/if}
 
 <style>
 	.heading {
@@ -112,6 +128,24 @@
 		width: 40px;
 		height: 40px;
 		cursor: pointer;
+	}
+
+	.button-panel {
+		display: flex;
+		justify-content: flex-end;
+		gap: 10px;
+	}
+
+	.control-button {
+		border: none;
+		background-color: transparent;
+		color: #0a2c4e;
+		font-size: 15px;
+		cursor: pointer;
+	}
+
+	.red {
+		color: red;
 	}
 
 	img {
