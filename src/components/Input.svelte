@@ -15,7 +15,7 @@
 
 	span {
 		color: rgba(0, 0, 0, 0.7);
-		font-size: 18px;
+		font-size: 15px;
 	}
 
 	input {
@@ -24,7 +24,7 @@
 		border-left-style: hidden;
 		border-bottom-style: solid;
 		border-color: black;
-		font-size: 28px;
+		font-size: 18px;
 		color: rgba(0, 0, 0, 0.7);
 		padding: 7px 7px 7px 0;
 		background-color: transparent;
