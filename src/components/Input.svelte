@@ -1,16 +1,18 @@
 <script lang="ts">
 	export let label: string;
+	export let type: string = 'text';
 </script>
 
 <div class="input-wrapper">
 	<span>{label}</span>
-	<input />
+	<input {type} />
 </div>
 
 <style>
 	.input-wrapper {
 		display: flex;
 		flex-direction: column;
+		width: 100%;
 	}
 
 	span {
@@ -28,7 +30,7 @@
 		color: rgba(0, 0, 0, 0.7);
 		padding: 7px 7px 7px 0;
 		background-color: transparent;
-		width: 200px;
+		width: 100%;
 	}
 
 	input:focus {

@@ -7,7 +7,9 @@
 </script>
 
 <div class="upper-navbar">
-	<img src={logo} alt="logo" />
+	<a href="/">
+		<img src={logo} alt="logo" />
+	</a>
 	<div class="user-wrapper">
 		<a href="/login"> <span>Login</span></a>
 		<a href="/register"> <span>Register</span></a>
@@ -29,7 +31,6 @@
 
 <style>
 	.upper-navbar {
-		width: 100%;
 		position: sticky;
 		top: 0;
 		height: 100px;
@@ -38,16 +39,24 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 0 100px;
+		z-index: 5;
 	}
 
 	.user-wrapper {
 		display: flex;
 		gap: 50px;
 		align-items: center;
+		overflow-x: auto;
 	}
 
-	span {
-		color: #e6e6e6;
+	a {
+		color: white;
+		text-decoration: none;
+		font-size: 1.3rem;
+	}
+
+	a:hover {
+		color: #cdcdcd;
 	}
 
 	img {
@@ -57,7 +66,7 @@
 	.left-navbar {
 		z-index: 5;
 		position: fixed;
-		height: 100%;
+		min-height: 100vh;
 		width: 100px;
 		display: flex;
 		flex-direction: column;

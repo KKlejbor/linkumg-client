@@ -29,8 +29,12 @@
 		font-size: 20px;
 		color: white;
 		border-radius: 25px;
-		width: 190px;
+		width: 100%;
 		border: none;
+	}
+
+	button:hover {
+		cursor: pointer;
 	}
 
 	.error {

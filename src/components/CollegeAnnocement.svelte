@@ -3,14 +3,14 @@
 </script>
 
 <div class="container">
-	<img src={user} alt="user" />
 	<div class="details">
-		<span
-			>22. Zgromadzenie Ogólne Międzynarodowego Stowarzyszenia Uniwersytetów Morskich IAMU
-			(International Association of Maritime Universities) w Gruzji</span
+		<img src={user} alt="user" />
+		<a href=""
+			>
+			22. Zgromadzenie Ogólne Międzynarodowego Stowarzyszenia Uniwersytetów Morskich IAMU (International Association of Maritime Universities) w Gruzji</a
 		>
-		<span class="date">29.10.2020</span>
 	</div>
+	<div class="date">29.10.2020</div>
 </div>
 
 <style>
@@ -18,23 +18,32 @@
 		background-color: #f1f1f1;
 	}
 
+	a {
+		color: black;
+		text-decoration: none;
+		font-size: 25px;
+		font-weight: 400;
+	}
+
 	.container {
-		width: 800px;
-		height: 300px;
-		padding: 15px;
+		padding: 10px 25px;
 		background-color: white;
 		border-radius: 15px;
-		display: flex;
-		gap: 20px;
-		align-items: center;
+		word-break: break-word;
+		min-width: 0;
+		-webkit-box-shadow: 0px 0px 7px -4px rgba(66, 68, 90, 1);
+		-moz-box-shadow: 0px 0px 7px -4px rgba(66, 68, 90, 1);
+		box-shadow: 0px 0px 7px -4px rgba(66, 68, 90, 1);
 	}
 
 	.details {
+		padding: 30px 0 15px 0;
 		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		align-items: flex-end;
-		gap: 20px;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+		text-align: left;
+		gap: 50px;
 	}
 
 	img {
@@ -42,11 +51,8 @@
 		height: 210px;
 	}
 
-	span {
-		font-size: 25px;
-	}
-
 	.date {
-		font-size: 10px;
+		text-align: right;
+		font-size: 15px;
 	}
 </style>

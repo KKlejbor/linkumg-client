@@ -1,11 +1,14 @@
 <script lang="ts">
 	export let text: string;
 	export let image: string;
+	export let href: string;
 </script>
 
 <div class="container">
-	<img src={image} alt="alternative" />
-	<h1>{text}</h1>
+	<a {href}>
+		<img src={image} alt="alternative" />
+		<h1>{text}</h1>
+	</a>
 </div>
 
 <style>

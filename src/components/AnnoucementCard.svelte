@@ -19,13 +19,13 @@
 	};
 </script>
 
-<div class="container" on:click={showMore}>
+<div class="container">
 	<div class="wrapper">
 		<img src={user} alt="user" />
 		<span>Figma Sp. z o. o</span>
 	</div>
 	<div class="wrapper">
-		<span class="job-heading">Konserwator powierzchni płaskich</span>
+		<span class="job-heading" on:click={showMore}>Konserwator powierzchni płaskich</span>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
 		<span>
@@ -168,6 +168,10 @@
 
 	.job-heading {
 		font-size: 25px;
+	}
+
+	.job-heading:hover {
+		cursor: pointer;
 	}
 
 	.wrapper:last-child > * {

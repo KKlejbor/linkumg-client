@@ -6,9 +6,13 @@
 	import MainPageCategory from '../components/MainPageCategory.svelte';
 </script>
 
+<svelte:head>
+	<title>Strona główna</title>
+</svelte:head>
+
 <div class="options">
-	<MainPageCategory text="Ogłoszenia Uniwersytetu Morskiego w Gdyni" image={announcements} />
-	<MainPageCategory text="Znajdź pracę twoich marzeń!!!" image={work} />
+	<MainPageCategory text="Ogłoszenia Uniwersytetu Morskiego w Gdyni" image={announcements} href="/tutor" />
+	<MainPageCategory text="Znajdź pracę twoich marzeń!!!" image={work} href="/board" />
 	<MainPageCategory text="Znajdź korepetytora względem twoich preferencji" image={tutor} />
 </div>
 

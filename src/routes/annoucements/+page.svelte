@@ -33,8 +33,8 @@
 		<AnnoucementCard />
 		<AnnoucementCard />
 		<AnnoucementCard />
-		<button on:click={openColllegeAnnoucementForm}> + </button>
 	</div>
+	<button on:click={openColllegeAnnoucementForm}> + </button>
 </div>
 
 <!-- Work annoucement -->
@@ -135,5 +135,9 @@
 		position: absolute;
 		bottom: 30px;
 		right: 30px;
+	}
+
+	button:hover {
+		cursor: pointer;
 	}
 </style>
