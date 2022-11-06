@@ -1,5 +1,6 @@
 <script>
 	import NavBar from 'src/components/NavBar.svelte';
+    import "../app.css";
 </script>
 
 
