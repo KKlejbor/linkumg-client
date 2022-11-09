@@ -6,6 +6,8 @@
 	import Range from 'src/components/Range.svelte';
 	import TextArea from 'src/components/TextArea.svelte';
 	import user from '$lib/images/user.png';
+	import Plus from '$lib/icons/Plus.svelte';
+	import pepe from '$lib/images/pepe.png';
 
 	let addAnnoucementModal = false;
 	let tutorAnnoucementModal = false;
@@ -24,17 +26,35 @@
 	};
 </script>
 
-<div style="">
-	<div class="heading">
-		<span>Twoje ogłoszenia</span>
+<div class="break-words w-full">
+	<div class="text-7xl text-center py-10 w-full bg-white shadow">Twoje ogłoszenia</div>
+
+	<div class="flex flex-col w-3/4 lg:w-1/2 gap-10 justify-center mx-auto py-14">
+
+		<!-- brak ogłoszeń -->
+		<div class="text-5xl flex flex-col gap-y-16 text-center items-center">
+			<div>
+				Wygląda na to, że nie masz żadnego aktywnego ogłoszenia :(
+			</div>
+
+			<div>
+				Możesz dodać nowe ogłoszenie klikając przycisk na dole.
+			</div>
+
+			<img src={pepe} class="w-80 h-80" alt="pepe" />
+		</div>
+
+		<!-- są ogłoszenia -->
+		<!--
+		<AnnoucementCard />
+		<AnnoucementCard />
+		<AnnoucementCard />
+		-->
 	</div>
 
-	<div class="board">
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-	</div>
-	<button on:click={openColllegeAnnoucementForm}> + </button>
+	<button on:click={openColllegeAnnoucementForm} class="fixed right-0 bottom-0 w-20 h-20 rounded-full bg-bgButton m-5 text-white font-bold">
+		<Plus class="fill-white w-1/3 mx-auto" />
+	</button>
 </div>
 
 <!-- Work annoucement -->
@@ -51,7 +71,7 @@
 	</Modal>
 {/if}
 
-<!-- Work annoucement -->
+<!-- Lessons annoucement -->
 {#if tutorAnnoucementModal}
 	<Modal heading="Ogłoszenie o korepetycje" open={tutorAnnoucementModal}>
 		<Input label="Tytuł oferty" />
@@ -80,64 +100,3 @@
 		</div>
 	</Modal>
 {/if}
-
-<style>
-	:global(body) {
-		background: #f1f1f1;
-	}
-
-	:global(.modal > div:last-child) {
-		align-self: center;
-		display: flex;
-		gap: 20px;
-	}
-
-	.college-annoucement-photo {
-		width: 300px;
-		height: 170px;
-	}
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
-
-	.heading {
-		margin-left: 100px;
-		height: 155px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.board {
-		margin-left: 100px;
-		padding-top: 80px;
-		display: flex;
-		gap: 20px;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-
-	span {
-		font-size: 70px;
-	}
-
-	button {
-		background-color: #0a2c4e;
-		color: white;
-		width: 100px;
-		height: 100px;
-		border-radius: 50%;
-		font-size: 33px;
-		font-weight: bold;
-		position: absolute;
-		bottom: 30px;
-		right: 30px;
-	}
-
-	button:hover {
-		cursor: pointer;
-	}
-</style>

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { changeSelectedOption } from 'src/utils/Select';
 	import { onMount } from 'svelte';
+	import DownArrow from "$lib/icons/DownArrow.svelte";
+	import { fade } from 'svelte/transition';
 
 	export let options: string[];
 
@@ -8,7 +10,7 @@
 	let optionsContainer: HTMLDivElement;
 
 	onMount(() => {
-		changeSelectedOption(optionsContainer.childNodes, selected);
+		//changeSelectedOption(optionsContainer.childNodes, selected);
 	});
 
 	const changeSelected = (event: Event) => {
@@ -17,83 +19,32 @@
 		if (name != null) {
 			selected = name;
 		}
+
 		changeSelectedOption(optionsContainer.childNodes, selected);
+
+		selectOpen = false;
+	};
+
+	let selectOpen = false;
+
+	const changeSelectOpen = () => {
+		selectOpen = !selectOpen;
 	};
 </script>
 
-<div class="dropdown-wrapper">
-	<div class="dropdown">
-		{selected}
+<div class="w-full relative">
+	<div class="w-full border-2 p-2 border-bgPrimary cursor-default" on:click={changeSelectOpen}>
+		<div class="flex w-full justify-between">
+			{selected}
+			<DownArrow class="w-6" />
+		</div>
 	</div>
-	<div bind:this={optionsContainer} class="dropdown-content">
-		{#each options as option}
-			<div on:click={changeSelected} name={option}>{option}</div>
-		{/each}
-	</div>
+
+	{#if selectOpen}
+		<div transition:fade bind:this={optionsContainer} class="absolute bg-gray-100 w-full">
+			{#each options as option}
+				<div on:click={changeSelected} name={option} class="p-2 hover:bg-gray-200 cursor-pointer">{option}</div>
+			{/each}
+		</div>
+	{/if}
 </div>
-
-<style>
-	.dropdown {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		border: 1px solid black;
-		border-radius: 5px;
-		border-radius: gray;
-		height: 40px;
-		width: 145px;
-		text-align: center;
-		font-size: 20px;
-		color: rgba(0, 0, 0, 0.7);
-		background-color: white;
-		background-image: url(../lib/images/down_arrow.svg);
-		background-repeat: no-repeat;
-		background-position-x: 90%;
-		background-position-y: 52%;
-	}
-
-	.dropdown-wrapper {
-		position: relative;
-		display: inline-block;
-	}
-
-	.dropdown-content {
-		animation: fadeIn 0.35s;
-		display: none;
-		position: absolute;
-		border: 1px solid black;
-		border-radius: gray;
-		background-color: white;
-		width: 145px;
-		z-index: 1;
-	}
-
-	.dropdown-content div {
-		color: gray;
-		padding: 12px 16px;
-		text-decoration: none;
-		display: block;
-		cursor: pointer;
-	}
-
-	.dropdown-content div:hover {
-		background-color: f1f1f1;
-	}
-
-	.dropdown-wrapper:hover .dropdown-content {
-		display: block;
-	}
-
-	.dropdown-content > div:first-child {
-		color: var(--selected_color);
-	}
-
-	@keyframes fadeIn {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
-</style>

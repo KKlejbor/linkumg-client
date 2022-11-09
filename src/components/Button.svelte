@@ -2,16 +2,16 @@
 	export let value: string;
 	export let error = false;
 	export let open = false;
-	export let icon = '';
+	export let icon = false;
 
 	const toggleOpen = () => {
 		open = !open;
 	};
 </script>
 
-{#if icon !== ''}
+{#if icon}
 	<button on:click={toggleOpen} class:error>
-		<img src={icon} alt="search" />
+		<slot />
 		{value}
 	</button>
 {:else}

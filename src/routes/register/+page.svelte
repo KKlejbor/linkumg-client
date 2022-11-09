@@ -5,13 +5,13 @@
 
 	const registerOptions = ['Student', 'Firma'];
 	const facultyOptions = ['WE', 'WM', 'WN', 'WZNiJ'];
-	let selected = registerOptions[0];
-	let facultySelected = facultyOptions[0];
+	let selected = 'Wybierz rodzaj konta';
+	let facultySelected = 'Wybierz wydział';
 </script>
 
-<div class="page">
-	<div class="container">
-		<span>Zarejestruj się</span>
+<div class="page w-full h-screen flex justify-center items-center">
+	<div class="bg-white rounded-lg p-14 w-full lg:w-1/3 m-auto flex flex-col gap-6 sm:justify-center items-center">
+		<h1 class="font-bold text-3xl text-center mb-7">Zarejestruj się na LinkUMG</h1>
 		<Input label="Imię" />
 		<Input label="Nazwisko" />
 		<Input label="Email" />
@@ -20,46 +20,18 @@
 		{#if selected === 'Student'}
 			<Input label="Numer albumu" />
 			<Select options={facultyOptions} bind:selected={facultySelected} />
-		{:else}
+		{:else if selected === 'Firma'}
 			<Input label="Nazwa firmy" />
 			<Input label="NIP" />
 		{/if}
 		<Button value="Zarejestruj się" />
-		<a href="/login">Zaloguj się na LingUMG</a>
+		<a href="/login">Zaloguj się na LinkUMG</a>
 	</div>
 </div>
 
 <style>
-	:global(body) {
-		overflow: hidden;
-	}
 	.page {
 		background-image: url(../../lib/images/rejestacja.png);
 		background-size: cover;
-		width: 100vw;
-		height: 100vh;
-	}
-
-	.container {
-		background-color: white;
-		border-radius: 30px;
-		padding: 25px;
-		align-items: center;
-		gap: 12px;
-		display: flex;
-		flex-direction: column;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
-
-	a {
-		text-decoration: none;
-		color: black;
-	}
-
-	span {
-		font-size: 30px;
 	}
 </style>

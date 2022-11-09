@@ -4,37 +4,9 @@
 	export let href: string;
 </script>
 
-<div class="container">
+<div class="w-full relative h-1/3">
 	<a {href}>
-		<img src={image} alt="alternative" />
-		<h1>{text}</h1>
+		<img src={image} alt="alternative" class="brightness-50 w-full h-full" />
+		<h1 class="absolute inset-y-1/2 right-0 text-white mr-10 text-5xl">{text}</h1>
 	</a>
 </div>
-
-<style>
-	.container {
-		width: 100%;
-		height: 100%;
-		position: relative;
-	}
-
-	img {
-		max-width: inherit;
-		max-height: inherit;
-		height: inherit;
-		width: inherit;
-		object-fit: cover;
-		filter: brightness(0.44);
-	}
-
-	h1 {
-		position: absolute;
-		top: 50%;
-		right: 70px;
-		color: white;
-		z-index: 5;
-		transform: translateY(-50%);
-		text-align: right;
-		max-width: 600px;
-	}
-</style>

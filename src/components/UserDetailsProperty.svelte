@@ -4,18 +4,6 @@
 </script>
 
 <div>
-    <div class="heading">{heading}:</div>
-    <div class="value">{value}</div>
+    <div class="font-bold text-3xl mb-3">{heading}:</div>
+    <div class="text-2xl">{value}</div>
 </div>
-
-<style>
-	.heading {
-		font-weight: bold;
-		font-size: 30px;
-        margin-bottom: 5px;
-	}
-
-	.value {
-		font-size: 28px;
-	}
-</style>

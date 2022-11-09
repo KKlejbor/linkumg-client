@@ -1,28 +1,16 @@
 <script lang="ts">
-	import search from '$lib/images/search.svg';
+	import Search from '../lib/icons/Search.svelte';
 	import Button from './Button.svelte';
 	import Input from './Input.svelte';
 	import Range from './Range.svelte';
 </script>
 
-<div class="filter-panel">
-	<Input label="Tytuł oferty" />
-	<Input label="Tytuł oferty" />
-	<Input label="Tytuł oferty" />
-	<Range label="Wynagrodzenie - przedział" />
-	<Button value="Wyszukaj" icon={search} />
+<div class="flex flex-col lg:flex-row bg-white gap-[70px] w-full p-[40px] items-end">
+	<Input label="Tytuł oferty" required="true" />
+	<Input label="Tytuł oferty" required="true" />
+	<Input label="Tytuł oferty" required="true" />
+	<Range label="Wynagrodzenie - przedział" required="true" />
+	<Button value="Wyszukaj" icon={true}>
+		<Search class="w-5 h-5" />
+	</Button>
 </div>
-
-<style>
-	.filter-panel {
-		display: inline-flex;
-		margin-left: 100px;
-		gap: 20px;
-		height: 150px;
-		background-color: white;
-		align-items: center;
-		width: calc(100% - 100px);
-		padding: 20px;
-		justify-content: space-between;
-	}
-</style>

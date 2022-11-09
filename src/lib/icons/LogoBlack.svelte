@@ -1,4 +1,7 @@
-<svg width="95px" height="95px" viewBox="0 0 1180 1285" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<script></script>
+<style></style>
+
+<svg class="{$$props.class}" viewBox="0 0 1180 1285" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <rect width="1180" height="1285" fill="url(#pattern0)"/>
     <defs>
         <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">

@@ -5,7 +5,7 @@
 <div class="container">
 	<div class="details">
 		<img src={user} alt="user" />
-		<a href=""
+		<a href="/news/1"
 			>
 			22. Zgromadzenie Ogólne Międzynarodowego Stowarzyszenia Uniwersytetów Morskich IAMU (International Association of Maritime Universities) w Gruzji</a
 		>
@@ -13,10 +13,8 @@
 	<div class="date">29.10.2020</div>
 </div>
 
+
 <style>
-	:global(body) {
-		background-color: #f1f1f1;
-	}
 
 	a {
 		color: black;

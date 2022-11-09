@@ -1,30 +1,10 @@
 <script lang="ts">
-	export let label: string;
+	export let label: string = '';
+	export let text: string;
+	export let required: boolean = false;
 </script>
 
-<div class="input-wrapper">
-	<span>{label}</span>
-	<textarea />
+<div class="flex flex-col h-full">
+	<span>{label} { (required) ? '*' : ''}</span>
+	<textarea {required} class="outline-none border-2 rounded-2xl border-bgPrimary bg-inherit p-2 grow resize-none h-full" bind:value={text}></textarea>
 </div>
-
-<style>
-	.input-wrapper {
-		display: flex;
-		flex-direction: column;
-	}
-
-	span {
-		color: rgba(0, 0, 0, 0.7);
-		font-size: 18px;
-	}
-
-	textarea {
-		width: 1000px;
-		height: 200px;
-		resize: none;
-	}
-
-	textarea:focus {
-		outline: none;
-	}
-</style>
