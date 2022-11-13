@@ -5,11 +5,11 @@
 	export let required: boolean = false;
 </script>
 
-<div class="w-full flex gap-3 flex-col">
-	<span>{label} { (required) ? '*' : ''}</span>
+<div class="flex w-full flex-col gap-3">
+	<span>{label} {required ? '*' : ''}</span>
 	<div class="flex gap-4">
 		<Input label="Od" />
-		<span class="font-bold self-center">&ndash;</span>
+		<span class="self-center font-bold">&ndash;</span>
 		<Input label="Do" />
 	</div>
 </div>

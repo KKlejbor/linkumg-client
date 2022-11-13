@@ -3,11 +3,11 @@
 	import UserDetailsProperty from 'src/components/UserDetailsProperty.svelte';
 	import Input from 'src/components/Input.svelte';
 	import Modal from 'src/components/Modal.svelte';
-	import TextArea from "src/components/TextArea.svelte";
-	import Linkedin from "$lib/icons/Linkedin.svelte";
-	import Github from "$lib/icons/Github.svelte";
-	import Facebook from "$lib/icons/Facebook.svelte";
-	import Camera from "$lib/icons/Camera.svelte";
+	import TextArea from 'src/components/TextArea.svelte';
+	import Linkedin from '$lib/icons/Linkedin.svelte';
+	import Github from '$lib/icons/Github.svelte';
+	import Facebook from '$lib/icons/Facebook.svelte';
+	import Camera from '$lib/icons/Camera.svelte';
 
 	let isEditProfileActive = false;
 	let editSocial = false;
@@ -17,9 +17,7 @@
 	};
 
 	const openSocialModal = (event) => {
-
-		if(isEditProfileActive)
-		{
+		if (isEditProfileActive) {
 			event.preventDefault();
 			editSocial = true;
 		}
@@ -27,45 +25,50 @@
 
 	const closeSocialModal = () => {
 		editSocial = false;
-	}
+	};
 </script>
 
 <div class="w-full bg-bgSecondary p-14">
-	<h1 class="text-center text-[70px] text-bold">Profil</h1>
-	<div class="grid lg:grid-cols-3 relative">
-
-		<div class="text-3xl px-10">
-			<h1 class="font-bold mb-4">O mnie</h1>
+	<h1 class="text-bold text-center text-[70px]">Profil</h1>
+	<div class="relative grid lg:grid-cols-3">
+		<div class="mb-20 px-10 text-3xl lg:h-[80%]">
+			<h1 class="mb-4 font-bold">O mnie</h1>
 			{#if isEditProfileActive}
-				<TextArea text="Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
+				<TextArea
+					text="Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
 					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
 					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien być
 					z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny nastrój w
 					moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy znaleźć sobie
-					ciekawe zajęcie." />
+					ciekawe zajęcie."
+				/>
 			{:else}
-				<p class="text-justify break-words">
+				<p class="break-words text-justify">
 					Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
 					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
-					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien być
-					z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny nastrój w
-					moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy znaleźć sobie
-					ciekawe zajęcie.
+					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien
+					być z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny
+					nastrój w moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy
+					znaleźć sobie ciekawe zajęcie.
 				</p>
 			{/if}
 		</div>
-		<div class="flex items-center flex-col self-center">
-			<div class="border-bgPrimary border-x-0 lg:border-x-2 px-10 relative">
+		<div class="flex flex-col items-center self-center">
+			<div class="relative border-x-0 border-bgPrimary px-10 lg:border-x-2">
 				<img src={user} alt="user" class="mx-auto rounded-full" />
-				{#if isEditProfileActive }
-					<Camera class="w-10 h-10 cursor-pointer absolute right-0 mr-10 -mt-10" />
+				{#if isEditProfileActive}
+					<Camera class="absolute right-0 mr-10 -mt-10 h-10 w-10 cursor-pointer" />
 				{/if}
 			</div>
-			<button on:click={activeEditProfileMode} class="bg-bgButton rounded-full text-white px-5 py-3 mt-6 text-center">{ isEditProfileActive ? 'Zapisz' : 'Edytuj profil' }</button>
+			<button
+				on:click={activeEditProfileMode}
+				class="mt-6 rounded-full bg-bgButton px-5 py-3 text-center text-white"
+				>{isEditProfileActive ? 'Zapisz' : 'Edytuj profil'}</button
+			>
 		</div>
 		<div class="flex flex-col gap-5 px-6">
 			{#if !isEditProfileActive}
-				<UserDetailsProperty heading="Imię" value="Jan"/>
+				<UserDetailsProperty heading="Imię" value="Jan" />
 				<UserDetailsProperty heading="Nazwisko" value="Kowalski" />
 				<UserDetailsProperty heading="Wiek" value="23 lat" />
 				<UserDetailsProperty heading="Lokalizacja" value="Gdynia" />
@@ -95,9 +98,11 @@
 			<div class="py-6">
 				<Input label="Link do Facebooka" />
 			</div>
-			<div class="flex flex-row-reverse gap-6 flex-end">
-				<button class="uppercase text-red-600 font-medium">Usuń</button>
-				<button on:click={closeSocialModal} class="uppercase text-blue-600 font-medium">Anuluj</button>
+			<div class="flex-end flex flex-row-reverse gap-6">
+				<button class="font-medium uppercase text-red-600">Usuń</button>
+				<button on:click={closeSocialModal} class="font-medium uppercase text-blue-600"
+					>Anuluj</button
+				>
 			</div>
 		</Modal>
 	{/if}

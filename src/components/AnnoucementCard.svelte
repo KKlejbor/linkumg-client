@@ -5,9 +5,9 @@
 	import Edit from '../lib/icons/Edit.svelte';
 	import Modal from './Modal.svelte';
 	import Clock from '../lib/icons/Clock.svelte';
-	import Input from "src/components/Input.svelte";
-	import TextArea from "src/components/TextArea.svelte";
-	import Button from "src/components/Button.svelte";
+	import Input from 'src/components/Input.svelte';
+	import TextArea from 'src/components/TextArea.svelte';
+	import Button from 'src/components/Button.svelte';
 
 	let editModal = false;
 	let deleteModal = false;
@@ -26,27 +26,28 @@
 	};
 </script>
 
-<div class="grid grid-cols-10 gap-x-5 bg-white p-4 shadow-md rounded-lg break-words">
+<div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
 	<div class="col-span-2">
-		<img src={user} alt="user" class="rounded-full mb-2" />
+		<img src={user} alt="user" class="mb-2 rounded-full" />
 		<span>Figma Sp. z o. o</span>
 	</div>
-	<div class="col-span-6 flex justify-between flex-col text-xl">
-		<span class="text-3xl cursor-pointer" on:click={showMore}>Konserwator powierzchni płaskich</span>
+	<div class="col-span-6 flex flex-col justify-between text-xl">
+		<span class="cursor-pointer text-3xl" on:click={showMore}>Konserwator powierzchni płaskich</span
+		>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
-		<span class="flex gap-1.5 items-center">
-			<Localization class="w-4 h-4" />
+		<span class="flex items-center gap-1.5">
+			<Localization class="h-4 w-4" />
 			Gdańsk
 		</span>
 	</div>
 	<div class="col-span-2 flex flex-col justify-between text-right">
 		<div>
 			<button on:click={editForm} class="mr-2 outline-none">
-				<Edit class="w-5 h-5" />
+				<Edit class="h-5 w-5" />
 			</button>
 			<button on:click={deleteForm} class="outline-none">
-				<Trash class="w-5 h-5" />
+				<Trash class="h-5 w-5" />
 			</button>
 		</div>
 		<div class="text-2xl">4000 - 6000 zł</div>
@@ -66,7 +67,7 @@
 			</div>
 		</div>
 
-		<div class="w-1/2 mt-6 text-right flex self-end">
+		<div class="mt-6 flex w-1/2 self-end text-right">
 			<Button value="Dodaj ogłoszenie" />
 		</div>
 	</Modal>
@@ -78,17 +79,17 @@
 			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>Konserwator powierzchi płaskich</q>?
 			Pamiętaj nie bedzie już można tego cofnąć.
 		</p>
-		<div class="flex flex-row-reverse gap-6 flex-end">
-			<button class="uppercase text-red-600 font-medium">Usuń</button>
-			<button on:click={deleteForm} class="uppercase text-blue-600 font-medium">Anuluj</button>
+		<div class="flex-end flex flex-row-reverse gap-6">
+			<button class="font-medium uppercase text-red-600">Usuń</button>
+			<button on:click={deleteForm} class="font-medium uppercase text-blue-600">Anuluj</button>
 		</div>
 	</Modal>
 {/if}
 
 {#if showMoreModal}
 	<Modal heading="" bind:open={showMoreModal}>
-		<div class="grid gap-y-4 lg:gap-y-0 lg:grid-cols-10 lg:gap-x-9 auto-cols-fr">
-			<div class="lg:col-span-2 text-center">
+		<div class="grid auto-cols-fr gap-y-4 lg:grid-cols-10 lg:gap-y-0 lg:gap-x-9">
+			<div class="text-center lg:col-span-2">
 				<div class="flex flex-col py-4 text-xl">
 					<img class="rounded-full" src={user} alt="user" />
 					<span>Figma Sp. z.o.o</span>
@@ -96,21 +97,19 @@
 					<span>Nr tel.: 123456789</span>
 				</div>
 			</div>
-			<div class="lg:col-span-6 flex flex-col gap-4">
-				<div class="text-4xl">
-					Konserwator powierzchni płaskich
-				</div>
+			<div class="flex flex-col gap-4 lg:col-span-6">
+				<div class="text-4xl">Konserwator powierzchni płaskich</div>
 
 				<div class="ml-5">
-					<span class="text-2xl mr-3">Typ umowy:</span>
+					<span class="mr-3 text-2xl">Typ umowy:</span>
 					Umowa o pracę
 				</div>
 				<div class="ml-5">
-					<span class="text-2xl mr-3">Etat:</span>
+					<span class="mr-3 text-2xl">Etat:</span>
 					Pełen etat
 				</div>
 				<div class="ml-5">
-					<span class="text-2xl mr-3">Lokalizacja:</span>
+					<span class="mr-3 text-2xl">Lokalizacja:</span>
 					Gdańsk
 				</div>
 				<p class="break-words text-justify text-2xl">
@@ -122,13 +121,11 @@
 					znaleźć sobie ciekawe zajęcie.
 				</p>
 			</div>
-			<div class="lg:col-span-2 text-4xl">
-				4000 - 6000 zł
-			</div>
+			<div class="text-4xl lg:col-span-2">4000 - 6000 zł</div>
 		</div>
 
-		<div class="flex justify-end gap-2 mt-3 items-center font-medium text-xl">
-			<Clock class="w-5 h-5" />
+		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
+			<Clock class="h-5 w-5" />
 			29.10.2020 | 21:34
 		</div>
 	</Modal>

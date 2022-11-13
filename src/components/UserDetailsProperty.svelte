@@ -4,6 +4,6 @@
 </script>
 
 <div>
-    <div class="font-bold text-3xl mb-3">{heading}:</div>
-    <div class="text-2xl">{value}</div>
+	<div class="mb-3 text-3xl font-bold">{heading}:</div>
+	<div class="text-2xl">{value}</div>
 </div>

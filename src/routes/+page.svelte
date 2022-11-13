@@ -9,8 +9,16 @@
 	<title>Strona główna</title>
 </svelte:head>
 
-<div class="w-full flex flex-col h-screen">
-	<MainPageCategory text="Ogłoszenia Uniwersytetu Morskiego w Gdyni" image={announcements} href="/news" />
+<div class="flex h-[calc(100vh-100px)] w-full flex-col">
+	<MainPageCategory
+		text="Ogłoszenia Uniwersytetu Morskiego w Gdyni"
+		image={announcements}
+		href="/news"
+	/>
 	<MainPageCategory text="Znajdź pracę twoich marzeń!!!" image={work} href="/jobs" />
-	<MainPageCategory text="Znajdź korepetytora względem twoich preferencji" image={tutor} href="/lessons" />
+	<MainPageCategory
+		text="Znajdź korepetytora względem twoich preferencji"
+		image={tutor}
+		href="/lessons"
+	/>
 </div>

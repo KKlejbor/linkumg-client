@@ -1,24 +1,24 @@
 <script>
-    import "../app.css";
-    import TopNavbar from "src/components/TopNavbar.svelte";
-    import LeftNavbar from "src/components/LeftNavbar.svelte";
-    import {page} from "$app/stores";
+	import '../app.css';
+	import TopNavbar from 'src/components/TopNavbar.svelte';
+	import LeftNavbar from 'src/components/LeftNavbar.svelte';
+	import { page } from '$app/stores';
 
-    const authorizationPages = ['/login/', '/register/'];
+	const authorizationPages = ['/login/', '/register/'];
 </script>
 
-{#if !authorizationPages.includes($page.url.pathname) }
-    <div class="min-h-screen flex flex-col">
-        <TopNavbar />
+{#if !authorizationPages.includes($page.url.pathname)}
+	<div class="flex min-h-screen flex-col">
+		<TopNavbar />
 
-        <div class="flex flex-1">
-            <LeftNavbar />
+		<div class="flex flex-1">
+			<LeftNavbar />
 
-            <slot />
-        </div>
-    </div>
+			<slot />
+		</div>
+	</div>
 {:else}
-    <div class="min-h-screen">
-        <slot />
-    </div>
+	<div class="min-h-screen">
+		<slot />
+	</div>
 {/if}

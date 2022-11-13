@@ -5,12 +5,12 @@
 	import Range from './Range.svelte';
 </script>
 
-<div class="flex flex-col lg:flex-row bg-white gap-[70px] w-full p-[40px] items-end">
+<div class="flex w-full flex-col items-end gap-[70px] bg-white p-[40px] lg:flex-row">
 	<Input label="Tytuł oferty" required="true" />
 	<Input label="Tytuł oferty" required="true" />
 	<Input label="Tytuł oferty" required="true" />
 	<Range label="Wynagrodzenie - przedział" required="true" />
 	<Button value="Wyszukaj" icon={true}>
-		<Search class="w-5 h-5" />
+		<Search class="h-5 w-5" />
 	</Button>
 </div>
