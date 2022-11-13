@@ -1,7 +1,24 @@
 <script>
-	import NavBar from 'src/components/NavBar.svelte';
+	import '../app.css';
+	import TopNavbar from 'src/components/TopNavbar.svelte';
+	import LeftNavbar from 'src/components/LeftNavbar.svelte';
+	import { page } from '$app/stores';
+
+	const authorizationPages = ['/login/', '/register/'];
 </script>
 
-<NavBar />
+{#if !authorizationPages.includes($page.url.pathname)}
+	<div class="flex min-h-screen flex-col">
+		<TopNavbar />
 
-<slot />
+		<div class="flex flex-1">
+			<LeftNavbar />
+
+			<slot />
+		</div>
+	</div>
+{:else}
+	<div class="min-h-screen">
+		<slot />
+	</div>
+{/if}

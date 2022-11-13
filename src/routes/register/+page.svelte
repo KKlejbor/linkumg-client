@@ -3,15 +3,17 @@
 	import Input from 'src/components/Input.svelte';
 	import Select from 'src/components/Select.svelte';
 
-	const registerOptions = ['Student', 'Firma'];
-	const facultyOptions = ['WE', 'WM', 'WN', 'WZNiJ'];
+	const registerOptions = ['Wybierz rodzaj konta', 'Student', 'Firma'];
+	const facultyOptions = ['Wybierz wydział', 'WE', 'WM', 'WN', 'WZNiJ'];
 	let selected = registerOptions[0];
-	let facultySelected = facultyOptions[0];
+	let facultySelected = 'Wybierz wydział';
 </script>
 
-<div class="page">
-	<div class="container">
-		<span>Zarejestruj się</span>
+<div class="page flex h-screen w-full items-center justify-center">
+	<div
+		class="m-auto flex w-full flex-col items-center gap-6 rounded-lg bg-white p-14 sm:justify-center lg:w-1/3"
+	>
+		<h1 class="mb-7 text-center text-3xl font-bold">Zarejestruj się na LinkUMG</h1>
 		<Input label="Imię" />
 		<Input label="Nazwisko" />
 		<Input label="Email" />
@@ -20,46 +22,18 @@
 		{#if selected === 'Student'}
 			<Input label="Numer albumu" />
 			<Select options={facultyOptions} bind:selected={facultySelected} />
-		{:else}
+		{:else if selected === 'Firma'}
 			<Input label="Nazwa firmy" />
 			<Input label="NIP" />
 		{/if}
 		<Button value="Zarejestruj się" />
-		<a href="/login">Zaloguj się na LingUMG</a>
+		<a href="/login">Zaloguj się na LinkUMG</a>
 	</div>
 </div>
 
 <style>
-	:global(body) {
-		overflow: hidden;
-	}
 	.page {
 		background-image: url(../../lib/images/rejestacja.png);
 		background-size: cover;
-		width: 100vw;
-		height: 100vh;
-	}
-
-	.container {
-		background-color: white;
-		border-radius: 30px;
-		padding: 25px;
-		align-items: center;
-		gap: 12px;
-		display: flex;
-		flex-direction: column;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
-
-	a {
-		text-decoration: none;
-		color: black;
-	}
-
-	span {
-		font-size: 30px;
 	}
 </style>

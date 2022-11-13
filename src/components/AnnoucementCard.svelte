@@ -1,14 +1,21 @@
 <script lang="ts">
 	import user from '$lib/images/user.png';
-	import localization from '$lib/images/localization.svg';
-	import trash from '$lib/images/trash.svg';
-	import edit from '$lib/images/edit.svg';
+	import Localization from '../lib/icons/Localization.svelte';
+	import Trash from '../lib/icons/Trash.svelte';
+	import Edit from '../lib/icons/Edit.svelte';
 	import Modal from './Modal.svelte';
-	import Button from './Button.svelte';
+	import Clock from '../lib/icons/Clock.svelte';
+	import Input from 'src/components/Input.svelte';
+	import TextArea from 'src/components/TextArea.svelte';
+	import Button from 'src/components/Button.svelte';
 
 	let editModal = false;
 	let deleteModal = false;
 	let showMoreModal = false;
+
+	const editForm = () => {
+		editModal = !editModal;
+	};
 
 	const deleteForm = () => {
 		deleteModal = !deleteModal;
@@ -19,194 +26,107 @@
 	};
 </script>
 
-<div class="container" on:click={showMore}>
-	<div class="wrapper">
-		<img src={user} alt="user" />
+<div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
+	<div class="col-span-2">
+		<img src={user} alt="user" class="mb-2 rounded-full" />
 		<span>Figma Sp. z o. o</span>
 	</div>
-	<div class="wrapper">
-		<span class="job-heading">Konserwator powierzchni płaskich</span>
+	<div class="col-span-6 flex flex-col justify-between text-xl">
+		<span class="cursor-pointer text-3xl" on:click={showMore}>Konserwator powierzchni płaskich</span
+		>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
-		<span>
-			<img class="localization" src={localization} alt="localization" />
+		<span class="flex items-center gap-1.5">
+			<Localization class="h-4 w-4" />
 			Gdańsk
 		</span>
 	</div>
-	<div class="wrapper">
-		<div class="button-wrapper">
-			<button src={edit} alt="edit">
-				<img src={edit} alt="edit" />
+	<div class="col-span-2 flex flex-col justify-between text-right">
+		<div>
+			<button on:click={editForm} class="mr-2 outline-none">
+				<Edit class="h-5 w-5" />
 			</button>
-			<button on:click={deleteForm}>
-				<img src={trash} alt="trash" />
+			<button on:click={deleteForm} class="outline-none">
+				<Trash class="h-5 w-5" />
 			</button>
 		</div>
-		<div class="salary">4000 - 6000</div>
+		<div class="text-2xl">4000 - 6000 zł</div>
 		<span>29.10.2020</span>
 	</div>
 </div>
 
+{#if editModal}
+	<Modal heading="Ogłoszenie o korepetycje" bind:open={editModal}>
+		<div class="flex flex-col gap-6 py-4">
+			<Input label="Tytuł oferty" />
+			<Input label="Lokalizacja" />
+			<Input label="Kategoria" />
+			<Input label="Stawka godzinowa" />
+			<div class="h-40">
+				<TextArea class="h-40" label="Opis oferty" />
+			</div>
+		</div>
+
+		<div class="mt-6 flex w-1/2 self-end text-right">
+			<Button value="Dodaj ogłoszenie" />
+		</div>
+	</Modal>
+{/if}
+
 {#if deleteModal}
-	<Modal heading="Usuń">
-		<p>
-			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie “Konserwator powierzchi płaskich”?
-			Pamietaj nie bedzie już można tego cofnąć.
+	<Modal heading="Usuń" bind:open={deleteModal}>
+		<p class="whitespace-pre-line pt-6 pb-12">
+			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>Konserwator powierzchi płaskich</q>?
+			Pamiętaj nie bedzie już można tego cofnąć.
 		</p>
-		<div class="button-panel">
-			<button on:click={deleteForm} class="cancel">Anuluj</button>
-			<button class="delete">Usuń</button>
+		<div class="flex-end flex flex-row-reverse gap-6">
+			<button class="font-medium uppercase text-red-600">Usuń</button>
+			<button on:click={deleteForm} class="font-medium uppercase text-blue-600">Anuluj</button>
 		</div>
 	</Modal>
 {/if}
 
 {#if showMoreModal}
-	<Modal heading="Konserwator powierzchni płaskich" open={showMoreModal}>
-		<div class="more-info-container">
-			<div>
-				<img class="photo" src={user} alt="user" />
-				<div class="info-wrapper">
+	<Modal heading="" bind:open={showMoreModal}>
+		<div class="grid auto-cols-fr gap-y-4 lg:grid-cols-10 lg:gap-y-0 lg:gap-x-9">
+			<div class="text-center lg:col-span-2">
+				<div class="flex flex-col py-4 text-xl">
+					<img class="rounded-full" src={user} alt="user" />
 					<span>Figma Sp. z.o.o</span>
 					<span>Email: nanana@gmail.com</span>
 					<span>Nr tel.: 123456789</span>
 				</div>
 			</div>
-			<div class="long-details">
-				<span>Typ umowy: Umowa o prace</span>
-				<span>Etat: Pełen etat</span>
-				<span
-					>Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
+			<div class="flex flex-col gap-4 lg:col-span-6">
+				<div class="text-4xl">Konserwator powierzchni płaskich</div>
+
+				<div class="ml-5">
+					<span class="mr-3 text-2xl">Typ umowy:</span>
+					Umowa o pracę
+				</div>
+				<div class="ml-5">
+					<span class="mr-3 text-2xl">Etat:</span>
+					Pełen etat
+				</div>
+				<div class="ml-5">
+					<span class="mr-3 text-2xl">Lokalizacja:</span>
+					Gdańsk
+				</div>
+				<p class="break-words text-justify text-2xl">
+					Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
 					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
 					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien
 					być z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny
 					nastrój w moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy
-					znaleźć sobie ciekawe zajęcie.</span
-				>
-				<Button value="Zamknij" error bind:open={showMoreModal} />
+					znaleźć sobie ciekawe zajęcie.
+				</p>
 			</div>
-			<div class="price">
-				<span class="salary">4000 - 6000 zł</span>
-				<span class="date">29.10.2020 | 21:34</span>
-			</div>
+			<div class="text-4xl lg:col-span-2">4000 - 6000 zł</div>
+		</div>
+
+		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
+			<Clock class="h-5 w-5" />
+			29.10.2020 | 21:34
 		</div>
 	</Modal>
 {/if}
-
-<style>
-	.salary {
-		font-size: 40px;
-	}
-
-	.date {
-		font-size: 14px;
-	}
-	.more-info-container {
-		display: grid;
-		max-width: 1000px;
-		grid-template-areas: 'a b c';
-		grid-column-gap: 25px;
-		grid-template-columns: 300px 1fr 300px;
-		grid-auto-rows: minmax(100px, auto);
-	}
-
-	.more-info-container > div:first-child {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		justify-content: center;
-	}
-
-	.more-info-container > div:nth-child(2) {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		justify-content: space-around;
-	}
-
-	.more-info-container > div:nth-child(3) {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		justify-content: space-around;
-		align-items: flex-end;
-	}
-
-	.info-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	.photo {
-		width: 250px;
-		height: 250px;
-	}
-	.container {
-		width: 800px;
-		height: 150px;
-		padding: 15px;
-		background-color: white;
-		border-radius: 15px;
-		display: grid;
-		grid-template-areas: 'a b c';
-		grid-template-columns: 150px 1fr 150px;
-		grid-column-gap: 25px;
-		grid-auto-rows: minmax(100px, auto);
-	}
-
-	.wrapper {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-
-	.localization {
-		width: 8px;
-		height: 12px;
-	}
-
-	.job-heading {
-		font-size: 25px;
-	}
-
-	.wrapper:last-child > * {
-		display: flex;
-		justify-content: flex-end;
-	}
-
-	.salary {
-		font-size: 25px;
-	}
-
-	img {
-		width: 80px;
-		height: 80px;
-		border-radius: 50%;
-	}
-
-	button {
-		border: none;
-		background-color: transparent;
-		font-size: 15px;
-	}
-
-	.cancel {
-		color: #0a2c4e;
-	}
-
-	.delete {
-		color: red;
-	}
-
-	.button-panel {
-		display: flex;
-		justify-content: flex-end;
-		gap: 10px;
-	}
-
-	button > img {
-		width: 20px;
-		height: 20px;
-	}
-</style>

@@ -2,30 +2,14 @@
 	import Input from './Input.svelte';
 
 	export let label: string;
+	export let required: boolean = false;
 </script>
 
-<div class="input-wrapper">
-	<span>{label}</span>
-	<div class="salary-range">
+<div class="flex w-full flex-col gap-3">
+	<span>{label} {required ? '*' : ''}</span>
+	<div class="flex gap-4">
 		<Input label="Od" />
+		<span class="self-center font-bold">&ndash;</span>
 		<Input label="Do" />
 	</div>
 </div>
-
-<style>
-	.input-wrapper {
-		display: flex;
-		gap: 10px;
-		flex-direction: column;
-	}
-
-	.salary-range {
-		display: flex;
-		gap: 15px;
-	}
-
-	span {
-		color: rgba(0, 0, 0, 0.7);
-		font-size: 18px;
-	}
-</style>

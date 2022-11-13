@@ -8,7 +8,7 @@ const config: UserConfig = {
 		alias: {
 			src: path.resolve('src/')
 		}
-	}
+	},
 };
 
 export default config;
