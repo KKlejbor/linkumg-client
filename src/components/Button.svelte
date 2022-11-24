@@ -28,7 +28,7 @@
 		gap: 10px;
 		font-size: 20px;
 		color: white;
-		border-radius: 25px;
+		border-radius: 10px;
 		width: 100%;
 		border: none;
 	}
