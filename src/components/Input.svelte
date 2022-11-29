@@ -6,42 +6,14 @@
 	export let value = "";
 </script>
 
-<div class="input-wrapper">
-	<span>{label}</span>
+<div class="w-full">
+	<label class="block text-lg">{label} {required ? '*' : ''}</label>
 	<input
 		name={name} 
 		type="text"
 		required={required}
 		placeholder={placeholder}
+		class="w-full border-b-2 border-bgPrimary bg-inherit py-2 text-bgPrimary outline-0"
 		bind:value
-		/><br/>
+		/>
 </div>
-
-<style>
-	.input-wrapper {
-		display: flex;
-		flex-direction: column;
-	}
-
-	span {
-		color: rgba(0, 0, 0, 0.7);
-		font-size: 15px;
-	}
-
-	input {
-		border-top-style: hidden;
-		border-right-style: hidden;
-		border-left-style: hidden;
-		border-bottom-style: solid;
-		border-color: black;
-		font-size: 18px;
-		color: rgba(0, 0, 0, 0.7);
-		padding: 7px 7px 7px 0;
-		background-color: transparent;
-		width: 200px;
-	}
-
-	input:focus {
-		outline: none;
-	}
-</style>

@@ -1,12 +1,13 @@
 <script>
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
 	import { storagedAuth } from 'src/api/Auth';
-	import NavBar from 'src/components/NavBar.svelte';
+	import TopNavbar from 'src/components/TopNavbar.svelte';
+	import LeftNavbar from 'src/components/LeftNavbar.svelte';
 	import { onMount } from 'svelte';
 	import Notifications from 'svelte-notifications';
-
+	import "../app.css";
+	
 	const queryClient = new QueryClient();
 
 	onMount(async () => {
@@ -19,8 +20,19 @@
 <QueryClientProvider client={queryClient}>
 	<Notifications>
 		{#if $storagedAuth != null}
-			<NavBar />
+		<div class="flex min-h-screen flex-col">
+			<TopNavbar />
+	
+			<div class="flex flex-1">
+				<LeftNavbar />
+	
+				<slot />
+			</div>
+		</div>
+		{:else}
+		<div class="min-h-screen">
+			<slot />
+		</div>
 		{/if}
-		<slot />
 	</Notifications>
 </QueryClientProvider>

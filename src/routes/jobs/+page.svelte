@@ -11,11 +11,10 @@
 	const jobs = useGetJobOffers(SortDirection.ASCENDING, 1, 10, SortBy.createdAt);
 </script>
 
-<QueryClientProvider>
-	<div style="">
+<div class="w-full bg-bgSecondary">
 		<FilterPanel />
 
-		<div class="board">
+		<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[80px]">
 			{#if $jobs.isLoading || $jobs.isFetching}
 				<span>Loading Data</span>
 			{:else if $jobs.isError}
@@ -30,26 +29,3 @@
 			<AddAdvert advertType={AdvertType.JOB} />
 		</div>
 	</div>
-</QueryClientProvider>
-
-<style>
-	:global(body) {
-		background: #f1f1f1;
-	}
-
-	:global(.modal > div:last-child) {
-		align-self: center;
-		display: flex;
-		gap: 20px;
-	}
-
-	.board {
-		margin-left: 100px;
-		padding-top: 80px;
-		display: flex;
-		gap: 20px;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-</style>

@@ -7,6 +7,7 @@
 	import Input from 'src/components/Input.svelte';
 	import type { Login } from 'src/models/User';
 	import { usePostLogin } from 'src/queries/useUser';
+	import LogoBlack from '$lib/icons/LogoBlack.svelte';
 	
 	const queryClient = useQueryClient();
 
@@ -34,47 +35,27 @@
 	};
 </script>
 
-	<div class="page">
-		<div class="container">
-			<span>Zaloguj się</span>
+<div class="page flex h-screen w-full w-full items-center justify-center">
+	<div
+		class="flex w-full flex-col items-center justify-center gap-6 rounded-lg bg-white p-14 lg:w-1/4"
+	>
+			<h1 class="mb-7 text-center text-3xl font-bold">Zaloguj się do LinkUMG</h1>
+			<LogoBlack class="w-40" />
 			<form on:submit|preventDefault={login}>
 				<Input label="Login" name="email" required={true} bind:value={email} />
-				<Input label="Hasło" name="password" required={true} bind:value={password} /> 
+				<Input label="Hasło" name="password" required={true} bind:value={password} /> <br/>
 				<Button value="Zaloguj się" type="submit" />
 				{error}
 			</form>
-			<a href="/register">Zarejestruj się na LingUMG</a>
+			<a class="register" href="/register">Zarejestruj się na LinkUMG</a>
 		</div>
 	</div>
 
-<style>
-	.page {
-		background-image: url(../../lib/images/login.png);
-		width: 100vw;
-		height: 100vh;
-		position: relative;
-	}
-
-	.container {
-		background-color: white;
-		border-radius: 30px;
-		padding: 50px;
-		align-items: center;
-		gap: 30px;
-		display: flex;
-		flex-direction: column;
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
-
-	a {
-		text-decoration: none;
-		color: black;
-	}
-
-	span {
-		font-size: 30px;
-	}
-</style>
+	<style>
+		.page {
+			background-image: url(../../lib/images/login.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-color: #111e2b;
+		}
+	</style>

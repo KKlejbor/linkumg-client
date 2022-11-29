@@ -1,8 +1,8 @@
 <script lang="ts">
 	import user from '$lib/images/user.png';
-	import localization from '$lib/images/localization.svg';
-	import trash from '$lib/images/trash.svg';
-	import edit from '$lib/images/edit.svg';
+	import Localization from '../lib/icons/Localization.svelte';
+	import Trash from '../lib/icons/Trash.svelte';
+	import Edit from '../lib/icons/Edit.svelte';
 	import Modal from './Modal.svelte';
 	import Button from './Button.svelte';
 	import { useDeleteJobOffers, usePatchJobOffers } from 'src/queries/useJobOffer';
@@ -11,6 +11,8 @@
 	import type { JobOffer, JobOfferPost } from 'src/models/JobOffer';
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { getNotificationsContext } from 'svelte-notifications';
+	import Clock from '../lib/icons/Clock.svelte';
+
 
 	const { addNotification } = getNotificationsContext();
 
@@ -24,10 +26,16 @@
 			addNotification({
 				text: 'Pomyślnie usunięto ofertę',
 				type: 'success',
-				position: 'bottom-right'
+				position: 'bottom-center'
 			});
 		},
-		onError: () => {}
+		onError: () => {
+			addNotification({
+				text: 'Błąd',
+				type: 'error',
+				position: 'bottom-center'
+			});
+		}
 	});
 
 	const patchJobOffer = usePatchJobOffers(queryClient, jobOffer.offerId, {
@@ -36,10 +44,16 @@
 			addNotification({
 				text: 'Pomyślnie zaktualizowano ofertę',
 				type: 'success',
-				position: 'bottom-right'
+				position: 'bottom-center'
 			});
 		},
-		onError: () => {}
+		onError: () => {
+			addNotification({
+				text: 'Błąd',
+				type: 'error',
+				position: 'bottom-center'
+			});
+		}
 	});
 
 	let editModal = false;
@@ -81,205 +95,110 @@
 	};
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="container">
-	<div class="wrapper">
-		<img src={user} alt="user" />
+<div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
+	<div class="col-span-2">
+		<img src={user} alt="user" class="mb-2 rounded-full" />
 		<span>{jobOffer.companyDto.name}</span>
 	</div>
-	<div class="wrapper" on:click={showMore}>
-		<span class="job-heading">{jobOffer.title}</span>
+	<div class="col-span-6 flex flex-col justify-between text-xl">
+		<span class="cursor-pointer text-3xl" on:click={showMore}>{jobOffer.title}</span
+		>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
-		<span>
-			<img class="localization" src={localization} alt="localization" />
+		<span class="flex items-center gap-1.5">
+			<Localization class="h-4 w-4" />
 			{jobOffer.location}
 		</span>
 	</div>
-	<div class="wrapper">
-		<div class="button-wrapper">
-			<button on:click={editForm}>
-				<img src={edit} alt="edit" />
+	<div class="col-span-2 flex flex-col justify-between text-right">
+		<div>
+			<button on:click={editForm} class="mr-2 outline-none">
+				<Edit class="h-5 w-5" />
 			</button>
-			<button on:click={deleteForm}>
-				<img src={trash} alt="trash" />
+			<button on:click={deleteForm} class="outline-none">
+				<Trash class="h-5 w-5" />
 			</button>
 		</div>
-		<div class="salary">{jobOffer.salaryDown} - {jobOffer.salaryUp}</div>
+		<div class="text-2xl">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
 		<span>{jobOffer.createdAt}</span>
 	</div>
 </div>
 
 {#if deleteModal}
-	<Modal heading="Usuń">
-		<p>
-			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie “Konserwator powierzchi płaskich”?
-			Pamietaj nie bedzie już można tego cofnąć.
+	<Modal heading="Usuń" bind:open={deleteModal}>
+		<p class="whitespace-pre-line pt-6 pb-12">
+			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>{jobOffer.title}</q>?
+			Pamiętaj nie bedzie już można tego cofnąć.
 		</p>
-		<div class="button-panel">
-			<button class="cancel" on:click={deleteForm}>Anuluj</button>
-			<button class="delete" on:click={deleteJobOfferById}>Usuń</button>
+		<div class="flex-end flex flex-row-reverse gap-6">
+			<button class="font-medium uppercase text-red-600" on:click={deleteJobOfferById}>Usuń</button>
+			<button class="font-medium uppercase text-blue-600" on:click={deleteForm}>Anuluj</button>
 		</div>
 	</Modal>
 {/if}
 
 {#if showMoreModal}
-	<Modal heading={jobOffer.title} open={showMoreModal}>
-		<div class="more-info-container">
-			<div>
-				<img class="photo" src={user} alt="user" />
-				<div class="info-wrapper">
+	<Modal heading="" bind:open={showMoreModal}>
+		<div class="grid auto-cols-fr gap-y-4 lg:grid-cols-10 lg:gap-y-0 lg:gap-x-9">
+			<div class="text-center lg:col-span-2">
+				<div class="flex flex-col py-4 text-xl">
+					<img class="rounded-full" src={user} alt="user" />
 					<span>{jobOffer.companyDto.name}</span>
 					<span>Email: {jobOffer.companyDto.email}</span>
 					<span>Nr tel.: {jobOffer.companyDto.phone}</span>
 				</div>
 			</div>
-			<div class="long-details">
-				<span>Typ umowy: Umowa o prace</span>
-				<span>Etat: Pełen etat</span>
-				<span>{jobOffer.description}</span>
-				<Button value="Zamknij" error bind:open={showMoreModal} />
+			<div class="flex flex-col gap-4 lg:col-span-6">
+				<div class="text-4xl">{jobOffer.title}</div>
+
+				<div class="ml-5">
+					<span class="mr-3 text-2xl">Typ umowy:</span>
+					Umowa o pracę
+				</div>
+				<div class="ml-5">
+					<span class="mr-3 text-2xl">Etat:</span>
+					Pełen etat
+				</div>
+				<div class="ml-5">
+					<span class="mr-3 text-2xl">Lokalizacja:</span>
+					{jobOffer.location}
+				</div>
+				<p class="break-words text-justify text-2xl">
+					{jobOffer.description}
+				</p>
 			</div>
-			<div class="price">
-				<span class="salary">{jobOffer.salaryDown} - {jobOffer.salaryUp}</span>
-				<span class="date">{jobOffer.createdAt}</span>
-			</div>
+			<div class="text-4xl lg:col-span-2">4000 - 6000 zł</div>
+		</div>
+
+		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
+			<Clock class="h-5 w-5" />
+			29.10.2020 | 21:34
 		</div>
 	</Modal>
 {/if}
 
 {#if editModal}
-	<Modal heading={jobOffer.title}>
+	<Modal heading={jobOffer.title} bind:open={editModal}>
 		<form on:submit|preventDefault={editWorkAds}>
-			<Input label="Tytuł oferty" required={true} bind:value={title} />
-			<Input label="Lokalizacja" required={true} bind:value={location} />
-			<h6>Wynagrodzenie- przedział*</h6>
-			<Input label="Od" required={true} bind:value={salaryDown} />
-			<Input label="Do" required={true} bind:value={salaryUp} />
-			<TextArea label="Opis oferty" bind:value={description} />
-			<div class="button-panel">
-				<Button value="Anuluj" on:click={editForm} error />
-				<Button value="Dodaj Ogłoszenie" type="submit" />
+			<div class="mt-5 grid grid-cols-2 gap-10">
+				<div class="col-span-1 flex flex-col gap-10">
+					<Input label="Tytuł oferty" required={true} bind:value={title} />
+					<Input label="Lokalizacja" required={true} bind:value={location} />
+					<h4 class="-mb-5">Wynagrodzenie- przedział*</h4>
+					<div class="flex gap-10">
+						<Input label="Od" required={true} bind:value={salaryDown} />
+						<span>-</span>
+						<Input label="Do" required={true} bind:value={salaryUp} />
+					</div>
+				</div>
+				<div class="grid col-span-2 h-40">
+					<TextArea label="Opis oferty" bind:value={description} />
+				</div>
+				<div class="col-start-2">
+					<Button value="Aktualizuj " type="submit" />
+				</div>
 			</div>
 		</form>
+	
 	</Modal>
 {/if}
-
-<style>
-	.salary {
-		font-size: 40px;
-	}
-
-	.date {
-		font-size: 14px;
-	}
-	.more-info-container {
-		display: grid;
-		max-width: 1000px;
-		grid-template-areas: 'a b c';
-		grid-column-gap: 25px;
-		grid-template-columns: 300px 1fr 300px;
-		grid-auto-rows: minmax(100px, auto);
-	}
-
-	.more-info-container > div:first-child {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		justify-content: center;
-	}
-
-	.more-info-container > div:nth-child(2) {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		justify-content: space-around;
-	}
-
-	.more-info-container > div:nth-child(3) {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-		justify-content: space-around;
-		align-items: flex-end;
-	}
-
-	.info-wrapper {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	.photo {
-		width: 250px;
-		height: 250px;
-	}
-	.container {
-		width: 800px;
-		height: 150px;
-		padding: 15px;
-		background-color: white;
-		border-radius: 15px;
-		display: grid;
-		grid-template-areas: 'a b c';
-		grid-template-columns: 150px 1fr 150px;
-		grid-column-gap: 25px;
-		grid-auto-rows: minmax(100px, auto);
-	}
-
-	.wrapper {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-	}
-
-	.localization {
-		width: 8px;
-		height: 12px;
-	}
-
-	.job-heading {
-		font-size: 25px;
-	}
-
-	.wrapper:last-child > * {
-		display: flex;
-		justify-content: flex-end;
-	}
-
-	.salary {
-		font-size: 25px;
-	}
-
-	img {
-		width: 80px;
-		height: 80px;
-		border-radius: 50%;
-	}
-
-	button {
-		border: none;
-		background-color: transparent;
-		font-size: 15px;
-	}
-
-	.cancel {
-		color: #0a2c4e;
-	}
-
-	.delete {
-		color: red;
-	}
-
-	.button-panel {
-		display: flex;
-		justify-content: flex-end;
-		gap: 10px;
-	}
-
-	button > img {
-		width: 20px;
-		height: 20px;
-	}
-</style>

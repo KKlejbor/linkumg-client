@@ -8,6 +8,7 @@
 	import type { JobOfferPost } from 'src/models/JobOffer';
 	import { usePostJobOffers } from 'src/queries/useJobOffer';
 	import { useQueryClient } from '@sveltestack/svelte-query';
+	import Plus from '$lib/icons/Plus.svelte';
 
 	export let advertType: AdvertType;
 
@@ -57,6 +58,7 @@
 
 <div class="">
 	<button
+	class="fixed right-0 bottom-0 m-5 h-20 w-20 rounded-full bg-bgButton font-bold text-white"
 		on:click={advertType === AdvertType.COLLEGE
 			? openCollegeAnnoucementForm
 			: advertType === AdvertType.JOB
@@ -65,117 +67,35 @@
 			? openLessonAnnoucementForm
 			: null}
 	>
-		+
+	<Plus class="mx-auto w-1/3 fill-white" />
 	</button>
 </div>
 
 <!-- Work annoucement -->
 {#if jobAnnoucementModal}
-	<Modal heading="Ogłoszenie o pracę" open={jobAnnoucementModal}>
-		<form on:submit|preventDefault={addWorkAds}>
-			<Input label="Tytuł oferty" required={true} bind:value={title} />
-			<Input label="Lokalizacja" required={true} bind:value={location} />
-			<h6>Wynagrodzenie- przedział*</h6>
-			<Input label="Od" required={true} bind:value={salaryDown} />
-			<Input label="Do" required={true} bind:value={salaryUp} />
-			<TextArea label="Opis oferty" bind:value={description} />
-			<div class="button-panel">
-				<Button bind:open={jobAnnoucementModal} value="Anuluj" error />
-				<Button value="Dodaj Ogłoszenie" type="submit" />
-			</div>
-		</form>
+	<Modal heading="Ogłoszenie o pracę" bind:open={jobAnnoucementModal}>
+		
+			<form on:submit|preventDefault={addWorkAds}>
+				<div class="mt-5 grid grid-cols-2 gap-10">
+					<div class="col-span-1 flex flex-col gap-10">
+						<Input label="Tytuł oferty" required={true} bind:value={title} />
+						<Input label="Lokalizacja" required={true} bind:value={location} />
+						<h4 class="-mb-5">Wynagrodzenie- przedział*</h4>
+						<div class="flex gap-10">
+							<Input label="Od" required={true} bind:value={salaryDown} />
+							<span>-</span>
+							<Input label="Do" required={true} bind:value={salaryUp} />
+						</div>
+					</div>
+					<div class="grid col-span-2 h-40">
+						<TextArea label="Opis oferty" bind:value={description} />
+					</div>
+					<div class="col-start-2">
+						<Button value="Dodaj ofertę " type="submit" />
+					</div>
+				</div>
+			</form>
+
 	</Modal>
 {/if}
 
-<!-- Work annoucement -->
-{#if lessonAnnoucementModal}
-	<Modal heading="Ogłoszenie o korepetycje" open={lessonAnnoucementModal}>
-		<Input label="Tytuł oferty" />
-		<Input label="Lokalizacja" />
-		<Input label="Kategoria" />
-		<Input label="Stawka godzinowa" />
-		<TextArea label="Opis oferty" />
-		<div class="button-panel">
-			<Button bind:open={lessonAnnoucementModal} value="Anuluj" error />
-			<Button value="Dodaj Ogłoszenie" />
-		</div>
-	</Modal>
-{/if}
-
-<!-- Voldemort annoucement -->
-{#if collegeAnnoucementModal}
-	<Modal heading="Ogłoszenie uczelni" open={collegeAnnoucementModal}>
-		<Input label="Tytuł ogłoszenia" />
-		<TextArea label="Opis ogłoszenia" />
-		<div class="college-annoucement-photo">
-			<img src={user} alt="college-annoucement-photo" />
-		</div>
-		<div class="button-panel">
-			<Button bind:open={collegeAnnoucementModal} value="Anuluj" error />
-			<Button value="Dodaj Ogłoszenie" />
-		</div>
-	</Modal>
-{/if}
-
-<style>
-	:global(body) {
-		background: #f1f1f1;
-	}
-
-	:global(.modal > div:last-child) {
-		align-self: center;
-		display: flex;
-		gap: 20px;
-	}
-
-	.college-annoucement-photo {
-		width: 300px;
-		height: 170px;
-	}
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
-
-	.heading {
-		margin-left: 100px;
-		height: 155px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.board {
-		margin-left: 100px;
-		padding-top: 80px;
-		display: flex;
-		gap: 20px;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.button-panel {
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-end;
-	}
-
-	span {
-		font-size: 70px;
-	}
-
-	button {
-		background-color: #0a2c4e;
-		color: white;
-		width: 100px;
-		height: 100px;
-		border-radius: 50%;
-		font-size: 33px;
-		font-weight: bold;
-		position: absolute;
-		bottom: 30px;
-		right: 30px;
-	}
-</style>
