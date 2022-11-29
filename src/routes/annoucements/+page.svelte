@@ -30,9 +30,9 @@
 	</div>
 
 	<div class="board">
+		<!-- <AnnoucementCard />
 		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
+		<AnnoucementCard /> -->
 		<button on:click={openColllegeAnnoucementForm}> + </button>
 	</div>
 </div>

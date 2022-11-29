@@ -1,17 +1,51 @@
+
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { useQueryClient } from '@sveltestack/svelte-query';
+	import { storagedAuth } from 'src/api/Auth';
 	import Button from 'src/components/Button.svelte';
 	import Input from 'src/components/Input.svelte';
+	import type { Login } from 'src/models/User';
+	import { usePostLogin } from 'src/queries/useUser';
+	
+	const queryClient = useQueryClient();
+
+	let email = '';
+	let password = '';
+	let error = '';
+
+	const postLogin = usePostLogin(queryClient, {
+		onError: () => {
+			error = "Błędne dane logowania";
+		},
+		onSuccess: (response) => {
+			$storagedAuth = response;
+			goto('/');
+		}
+	});
+
+	const login = () => {
+		const loginData: Login = {
+			email: email,
+			password: password
+		};
+
+		$postLogin.mutate(loginData);
+	};
 </script>
 
-<div class="page">
-	<div class="container">
-		<span>Zaloguj się</span>
-		<Input label="Login" />
-		<Input label="Hasło" />
-		<Button value="Zaloguj się" />
-		<a href="/register">Zarejestruj się na LingUMG</a>
+	<div class="page">
+		<div class="container">
+			<span>Zaloguj się</span>
+			<form on:submit|preventDefault={login}>
+				<Input label="Login" name="email" required={true} bind:value={email} />
+				<Input label="Hasło" name="password" required={true} bind:value={password} /> 
+				<Button value="Zaloguj się" type="submit" />
+				{error}
+			</form>
+			<a href="/register">Zarejestruj się na LingUMG</a>
+		</div>
 	</div>
-</div>
 
 <style>
 	.page {

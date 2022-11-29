@@ -1,10 +1,20 @@
 <script lang="ts">
 	export let label: string;
+	export let name: string = "name";
+	export let required: boolean = false;
+	export let placeholder: string = "";
+	export let value = "";
 </script>
 
 <div class="input-wrapper">
 	<span>{label}</span>
-	<input />
+	<input
+		name={name} 
+		type="text"
+		required={required}
+		placeholder={placeholder}
+		bind:value
+		/><br/>
 </div>
 
 <style>

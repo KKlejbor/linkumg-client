@@ -28,6 +28,9 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-static": "^1.0.0-next.46",
+		"@sveltestack/svelte-query": "^1.6.0",
+		"axios": "^1.2.0",
+		"svelte-notifications": "^0.9.98",
 		"vite-tsconfig-paths": "^3.5.2"
 	}
 }

@@ -5,45 +5,108 @@
 	import edit from '$lib/images/edit.svg';
 	import Modal from './Modal.svelte';
 	import Button from './Button.svelte';
+	import { useDeleteJobOffers, usePatchJobOffers } from 'src/queries/useJobOffer';
+	import Input from 'src/components/Input.svelte';
+	import TextArea from 'src/components/TextArea.svelte';
+	import type { JobOffer, JobOfferPost } from 'src/models/JobOffer';
+	import { useQueryClient } from '@sveltestack/svelte-query';
+	import { getNotificationsContext } from 'svelte-notifications';
+
+	const { addNotification } = getNotificationsContext();
+
+	export let jobOffer: JobOffer;
+
+	const queryClient = useQueryClient();
+
+	const deleteJobOffer = useDeleteJobOffers(queryClient, {
+		onSuccess: () => {
+			deleteForm();
+			addNotification({
+				text: 'Pomyślnie usunięto ofertę',
+				type: 'success',
+				position: 'bottom-right'
+			});
+		},
+		onError: () => {}
+	});
+
+	const patchJobOffer = usePatchJobOffers(queryClient, jobOffer.offerId, {
+		onSuccess: () => {
+			editForm();
+			addNotification({
+				text: 'Pomyślnie zaktualizowano ofertę',
+				type: 'success',
+				position: 'bottom-right'
+			});
+		},
+		onError: () => {}
+	});
 
 	let editModal = false;
 	let deleteModal = false;
 	let showMoreModal = false;
 
+	const showMore = () => {
+		showMoreModal = !showMoreModal;
+	};
+
 	const deleteForm = () => {
 		deleteModal = !deleteModal;
 	};
 
-	const showMore = () => {
-		showMoreModal = !showMoreModal;
+	const editForm = () => {
+		editModal = !editModal;
+	};
+
+	const deleteJobOfferById = () => {
+		$deleteJobOffer.mutate(jobOffer.offerId);
+	};
+
+	let title = jobOffer.title;
+	let location = jobOffer.location;
+	let salaryDown = jobOffer.salaryDown.toString();
+	let salaryUp = jobOffer.salaryUp.toString();
+	let description = jobOffer.description;
+
+	const editWorkAds = () => {
+		const editWorkAdsData: JobOfferPost = {
+			description: description,
+			location: location,
+			salaryDown: parseInt(salaryDown),
+			salaryUp: parseInt(salaryUp),
+			title: title
+		};
+
+		$patchJobOffer.mutate(editWorkAdsData);
 	};
 </script>
 
-<div class="container" on:click={showMore}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<div class="container">
 	<div class="wrapper">
 		<img src={user} alt="user" />
-		<span>Figma Sp. z o. o</span>
+		<span>{jobOffer.companyDto.name}</span>
 	</div>
-	<div class="wrapper">
-		<span class="job-heading">Konserwator powierzchni płaskich</span>
+	<div class="wrapper" on:click={showMore}>
+		<span class="job-heading">{jobOffer.title}</span>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
 		<span>
 			<img class="localization" src={localization} alt="localization" />
-			Gdańsk
+			{jobOffer.location}
 		</span>
 	</div>
 	<div class="wrapper">
 		<div class="button-wrapper">
-			<button src={edit} alt="edit">
+			<button on:click={editForm}>
 				<img src={edit} alt="edit" />
 			</button>
 			<button on:click={deleteForm}>
 				<img src={trash} alt="trash" />
 			</button>
 		</div>
-		<div class="salary">4000 - 6000</div>
-		<span>29.10.2020</span>
+		<div class="salary">{jobOffer.salaryDown} - {jobOffer.salaryUp}</div>
+		<span>{jobOffer.createdAt}</span>
 	</div>
 </div>
 
@@ -54,41 +117,51 @@
 			Pamietaj nie bedzie już można tego cofnąć.
 		</p>
 		<div class="button-panel">
-			<button on:click={deleteForm} class="cancel">Anuluj</button>
-			<button class="delete">Usuń</button>
+			<button class="cancel" on:click={deleteForm}>Anuluj</button>
+			<button class="delete" on:click={deleteJobOfferById}>Usuń</button>
 		</div>
 	</Modal>
 {/if}
 
 {#if showMoreModal}
-	<Modal heading="Konserwator powierzchni płaskich" open={showMoreModal}>
+	<Modal heading={jobOffer.title} open={showMoreModal}>
 		<div class="more-info-container">
 			<div>
 				<img class="photo" src={user} alt="user" />
 				<div class="info-wrapper">
-					<span>Figma Sp. z.o.o</span>
-					<span>Email: nanana@gmail.com</span>
-					<span>Nr tel.: 123456789</span>
+					<span>{jobOffer.companyDto.name}</span>
+					<span>Email: {jobOffer.companyDto.email}</span>
+					<span>Nr tel.: {jobOffer.companyDto.phone}</span>
 				</div>
 			</div>
 			<div class="long-details">
 				<span>Typ umowy: Umowa o prace</span>
 				<span>Etat: Pełen etat</span>
-				<span
-					>Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
-					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
-					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien
-					być z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny
-					nastrój w moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy
-					znaleźć sobie ciekawe zajęcie.</span
-				>
+				<span>{jobOffer.description}</span>
 				<Button value="Zamknij" error bind:open={showMoreModal} />
 			</div>
 			<div class="price">
-				<span class="salary">4000 - 6000 zł</span>
-				<span class="date">29.10.2020 | 21:34</span>
+				<span class="salary">{jobOffer.salaryDown} - {jobOffer.salaryUp}</span>
+				<span class="date">{jobOffer.createdAt}</span>
 			</div>
 		</div>
+	</Modal>
+{/if}
+
+{#if editModal}
+	<Modal heading={jobOffer.title}>
+		<form on:submit|preventDefault={editWorkAds}>
+			<Input label="Tytuł oferty" required={true} bind:value={title} />
+			<Input label="Lokalizacja" required={true} bind:value={location} />
+			<h6>Wynagrodzenie- przedział*</h6>
+			<Input label="Od" required={true} bind:value={salaryDown} />
+			<Input label="Do" required={true} bind:value={salaryUp} />
+			<TextArea label="Opis oferty" bind:value={description} />
+			<div class="button-panel">
+				<Button value="Anuluj" on:click={editForm} error />
+				<Button value="Dodaj Ogłoszenie" type="submit" />
+			</div>
+		</form>
 	</Modal>
 {/if}
 
