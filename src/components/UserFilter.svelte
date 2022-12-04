@@ -21,7 +21,7 @@
 	};
 </script>
 
-<div class="flex h-10 w-full items-center gap-24 px-28 py-16">
+<div class="flex flex-col lg:flex-row lg:h-10 w-full items-center lg:gap-24 gap-6 px-28 py-16">
 	<div class="flex items-center gap-3">
 		<span>Rola:</span>
 		<div class="flex cursor-pointer rounded-lg border border-gray-400">
