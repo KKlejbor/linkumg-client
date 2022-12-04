@@ -4,6 +4,7 @@
 	import ViewList from '$lib/icons/ViewList.svelte';
 	import Logout from '$lib/icons/Logout.svelte';
 	import { clickOutside } from '../utils/clickOutside.js';
+	import Admin from '$lib/icons/Admin.svelte';
 
 	let dropdownOpen = false;
 
@@ -49,6 +50,12 @@
 			<a class="flex w-full gap-2" href="/user-announcements" on:click={closeDropdown}>
 				<ViewList class="inline w-4 items-center justify-center fill-black" />
 				<span class="text-lg"> Lista ogłoszeń </span>
+			</a>
+		</div>
+		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
+			<a class="flex w-full gap-2 items-center" href="/admin" on:click={closeDropdown}>
+				<Admin class="inline w-4 h-4 items-center justify-center fill-black" />
+				<span class="text-lg"> Panel administratora </span>
 			</a>
 		</div>
 		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
