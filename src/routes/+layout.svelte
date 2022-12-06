@@ -15,6 +15,7 @@
 			goto('/login');
 		}
 	});
+	
 </script>
 
 <QueryClientProvider client={queryClient}>
