@@ -1,24 +1,38 @@
 <script>
-	import '../app.css';
+	import { goto } from '$app/navigation';
+	import { QueryClient, QueryClientProvider } from '@sveltestack/svelte-query';
+	import { storagedAuth } from 'src/api/Auth';
 	import TopNavbar from 'src/components/TopNavbar.svelte';
 	import LeftNavbar from 'src/components/LeftNavbar.svelte';
-	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
+	import Notifications from 'svelte-notifications';
+	import "../app.css";
+	
+	const queryClient = new QueryClient();
 
-	const authorizationPages = ['/login/', '/register/'];
+	onMount(async () => {
+		if ($storagedAuth == null) {
+			goto('/login');
+		}
+	});
 </script>
 
-{#if !authorizationPages.includes($page.url.pathname)}
-	<div class="flex min-h-screen flex-col">
-		<TopNavbar />
-
-		<div class="flex flex-1">
-			<LeftNavbar />
-
+<QueryClientProvider client={queryClient}>
+	<Notifications>
+		{#if $storagedAuth != null}
+		<div class="flex min-h-screen flex-col">
+			<TopNavbar />
+	
+			<div class="flex flex-1">
+				<LeftNavbar />
+	
+				<slot />
+			</div>
+		</div>
+		{:else}
+		<div class="min-h-screen">
 			<slot />
 		</div>
-	</div>
-{:else}
-	<div class="min-h-screen">
-		<slot />
-	</div>
-{/if}
+		{/if}
+	</Notifications>
+</QueryClientProvider>

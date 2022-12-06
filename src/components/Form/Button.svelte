@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let value: string;
+	export let type = 'button';
 	export let error = false;
 	export let open = false;
 	export let icon = false;
@@ -14,6 +15,8 @@
 		<slot />
 		{value}
 	</button>
+{:else if type != 'button'}
+	<button type={type} class:error>{value}</button>
 {:else}
 	<button on:click={toggleOpen} class:error>{value}</button>
 {/if}

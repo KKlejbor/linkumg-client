@@ -1,14 +1,13 @@
 <script>
-	import AnnoucementCard from 'src/components/AnnoucementCard.svelte';
-	import Button from 'src/components/Button.svelte';
-	import Input from 'src/components/Input.svelte';
+	import Button from 'src/components/Form/Button.svelte';
+	import Input from 'src/components/Form/Input.svelte';
 	import Modal from 'src/components/Modal.svelte';
-	import Range from 'src/components/Range.svelte';
-	import TextArea from 'src/components/TextArea.svelte';
+	import Range from 'src/components/Form/Range.svelte';
+	import TextArea from 'src/components/Form/TextArea.svelte';
 	import user from '$lib/images/user.png';
 	import Plus from '$lib/icons/Plus.svelte';
 	import pepe from '$lib/images/pepe.png';
-	import Select from 'src/components/Select.svelte';
+	import Select from 'src/components/Form/Select.svelte';
 
 	let selectAnnouncementTypeModal = false;
 	let collegeAnnouncementModal = false;
@@ -59,13 +58,6 @@
 
 			<img src={pepe} class="h-80 w-80" alt="pepe" />
 		</div>
-
-		<!-- są ogłoszenia -->
-		<!--
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		-->
 	</div>
 
 	<button
@@ -95,12 +87,12 @@
 	<Modal heading="Ogłoszenie o pracę" bind:open={jobsAnnouncementModal}>
 		<div class="mt-5 grid grid-cols-2 gap-10">
 			<div class="flex flex-col gap-10">
-				<Input label="Tytuł oferty" required="true" />
-				<Input label="Lokalizacja" required="true" />
-				<Range label="Wynagrodzenie - przedział" required="true" />
+				<Input label="Tytuł oferty" required={true} />
+				<Input label="Lokalizacja" required={true} />
+				<Range label="Wynagrodzenie - przedział" required={true} />
 			</div>
 			<div class="col-span-2 h-40">
-				<TextArea label="Opis oferty" required="true" />
+				<TextArea label="Opis oferty" required={true} />
 			</div>
 
 			<div class="col-start-2">
@@ -115,15 +107,15 @@
 	<Modal heading="Ogłoszenie o korepetycje" bind:open={lessonsAnnouncementModal}>
 		<div class="mt-5 grid grid-cols-2 gap-10">
 			<div class="flex flex-col gap-10">
-				<Input label="Tytuł oferty" required="true" />
-				<Input label="Lokalizacja" required="true" />
-				<Input label="Kategoria" required="true" />
+				<Input label="Tytuł oferty" required={true} />
+				<Input label="Lokalizacja" required={true} />
+				<Input label="Kategoria" required={true} />
 			</div>
 			<div>
-				<Input label="Stawka godzinowa" required="true" />
+				<Input label="Stawka godzinowa" required={true} />
 			</div>
 			<div class="col-span-2 h-40">
-				<TextArea label="Opis oferty" required="true" />
+				<TextArea label="Opis oferty" required={true} />
 			</div>
 			<div class="col-start-2">
 				<Button value="Dodaj ogłoszenie" />
@@ -138,7 +130,7 @@
 		<div class="my-5 flex flex-col gap-5">
 			<Input label="Tytuł ogłoszenia" />
 			<div class="h-40">
-				<TextArea label="Opis ogłoszenia" required="true" />
+				<TextArea label="Opis ogłoszenia" required={true} />
 			</div>
 			<div class="w-1/2">
 				<label>Zdjęcie ogłoszenia:</label>

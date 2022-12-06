@@ -1,62 +1,81 @@
-<script>
-	import AnnoucementCard from 'src/components/AnnoucementCard.svelte';
-	import FilterPanel from 'src/components/FilterPanel.svelte';
-	import Plus from '$lib/icons/Plus.svelte';
-	import Modal from 'src/components/Modal.svelte';
-	import Input from 'src/components/Input.svelte';
-	import Range from 'src/components/Range.svelte';
-	import TextArea from 'src/components/TextArea.svelte';
-	import Button from 'src/components/Button.svelte';
+<script lang="ts">
+	import { useQueryClient } from '@sveltestack/svelte-query';
+	import { SortBy } from 'src/enums/SortBy';
+	import { SortDirection } from 'src/enums/SortDirection';
+	import { invalidateJobOffer, useGetJobOffers } from 'src/queries/useJobOffer';
+	import AddAdvert from 'src/components/AddAdvert.svelte';
+	import { AdvertType } from 'src/enums/AdvertType';
+	import { get, writable, type Writable } from 'svelte/store';
+	import { LightPaginationNav } from 'svelte-paginate';
+	import { pageSize } from 'src/utils/globalState';
+	import type { SearchJobOffer } from 'src/models/JobOffer';
+	import Button from 'src/components/Form/Button.svelte';
+	import Input from 'src/components/Form/Input.svelte';
+	import Range from 'src/components/Form/Range.svelte';
+	import JobOfferCard from 'src/components/Job/JobOfferCard.svelte';
 
-	let jobsAnnoucementModal = false;
+	const queryClient = useQueryClient();
+	let searchRequest: SearchJobOffer = {};
+	let page = 1;
 
-	const openJobsModal = () => {
-		jobsAnnoucementModal = true;
+	export let searchBodyState: Writable<SearchJobOffer> = writable(searchRequest);
+	export let paginatePropsState: Writable<number> = writable(page);
+		
+	const jobs = useGetJobOffers(
+		SortDirection.ASCENDING,
+		paginatePropsState,
+		SortBy.createdAt,
+		searchBodyState
+	);
+
+	let searchBody: SearchJobOffer = {};
+
+	const submit = () => {
+		searchBodyState.set(searchBody);
+		invalidateJobOffer(queryClient);
 	};
 
-	const closeJobsModal = () => {
-		jobsAnnoucementModal = false;
+	const changePage = (e: CustomEvent<any>) => {
+		console.log(e.detail.page);
+		paginatePropsState.set(e.detail.page);
+		invalidateJobOffer(queryClient);
 	};
 </script>
 
 <div class="w-full bg-bgSecondary">
-	<FilterPanel />
-
-	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[80px]">
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-	</div>
-
-	<button
-		on:click={openJobsModal}
-		class="fixed right-0 bottom-0 m-5 h-20 w-20 rounded-full bg-bgButton font-bold text-white"
-	>
-		<Plus class="mx-auto w-1/3 fill-white" />
-	</button>
-</div>
-
-<!-- Work annoucement -->
-{#if jobsAnnoucementModal}
-	<Modal heading="Ogłoszenie o pracę" bind:open={jobsAnnoucementModal}>
-		<div class="mt-5 grid grid-cols-2 gap-10">
-			<div class="flex flex-col gap-10">
-				<Input label="Tytuł oferty" required="true" />
-				<Input label="Lokalizacja" required="true" />
-				<Range label="Wynagrodzenie - przedział" required="true" />
-			</div>
-			<div class="col-span-2 h-40">
-				<TextArea label="Opis oferty" required="true" />
-			</div>
-
-			<div class="col-start-2">
-				<Button value="Dodaj Ogłoszenie" />
-			</div>
+	<form on:submit|preventDefault={submit}>
+		<div class="flex w-full flex-col items-end gap-[70px] bg-white p-[40px] lg:flex-row">
+			<Input label="Tytuł oferty" bind:value={searchBody.contain} />
+			<Input label="Lokalizacja" bind:value={searchBody.location} />
+			<Range
+				label="Wynagrodzenie - przedział"
+				bind:fromRange={searchBody.salaryDown}
+				bind:toRange={searchBody.salaryUp}
+			/>
+			<Button value="Wyszukaj" icon={true} type="submit" />
 		</div>
-	</Modal>
-{/if}
+	</form>
+	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[40px]">
+		{#if $jobs.isLoading || $jobs.isFetching}
+			<span>Loading Data</span>
+		{:else if $jobs.isError}
+			<span>Error Loading Data</span>
+		{:else if ($jobs.isSuccess && $jobs.data) || ($jobs.isFetched && $jobs.isSuccess)}
+			{#each $jobs.data.content as jobOffer}
+				<JobOfferCard {jobOffer} />
+			{/each}
+		{:else}
+			<span>Ogłoszenia o pracę</span>
+		{/if}
+	</div>
+	{#if $jobs.data && $jobs.isSuccess}
+		<LightPaginationNav
+			totalItems={$jobs.data.totalPages}
+			pageSize={get(paginatePropsState)}
+			currentPage={get(pageSize)}
+			limit={1}
+			on:setPage={(e) => changePage(e)}
+		/>
+	{/if}
+	<AddAdvert advertType={AdvertType.JOB} />
+</div>

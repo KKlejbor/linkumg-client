@@ -1,16 +1,18 @@
 <script lang="ts">
 	import user from '$lib/images/user.png';
+	import type { Announcement } from 'src/models/Announcement';
+
+	export let annoucement: Announcement;
 </script>
 
 <div class="container">
 	<div class="details">
 		<img src={user} alt="user" />
-		<a href="/news/1">
-			22. Zgromadzenie Ogólne Międzynarodowego Stowarzyszenia Uniwersytetów Morskich IAMU
-			(International Association of Maritime Universities) w Gruzji</a
+		<a href="/news/{annoucement.announcementId}">
+			{annoucement.title}</a
 		>
 	</div>
-	<div class="date">29.10.2020</div>
+	<div class="date">{annoucement.createdAt}</div>
 </div>
 
 <style>

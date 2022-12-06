@@ -1,60 +1,56 @@
 <script lang="ts">
-	import CollegeAnnocement from 'src/components/CollegeAnnocement.svelte';
-	import Plus from '$lib/icons/Plus.svelte';
-	import Modal from 'src/components/Modal.svelte';
-	import Input from 'src/components/Input.svelte';
-	import TextArea from 'src/components/TextArea.svelte';
-	import Button from 'src/components/Button.svelte';
-	import user from '$lib/images/user.png';
+	import CollegeAnnocement from 'src/components/College/CollegeAnnocement.svelte';
+	import AddAdvert from 'src/components/AddAdvert.svelte';
+	import { AdvertType } from 'src/enums/AdvertType';
+	import { useQueryClient } from '@sveltestack/svelte-query';
+	import { get, writable, type Writable } from 'svelte/store';
+	import { invalidateAnnouncement, useGetAnnouncements } from 'src/queries/useAnnouncement';
+	import { SortDirection } from 'src/enums/SortDirection';
+	import { SortBy } from 'src/enums/SortBy';
+	import { LightPaginationNav } from 'svelte-paginate';
+	import { pageSize } from 'src/utils/globalState';
 
-	let collegeAnnouncementModal = false;
+	const queryClient = useQueryClient();
+	let page = 1;
 
-	const openCollegeAnnouncementForm = () => {
-		collegeAnnouncementModal = true;
-	};
+	export let paginatePropsState: Writable<number> = writable(page);
 
-	const closeCollegeAnnouncementForm = () => {
-		collegeAnnouncementModal = false;
+	const annoucement = useGetAnnouncements(
+		SortDirection.ASCENDING,
+		paginatePropsState,
+		SortBy.createdAt
+	);
+	const changePage = (e: CustomEvent<any>) => {
+		paginatePropsState.set(e.detail.page);
+		invalidateAnnouncement(queryClient);
 	};
 </script>
 
 <svelte:head>
 	<title>Ogłoszenia uczelni</title>
 </svelte:head>
-
-<div class="grid w-full gap-12 p-14 lg:grid-cols-2">
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
-	<CollegeAnnocement />
+<div class="w-full bg-bgSecondary">
+	<div class="grid w-full gap-12 p-14 lg:grid-cols-2">
+		{#if $annoucement.isLoading || $annoucement.isFetching}
+			<span>Loading Data</span>
+		{:else if $annoucement.isError}
+			<span>Error Loading Data</span>
+		{:else if ($annoucement.isSuccess && $annoucement.data) || ($annoucement.isFetched && $annoucement.isSuccess)}
+			{#each $annoucement.data.content as annoucement}
+				<CollegeAnnocement {annoucement} />
+			{/each}
+		{:else}
+			<span>Ogłoszenia o pracę</span>
+		{/if}
+	</div>
+	{#if $annoucement.data && $annoucement.isSuccess}
+		<LightPaginationNav
+			totalItems={$annoucement.data.totalPages}
+			pageSize={get(paginatePropsState)}
+			currentPage={get(pageSize)}
+			limit={1}
+			on:setPage={(e) => changePage(e)}
+		/>
+	{/if}
+	<AddAdvert advertType={AdvertType.COLLEGE} />
 </div>
-
-<button
-	on:click={openCollegeAnnouncementForm}
-	class="fixed right-0 bottom-0 m-5 h-20 w-20 rounded-full bg-bgButton font-bold text-white"
->
-	<Plus class="mx-auto w-1/3 fill-white" />
-</button>
-
-{#if collegeAnnouncementModal}
-	<Modal heading="Ogłoszenie uczelni" bind:open={collegeAnnouncementModal}>
-		<div class="my-5 flex flex-col gap-5">
-			<Input label="Tytuł ogłoszenia" />
-			<div class="h-40">
-				<TextArea label="Opis ogłoszenia" required="true" />
-			</div>
-			<div class="w-1/2">
-				<label>Zdjęcie ogłoszenia:</label>
-				<img src={user} alt="user" />
-			</div>
-		</div>
-		<div>
-			<Button value="Dodaj Ogłoszenie" />
-		</div>
-	</Modal>
-{/if}
