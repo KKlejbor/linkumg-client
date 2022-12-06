@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Button from 'src/components/Button.svelte';
-	import Input from 'src/components/Input.svelte';
-	import Select from 'src/components/Select.svelte';
+	import Button from 'src/components/Form/Button.svelte';
+	import Input from 'src/components/Form/Input.svelte';
+	import Select from 'src/components/Form/Select.svelte';
 
 	const registerOptions = ['Wybierz rodzaj konta', 'Student', 'Firma'];
 	const facultyOptions = ['Wybierz wydział', 'WE', 'WM', 'WN', 'WZNiJ'];

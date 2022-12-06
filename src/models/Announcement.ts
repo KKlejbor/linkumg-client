@@ -9,3 +9,9 @@ export interface Announcement {
 	pathToAnnouncementImage: string;
 	title: string;
 }
+
+export interface AnnouncementPost {
+	description: string;
+	pathToAnnouncementImage: string;
+	title: string;
+}

@@ -19,3 +19,10 @@ export interface JobOfferPost {
 	salaryUp: number;
 	title: string;
 }
+
+export interface SearchJobOffer {
+	contain?: string;
+  location?: string;
+  salaryDown?: number;
+  salaryUp?: number;
+}

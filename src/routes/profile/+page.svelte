@@ -1,9 +1,9 @@
 <script lang="ts">
 	import user from '$lib/images/user.png';
 	import UserDetailsProperty from 'src/components/UserDetailsProperty.svelte';
-	import Input from 'src/components/Input.svelte';
+	import Input from 'src/components/Form/Input.svelte';
 	import Modal from 'src/components/Modal.svelte';
-	import TextArea from 'src/components/TextArea.svelte';
+	import TextArea from 'src/components/Form/TextArea.svelte';
 	import Linkedin from '$lib/icons/Linkedin.svelte';
 	import Github from '$lib/icons/Github.svelte';
 	import Facebook from '$lib/icons/Facebook.svelte';
@@ -35,7 +35,7 @@
 			<h1 class="mb-4 font-bold">O mnie</h1>
 			{#if isEditProfileActive}
 				<TextArea
-					text="Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
+					value="Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
 					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
 					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien być
 					z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny nastrój w

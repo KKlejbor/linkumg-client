@@ -1,14 +1,13 @@
 <script>
-	import AnnoucementCard from 'src/components/AnnoucementCard.svelte';
-	import Button from 'src/components/Button.svelte';
-	import Input from 'src/components/Input.svelte';
+	import Button from 'src/components/Form/Button.svelte';
+	import Input from 'src/components/Form/Input.svelte';
 	import Modal from 'src/components/Modal.svelte';
-	import Range from 'src/components/Range.svelte';
-	import TextArea from 'src/components/TextArea.svelte';
+	import Range from 'src/components/Form/Range.svelte';
+	import TextArea from 'src/components/Form/TextArea.svelte';
 	import user from '$lib/images/user.png';
 	import Plus from '$lib/icons/Plus.svelte';
 	import pepe from '$lib/images/pepe.png';
-	import Select from 'src/components/Select.svelte';
+	import Select from 'src/components/Form/Select.svelte';
 
 	let selectAnnouncementTypeModal = false;
 	let collegeAnnouncementModal = false;
@@ -59,13 +58,6 @@
 
 			<img src={pepe} class="h-80 w-80" alt="pepe" />
 		</div>
-
-		<!-- są ogłoszenia -->
-		<!--
-		<AnnoucementCard />
-		<AnnoucementCard />
-		<AnnoucementCard />
-		-->
 	</div>
 
 	<button

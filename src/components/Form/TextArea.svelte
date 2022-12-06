@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let label: string;
+	export let label: string = "";
 	export let name: string = "name";
 	export let required: boolean = false;
 	export let value = "";

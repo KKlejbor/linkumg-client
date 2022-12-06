@@ -1,18 +1,17 @@
 <script lang="ts">
 	import user from '$lib/images/user.png';
-	import Localization from '../lib/icons/Localization.svelte';
-	import Trash from '../lib/icons/Trash.svelte';
-	import Edit from '../lib/icons/Edit.svelte';
-	import Modal from './Modal.svelte';
-	import Button from './Button.svelte';
+	import Localization from '../../lib/icons/Localization.svelte';
+	import Trash from '../../lib/icons/Trash.svelte';
+	import Edit from '../../lib/icons/Edit.svelte';
+	import Modal from '../Modal.svelte';
+	import Button from 'src/components/Form/Button.svelte';
 	import { useDeleteJobOffers, usePatchJobOffers } from 'src/queries/useJobOffer';
-	import Input from 'src/components/Input.svelte';
-	import TextArea from 'src/components/TextArea.svelte';
+	import Input from 'src/components/Form/Input.svelte';
+	import TextArea from 'src/components/Form/TextArea.svelte';
 	import type { JobOffer, JobOfferPost } from 'src/models/JobOffer';
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { getNotificationsContext } from 'svelte-notifications';
-	import Clock from '../lib/icons/Clock.svelte';
-
+	import Clock from '../../lib/icons/Clock.svelte';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -101,8 +100,7 @@
 		<span>{jobOffer.companyDto.name}</span>
 	</div>
 	<div class="col-span-6 flex flex-col justify-between text-xl">
-		<span class="cursor-pointer text-3xl" on:click={showMore}>{jobOffer.title}</span
-		>
+		<span class="cursor-pointer text-3xl" on:click={showMore}>{jobOffer.title}</span>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
 		<span class="flex items-center gap-1.5">
@@ -127,8 +125,8 @@
 {#if deleteModal}
 	<Modal heading="Usuń" bind:open={deleteModal}>
 		<p class="whitespace-pre-line pt-6 pb-12">
-			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>{jobOffer.title}</q>?
-			Pamiętaj nie bedzie już można tego cofnąć.
+			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>{jobOffer.title}</q>? Pamiętaj nie
+			bedzie już można tego cofnąć.
 		</p>
 		<div class="flex-end flex flex-row-reverse gap-6">
 			<button class="font-medium uppercase text-red-600" on:click={deleteJobOfferById}>Usuń</button>
@@ -199,6 +197,5 @@
 				</div>
 			</div>
 		</form>
-	
 	</Modal>
 {/if}

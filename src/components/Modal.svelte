@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 	import Close from '../lib/icons/Close.svelte';
-	import { clickOutside } from '../utils/clickOutside.ts';
+	import { clickOutside } from '../utils/clickOutside';
 
 	export let heading: string;
 	export let open = false;

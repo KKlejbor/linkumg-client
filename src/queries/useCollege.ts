@@ -1,7 +1,8 @@
 import { useMutation, QueryClient } from '@sveltestack/svelte-query';
 import type { AxiosError } from 'axios';
 import axiosInstance from 'src/api/Axios';
-import type { CollegeRegisterDto } from 'src/models/College';
+import type { CollegePost } from 'src/models/College';
+
 
 export const usePostCollege = (
 	queryClient: QueryClient,
@@ -11,7 +12,7 @@ export const usePostCollege = (
 		onSettled?: () => void;
 	}
 ) => {
-	return useMutation((data: CollegeRegisterDto) => postCollege(data), {
+	return useMutation((data: CollegePost) => postCollege(data), {
 		onSuccess: () => {
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 		},
@@ -24,8 +25,8 @@ export const usePostCollege = (
 	});
 };
 
-const postCollege = async (data: CollegeRegisterDto) => {
-	return await axiosInstance.post<CollegeRegisterDto>(`/colleges`, data, {
+const postCollege = async (data: CollegePost) => {
+	return await axiosInstance.post<CollegePost>(`/colleges`, data, {
 		headers: { 'Content-Type': 'application/json' }
 	});
 };

@@ -1,8 +1,10 @@
 import { QueryClient, useMutation, useQuery } from '@sveltestack/svelte-query';
 import type { SortBy } from 'src/enums/SortBy';
 import type { SortDirection } from 'src/enums/SortDirection';
-import type { JobOffer, JobOfferPost } from 'src/models/JobOffer';
+import type { JobOffer, JobOfferPost, SearchJobOffer } from 'src/models/JobOffer';
 import type { PaginateResults } from 'src/models/PaginateResults';
+import { pageSize } from 'src/utils/globalState';
+import { get, type Writable } from 'svelte/store';
 import axiosInstance from '../api/Axios';
 
 export const invalidateJobOffer = (queryClient: QueryClient) => {
@@ -11,18 +13,14 @@ export const invalidateJobOffer = (queryClient: QueryClient) => {
 
 export const useGetJobOffers = (
 	direction: SortDirection,
-	page: number,
-	pageSize: number,
+	page: Writable<number>,
 	sortBy: SortBy,
-	contain?: string,
-	location?: string,
-	salaryDown?: string,
-	salaryUp?: string
+	searchBodyState: Writable<SearchJobOffer>
 ) => {
 	return useQuery<PaginateResults<JobOffer>>(
-		['jobOffers', direction, page, pageSize, sortBy, contain, location, salaryDown, salaryUp],
+		['jobOffers', direction, page, sortBy, searchBodyState],
 		() =>
-			fetchJobOffers(direction, page, pageSize, sortBy, contain, location, salaryDown, salaryUp),
+			fetchJobOffers(direction, get(page), get(pageSize), sortBy, get(searchBodyState).contain,  get(searchBodyState).location,  get(searchBodyState).salaryDown,  get(searchBodyState).salaryUp),
 		{
 			enabled: direction !== undefined
 		}
@@ -36,8 +34,8 @@ const fetchJobOffers = async (
 	sortBy: SortBy,
 	contain?: string,
 	location?: string,
-	salaryDown?: string,
-	salaryUp?: string
+	salaryDown?: number,
+	salaryUp?: number
 ) => {
 	const response = await axiosInstance.get<PaginateResults<JobOffer>>('/jobOffers', {
 		params: {

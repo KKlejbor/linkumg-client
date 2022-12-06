@@ -3,7 +3,7 @@ import { get } from 'svelte/store';
 import { storagedAuth } from './Auth';
 
 const axiosInstance = axios.create({
-	baseURL: process.env.NODE_ENV === 'production' ? "/api" : "http://localhost:8080/api"
+	baseURL: process.env.NODE_ENV === 'production' ? "/api" : "http://localhost:8080"
 });
 
 axiosInstance.interceptors.request.use((config) => {

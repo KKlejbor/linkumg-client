@@ -15,7 +15,13 @@ export interface PrivateLesson {
 export interface PrivateLessonPost {
 	description: string;
 	location: string;
-	salaryDown: number;
-	salaryUp: number;
+	pricePerHour: number;
+	category: string;
 	title: string;
+}
+
+export interface SearchPrivateLesson {
+	contain?: string;
+  location?: string;
+  category?: string;
 }
