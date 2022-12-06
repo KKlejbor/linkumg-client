@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Search from '$lib/icons/Search.svelte';
-	import Button from 'src/components/Button.svelte';
+	import Button from 'src/components/Form/Button.svelte';
 
 	let userType = 'student';
 
