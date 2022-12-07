@@ -12,7 +12,7 @@
 	const queryClient = new QueryClient();
 
 	onMount(async () => {
-		if ($storagedAuth == null && !$page.params.token && $page.url.pathname !== '/register/') {
+		if ($storagedAuth == null && !$page.url.searchParams.get('token') && $page.url.pathname !== '/register/') {
 			goto('/login');
 		}
 	});

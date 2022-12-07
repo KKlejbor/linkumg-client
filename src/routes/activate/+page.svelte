@@ -23,7 +23,7 @@
 	})
 
 	onMount(async () => {
-		$activateAccount.mutate($page.params.token);
+		$activateAccount.mutate($page.url.searchParams.get('token').replace(/\/+$/, ''));
 	});
 </script>
 
@@ -51,7 +51,7 @@
 
 <style>
     .page {
-        background-image: url(../../../lib/images/login.png);
+        background-image: url(../../lib/images/login.png);
         background-size: cover;
         background-repeat: no-repeat;
         background-color: #111e2b;
