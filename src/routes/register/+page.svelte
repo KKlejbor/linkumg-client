@@ -18,7 +18,7 @@
 		<Input label="Nazwisko" />
 		<Input label="Email" />
 		<Input label="Hasło" />
-		<Select options={registerOptions} bind:selected />
+		<Select label="" options={registerOptions} bind:selected />
 		{#if selected === 'Student'}
 			<Input label="Numer albumu" />
 			<Select options={facultyOptions} bind:selected={facultySelected} />
