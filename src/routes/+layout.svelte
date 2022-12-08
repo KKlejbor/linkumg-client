@@ -6,34 +6,51 @@
 	import LeftNavbar from 'src/components/LeftNavbar.svelte';
 	import { onMount } from 'svelte';
 	import Notifications from 'svelte-notifications';
-	import "../app.css";
-	
+	import '../app.css';
+	import { page } from '$app/stores';
+
 	const queryClient = new QueryClient();
 
 	onMount(async () => {
-		if ($storagedAuth == null) {
+		if (
+			$storagedAuth == null &&
+			!$page.url.searchParams.get('token') &&
+			$page.url.pathname !== '/register/'
+		) {
 			goto('/login');
 		}
 	});
-	
 </script>
 
 <QueryClientProvider client={queryClient}>
 	<Notifications>
 		{#if $storagedAuth != null}
-		<div class="flex min-h-screen flex-col">
-			<TopNavbar />
-	
-			<div class="flex flex-1">
+			<div class="layout">
+				<div class="topBar">
+					<TopNavbar />
+				</div>
 				<LeftNavbar />
-	
+				<div class="overflow-y-auto">
+					<slot />
+				</div>
+			</div>
+		{:else}
+			<div class="min-h-screen">
 				<slot />
 			</div>
-		</div>
-		{:else}
-		<div class="min-h-screen">
-			<slot />
-		</div>
 		{/if}
 	</Notifications>
 </QueryClientProvider>
+
+<style>
+	.layout {
+		height: 100vh;
+		display: grid;
+		grid-template-columns: 100px 1fr;
+		grid-template-rows: 100px 1fr;
+	}
+
+	.topBar {
+		grid-column: 1/-1;
+	}
+</style>

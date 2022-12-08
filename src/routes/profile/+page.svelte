@@ -91,7 +91,7 @@
 	};
 </script>
 
-<div class="w-full bg-bgSecondary p-14">
+<div class="bg-bgSecondary p-10">
 	<h1 class="text-bold text-center text-[70px]">Profil</h1>
 	<div class="relative grid lg:grid-cols-3">
 		<div class="mb-20 px-10 text-3xl lg:h-[80%]">

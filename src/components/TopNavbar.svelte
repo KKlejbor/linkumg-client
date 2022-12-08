@@ -17,9 +17,7 @@
 	};
 </script>
 
-<div
-	class="relative sticky top-0 z-10 flex h-[100px] w-full justify-between bg-bgPrimary pr-10 pl-[100px]"
->
+<div class="flex h-full justify-between bg-bgPrimary pr-10 pl-[100px]">
 	<a href="/">
 		<Logo class="w-24" />
 	</a>

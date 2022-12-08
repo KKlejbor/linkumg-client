@@ -16,7 +16,7 @@
 		{value}
 	</button>
 {:else if type != 'button'}
-	<button type={type} class:error>{value}</button>
+	<button {type} class:error>{value}</button>
 {:else}
 	<button on:click={toggleOpen} class:error>{value}</button>
 {/if}
@@ -38,6 +38,7 @@
 
 	button:hover {
 		cursor: pointer;
+		text-decoration: underline;
 	}
 
 	.error {

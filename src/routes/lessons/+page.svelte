@@ -21,7 +21,7 @@
 
 	export let searchBodyState: Writable<SearchJobOffer> = writable(searchRequest);
 	export let paginatePropsState: Writable<number> = writable(page);
-		
+
 	const lessons = useGetPrivateLesson(
 		SortDirection.ASCENDING,
 		paginatePropsState,
