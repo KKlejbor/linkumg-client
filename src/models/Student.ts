@@ -25,3 +25,11 @@ export interface StudentPost {
     name: string;
     password: string;
 }
+
+export interface StudentPatch {
+	birthDate: string;
+	phone: string;
+	about: string; 
+	socials: Socials;
+	avatar: string;
+}
