@@ -8,3 +8,19 @@ export interface LoginResponse {
     accessToken: string;
     refreshToken: string;
 }
+
+export interface RegisterStudent {
+    email: string;
+    password: string;
+    name: string;
+    lastName: string;
+    indexNumber: string;
+    faculty: string;
+}
+
+export interface RegisterCompany {
+    email: string;
+    password: string;
+    name: string;
+    nip: string;
+}
