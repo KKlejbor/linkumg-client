@@ -7,11 +7,16 @@
 	import { onMount } from 'svelte';
 	import Notifications from 'svelte-notifications';
 	import '../app.css';
+	import { page } from '$app/stores';
 
 	const queryClient = new QueryClient();
 
 	onMount(async () => {
-		if ($storagedAuth == null) {
+		if (
+			$storagedAuth == null &&
+			!$page.url.searchParams.get('token') &&
+			$page.url.pathname !== '/register/'
+		) {
 			goto('/login');
 		}
 	});
