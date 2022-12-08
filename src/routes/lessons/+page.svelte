@@ -21,7 +21,7 @@
 
 	export let searchBodyState: Writable<SearchJobOffer> = writable(searchRequest);
 	export let paginatePropsState: Writable<number> = writable(page);
-		
+
 	const lessons = useGetPrivateLesson(
 		SortDirection.ASCENDING,
 		paginatePropsState,
@@ -49,7 +49,6 @@
 			<Input label="Tytuł oferty" bind:value={searchBody.contain} />
 			<Input label="Kategoria" bind:value={searchBody.category} />
 			<Input label="Lokalizacja" bind:value={searchBody.location} />
-			/>
 			<Button value="Wyszukaj" icon={true} type="submit" />
 		</div>
 	</form>

@@ -4,9 +4,13 @@
 	export let href: string;
 </script>
 
-<div class="relative h-1/3 w-full overflow-hidden">
-	<a {href}>
-		<img src={image} alt="alternative" class="h-full w-full brightness-50" />
-		<h1 class="absolute top-1/2 right-0 mr-10 -translate-y-1/2 text-5xl text-white">{text}</h1>
-	</a>
-</div>
+<a {href} class="card flex-1 relative">
+	<img src={image} alt="alternative" class="brightness-50 h-full" />
+	<span class="text-white absolute text-2xl top-[50%] right-[20px]">{text}</span>
+</a>
+
+<style>
+	a:hover img {
+		filter: brightness(0.35);
+	}
+</style>
