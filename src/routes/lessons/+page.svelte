@@ -53,11 +53,11 @@
 		</div>
 	</form>
 	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[40px]">
-		{#if $lessons.isLoading || $lessons.isFetching}
+		{#if $lessons.isLoading}
 			<span>Loading Data</span>
 		{:else if $lessons.isError}
 			<span>Error Loading Data</span>
-		{:else if ($lessons.isSuccess && $lessons.data) || ($lessons.isFetched && $lessons.isSuccess)}
+		{:else if ($lessons.isSuccess && $lessons.data)}
 			{#each $lessons.data.content as lesson}
 				<LessonCard privateLesson={lesson} />
 			{/each}

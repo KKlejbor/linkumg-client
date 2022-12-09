@@ -1,7 +1,26 @@
-import { type QueryClient, useMutation } from '@sveltestack/svelte-query';
+import { type QueryClient, useMutation, useQuery } from '@sveltestack/svelte-query';
 import type { AxiosError, AxiosResponse } from 'axios';
 import axiosInstance from 'src/api/Axios';
+import type { College } from 'src/models/College';
+import type { Company } from 'src/models/Company';
+import type { Student } from 'src/models/Student';
 import type { Login, LoginResponse, RegisterCompany, RegisterStudent } from 'src/models/User';
+
+export const invalidateUser = (queryClient: QueryClient) => {
+	queryClient.invalidateQueries('UserInfo');
+};
+
+export const useGetUserInfo = () => {
+  return useQuery<Student>(
+    ['UserInfo'],
+    () => fetchUserInfo(),
+  );
+};
+
+const fetchUserInfo = async () => {
+  const response = await axiosInstance.get<Student>(`/users/info`);
+  return response.data;
+};
 
 export const usePostLogin = (
 	queryClient: QueryClient,

@@ -31,11 +31,11 @@
 </svelte:head>
 <div class="w-full bg-bgSecondary">
 	<div class="grid w-full gap-12 p-14 lg:grid-cols-2">
-		{#if $annoucement.isLoading || $annoucement.isFetching}
+		{#if $annoucement.isLoading}
 			<span>Loading Data</span>
 		{:else if $annoucement.isError}
 			<span>Error Loading Data</span>
-		{:else if ($annoucement.isSuccess && $annoucement.data) || ($annoucement.isFetched && $annoucement.isSuccess)}
+		{:else if ($annoucement.isSuccess && $annoucement.data)}
 			{#each $annoucement.data.content as annoucement}
 				<CollegeAnnocement {annoucement} />
 			{/each}

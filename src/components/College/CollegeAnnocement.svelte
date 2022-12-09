@@ -8,9 +8,7 @@
 <div class="container">
 	<div class="details">
 		<img src={user} alt="user" />
-		<a href="/news/{annoucement.announcementId}">
-			{annoucement.title}</a
-		>
+			{annoucement.title}
 	</div>
 	<div class="date">{annoucement.createdAt}</div>
 </div>

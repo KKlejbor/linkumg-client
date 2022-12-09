@@ -2,6 +2,7 @@ import { useMutation, QueryClient } from '@sveltestack/svelte-query';
 import type { AxiosError } from 'axios';
 import axiosInstance from 'src/api/Axios';
 import type { StudentPatch, StudentPost } from 'src/models/Student';
+import { invalidateUser } from './useUser';
 
 export const usePostStudent = (
 	queryClient: QueryClient,
@@ -47,6 +48,7 @@ export const usePatchStudent = (
 		},
 		onSettled: () => {
 			if (callbacks?.onSettled) callbacks.onSettled();
+			invalidateUser(queryClient);
 		}
 	});
 };
