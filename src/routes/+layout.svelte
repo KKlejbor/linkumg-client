@@ -23,7 +23,7 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
-	<Notifications>
+	<Notifications zIndex=40>
 		{#if $storagedAuth != null}
 			<div class="layout">
 				<div class="topBar">

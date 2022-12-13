@@ -8,8 +8,10 @@
 	import type { Login } from 'src/models/User';
 	import { usePostLogin } from 'src/queries/useUser';
 	import LogoBlack from '$lib/icons/LogoBlack.svelte';
+	import { getNotificationsContext } from 'svelte-notifications';
 	
 	const queryClient = useQueryClient();
+	const { addNotification } = getNotificationsContext();
 
 	let email = '';
 	let password = '';
@@ -17,7 +19,12 @@
 
 	const postLogin = usePostLogin(queryClient, {
 		onError: () => {
-			error = "Błędne dane logowania";
+			addNotification({
+				text: 'Błędne dane logowania',
+				type: 'error',
+				position: 'bottom-center',
+				removeAfter: 4000,
+			});
 		},
 		onSuccess: (response) => {
 			$storagedAuth = response;
@@ -45,7 +52,6 @@
 				<Input label="Login" name="email" required={true} bind:value={email} />
 				<Input label="Hasło" name="password" required={true} bind:value={password} type="password" /> <br/>
 				<Button value="Zaloguj się" type="submit" />
-				{error}
 			</form>
 			<a class="register" href="/register">Zarejestruj się na LinkUMG</a>
 		</div>

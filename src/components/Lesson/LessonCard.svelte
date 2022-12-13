@@ -32,7 +32,7 @@
 		},
 		onError: () => {
 			addNotification({
-				text: 'Błąd',
+				text: 'Wystąpił błąd podczas usuwania oferty',
 				type: 'error',
 				position: 'bottom-center',
 				removeAfter: 4000,
@@ -50,9 +50,9 @@
 				removeAfter: 4000,
 			});
 		},
-		onError: () => {
+		onError: (response) => {
 			addNotification({
-				text: 'Błąd',
+				text: response.response.data,
 				type: 'error',
 				position: 'bottom-center',
 				removeAfter: 4000,
@@ -125,7 +125,7 @@
 			</button>
 		</div>
 		<div class="text-2xl">{privateLesson.pricePerHour}/h zł</div>
-		<span>{privateLesson.createdAt}</span>
+		<span>{new Date(privateLesson.lastUpdateAt).toLocaleString()}</span>
 	</div>
 </div>
 
@@ -173,7 +173,7 @@
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
 			<Clock class="h-5 w-5" />
-			{privateLesson.createdAt}
+			{new Date(privateLesson.lastUpdateAt).toLocaleString()}
 		</div>
 	</Modal>
 {/if}

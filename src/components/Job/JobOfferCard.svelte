@@ -31,7 +31,7 @@
 		},
 		onError: () => {
 			addNotification({
-				text: 'Błąd',
+				text: 'Wystąpił błąd podczas usuwania oferty',
 				type: 'error',
 				position: 'bottom-center',
 				removeAfter: 4000,
@@ -49,9 +49,9 @@
 				removeAfter: 4000,
 			});
 		},
-		onError: () => {
+		onError: (response) => {
 			addNotification({
-				text: 'Błąd',
+				text: response.response.data,
 				type: 'error',
 				position: 'bottom-center',
 				removeAfter: 4000,
@@ -122,7 +122,7 @@
 			</button>
 		</div>
 		<div class="text-2xl">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
-		<span>{jobOffer.createdAt}</span>
+		<span>{new Date(jobOffer.createdAt).toLocaleDateString('pl-PL')}</span>
 	</div>
 </div>
 
@@ -169,12 +169,12 @@
 					{jobOffer.description}
 				</p>
 			</div>
-			<div class="text-4xl lg:col-span-2">4000 - 6000 zł</div>
+			<div class="text-4xl lg:col-span-2">{jobOffer.salaryDown} - {jobOffer.salaryUp}  zł</div>
 		</div>
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
 			<Clock class="h-5 w-5" />
-			29.10.2020 | 21:34
+			{new Date(jobOffer.createdAt).toLocaleDateString('pl-PL')}
 		</div>
 	</Modal>
 {/if}

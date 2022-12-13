@@ -74,9 +74,9 @@
 				removeAfter: 4000,
 			});
 		},
-		onError: () => {
+		onError: (response) => {
 			addNotification({
-				text: 'Wystąpił błąd przy aktualizowaniu użytkownika!',
+				text: response.response.data,
 				type: 'error',
 				position: 'bottom-center',
 				removeAfter: 4000,
@@ -129,12 +129,7 @@
 				<TextArea bind:value={editStudent.about} />
 			{:else}
 				<p class="break-words text-justify">
-					Kiedy zdarzy się, że ktoś ma jakiś problem albo kłopot zawsze staram się mu jak najlepiej
-					pomóc. Jestem człowiekiem spokojnym, otwartym i szczerym. Ta szczerość niestety nie zawsze
-					jest odbierana w pozytywny sposób przez drugie osoby. Ja jednak uważam, że każdy powinien
-					być z drugą osobą szczery i powiedzieć jej co myśli w danej sytuacji. Wnoszę pogodny
-					nastrój w moim otoczeniu, razem z przyjaciółmi nie potrafię się nudzić. Zawsze potrafimy
-					znaleźć sobie ciekawe zajęcie.
+					{ ($userInfo.data && $userInfo.data.about) ? $userInfo.data.about : 'Użytkownik nie uzupełnił opisu.'}
 				</p>
 			{/if}
 		</div>

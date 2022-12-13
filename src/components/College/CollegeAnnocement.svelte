@@ -10,7 +10,7 @@
 		<img src={user} alt="user" />
 			{annoucement.title}
 	</div>
-	<div class="date">{annoucement.createdAt}</div>
+	<div class="date">{new Date(annoucement.createdAt).toLocaleDateString('pl-PL')}</div>
 </div>
 
 <style>

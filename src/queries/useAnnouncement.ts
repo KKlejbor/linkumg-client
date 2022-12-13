@@ -6,6 +6,7 @@ import type { PaginateResults } from 'src/models/PaginateResults';
 import { pageSize } from 'src/utils/globalState';
 import { get, type Writable } from 'svelte/store';
 import axiosInstance from '../api/Axios';
+import type { AxiosError } from 'axios';
 
 export const invalidateAnnouncement = (queryClient: QueryClient) => {
 	queryClient.invalidateQueries('Announcements');
@@ -63,7 +64,7 @@ export const usePostAnnouncement = (
 	queryClient: QueryClient,
 	callbacks?: {
 		onSuccess?: () => void;
-		onError?: () => void;
+		onError?: (error: AxiosError) => void;
 		onSettled?: () => void;
 	}
 ) => {
@@ -71,8 +72,8 @@ export const usePostAnnouncement = (
 		onSuccess: () => {
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 		},
-		onError: () => {
-			if (callbacks?.onError) callbacks.onError();
+		onError: (error: AxiosError) => {
+			if (callbacks?.onError) callbacks.onError(error);
 		},
 		onSettled: () => {
 			if (callbacks?.onSettled) callbacks.onSettled();

@@ -7,6 +7,7 @@ import { pageSize } from 'src/utils/globalState';
 import type { Writable } from 'svelte/store';
 import { get } from 'svelte/store';
 import axiosInstance from '../api/Axios';
+import type { AxiosError } from 'axios';
 
 
 export const invalidatePrivateLesson = (queryClient: QueryClient) => {
@@ -55,7 +56,7 @@ export const usePostPrivateLesson = (
 	queryClient: QueryClient,
 	callbacks?: {
 		onSuccess?: () => void;
-		onError?: () => void;
+		onError?: (error: AxiosError) => void;
 		onSettled?: () => void;
 	}
 ) => {
@@ -63,8 +64,8 @@ export const usePostPrivateLesson = (
 		onSuccess: () => {
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 		},
-		onError: () => {
-			if (callbacks?.onError) callbacks.onError();
+		onError: (error : AxiosError) => {
+			if (callbacks?.onError) callbacks.onError(error);
 		},
 		onSettled: () => {
 			if (callbacks?.onSettled) callbacks.onSettled();
@@ -85,7 +86,7 @@ export const usePatchPrivateLesson = (
 	id: string,
 	callbacks?: {
 		onSuccess?: () => void;
-		onError?: () => void;
+		onError?: (error : AxiosError) => void;
 		onSettled?: () => void;
 	}
 ) => {
@@ -94,8 +95,8 @@ export const usePatchPrivateLesson = (
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 			invalidatePrivateLesson(queryClient);
 		},
-		onError: () => {
-			if (callbacks?.onError) callbacks.onError();
+		onError: (error : AxiosError) => {
+			if (callbacks?.onError) callbacks.onError(error);
 		},
 		onSettled: () => {
 			if (callbacks?.onSettled) callbacks.onSettled();

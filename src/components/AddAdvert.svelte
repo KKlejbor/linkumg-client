@@ -14,10 +14,12 @@
 	import type { PrivateLesson, PrivateLessonPost } from 'src/models/PrivateLesson';
 	import { usePostAnnouncement } from 'src/queries/useAnnouncement';
 	import type { AnnouncementPost } from 'src/models/Announcement';
+	import { getNotificationsContext } from 'svelte-notifications';
 
 	export let advertType: AdvertType;
 
 	const queryClient = useQueryClient();
+	const { addNotification } = getNotificationsContext();
 
 	let jobAnnoucementModal = false;
 	let lessonAnnoucementModal = false;
@@ -40,7 +42,14 @@
 		onSuccess: () => {
 			jobAnnoucementModal = false;
 		},
-		onError: () => {}
+		onError: (response) => {
+			addNotification({
+				text: response.response.data,
+				type: 'error',
+				position: 'bottom-center',
+				removeAfter: 4000,
+			});
+		}
 	});
 
 	let newJobsForm: JobOfferPost = {
@@ -69,7 +78,14 @@
 		onSuccess: () => {
 			lessonAnnoucementModal = false;
 		},
-		onError: () => {}
+		onError: (response) => {
+			addNotification({
+				text: response.response.data,
+				type: 'error',
+				position: 'bottom-center',
+				removeAfter: 4000,
+			});
+		}
 	});
 
 	let newPrivateLessonForm: PrivateLessonPost = {
@@ -98,7 +114,14 @@
 		onSuccess: () => {
 			collegeAnnoucementModal = false;
 		},
-		onError: () => {}
+		onError: (response) => {
+			addNotification({
+				text: response.response.data,
+				type: 'error',
+				position: 'bottom-center',
+				removeAfter: 4000,
+			});
+		}
 	});
 
 	let newAnnouncementForm: AnnouncementPost = {
