@@ -25,14 +25,16 @@
 			addNotification({
 				text: 'Pomyślnie usunięto ofertę',
 				type: 'success',
-				position: 'bottom-center'
+				position: 'bottom-center',
+				removeAfter: 4000,
 			});
 		},
 		onError: () => {
 			addNotification({
 				text: 'Błąd',
 				type: 'error',
-				position: 'bottom-center'
+				position: 'bottom-center',
+				removeAfter: 4000,
 			});
 		}
 	});
@@ -43,14 +45,16 @@
 			addNotification({
 				text: 'Pomyślnie zaktualizowano ofertę',
 				type: 'success',
-				position: 'bottom-center'
+				position: 'bottom-center',
+				removeAfter: 4000,
 			});
 		},
 		onError: () => {
 			addNotification({
 				text: 'Błąd',
 				type: 'error',
-				position: 'bottom-center'
+				position: 'bottom-center',
+				removeAfter: 4000,
 			});
 		}
 	});

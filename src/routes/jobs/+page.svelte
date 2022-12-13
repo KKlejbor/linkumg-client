@@ -56,11 +56,11 @@
 		</div>
 	</form>
 	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[40px]">
-		{#if $jobs.isLoading || $jobs.isFetching}
+		{#if $jobs.isLoading}
 			<span>Loading Data</span>
 		{:else if $jobs.isError}
 			<span>Error Loading Data</span>
-		{:else if ($jobs.isSuccess && $jobs.data) || ($jobs.isFetched && $jobs.isSuccess)}
+		{:else if ($jobs.isSuccess && $jobs.data)}
 			{#each $jobs.data.content as jobOffer}
 				<JobOfferCard {jobOffer} />
 			{/each}

@@ -5,6 +5,7 @@
 	import Logout from '$lib/icons/Logout.svelte';
 	import { clickOutside } from '../utils/clickOutside.js';
 	import Admin from '$lib/icons/Admin.svelte';
+	import { useGetUserInfo } from 'src/queries/useUser';
 
 	let dropdownOpen = false;
 
@@ -15,6 +16,8 @@
 	const closeDropdown = () => {
 		dropdownOpen = false;
 	};
+
+	const userInfo= useGetUserInfo();
 </script>
 
 <div class="flex h-full justify-between bg-bgPrimary pr-10 pl-[100px]">
@@ -22,7 +25,11 @@
 		<Logo class="w-24" />
 	</a>
 	<div class="my-auto flex h-2/5 gap-16 overflow-x-auto">
+		{#if ($userInfo.data && $userInfo.isSuccess)}
+		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name} {$userInfo.data.lastName}</a>
+		{:else}
 		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Jan Kowalski</a>
+		{/if}
 		<div on:click={showDropdown}>
 			<Placeholder class="w-10 cursor-pointer fill-white" />
 		</div>
