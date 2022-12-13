@@ -8,17 +8,14 @@
 	import Github from '$lib/icons/Github.svelte';
 	import Facebook from '$lib/icons/Facebook.svelte';
 	import Camera from '$lib/icons/Camera.svelte';
-	import type { StudentPatch } from 'src/models/Student';
 	import type { Socials } from 'src/models/Socials';
-	import { usePatchStudent } from 'src/queries/useStudent';
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { useGetUserInfo } from 'src/queries/useUser';
 	import { getNotificationsContext } from 'svelte-notifications';
   import { notification } from 'src/locales/pl/common.json';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
-	import InputDate from 'src/components/Form/InputDate.svelte';
 	import { usePatchCompany } from 'src/queries/useCompany';
-	import type { Company, CompanyPatch } from 'src/models/Company';
+	import type { CompanyPatch } from 'src/models/Company';
 
 	const queryClient = useQueryClient();
 	const { addNotification } = getNotificationsContext();

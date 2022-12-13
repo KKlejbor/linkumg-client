@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Logo from '../lib/icons/Logo.svelte';
 	import Placeholder from '../lib/icons/Placeholder.svelte';
-	import ViewList from '$lib/icons/ViewList.svelte';
 	import Logout from '$lib/icons/Logout.svelte';
 	import { clickOutside } from '../utils/clickOutside.js';
 	import Admin from '$lib/icons/Admin.svelte';
@@ -34,11 +33,7 @@
 	</a>
 	<div class="my-auto flex h-2/5 gap-16 overflow-x-auto">
 		{#if ($userInfo.data && $userInfo.isSuccess)}
-<<<<<<< HEAD
-		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name} {$userInfo.data.lastName ? $userInfo.data.lastName : ''}</a>
-=======
 		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name}</a>
->>>>>>> main
 		{:else}
 		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Loading...</a>
 		{/if}
