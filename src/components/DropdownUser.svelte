@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { clickOutside } from '../utils/clickOutside.js';
 	import Placeholder from '$lib/icons/Placeholder.svelte';
-	import ViewList from '$lib/icons/ViewList.svelte';
-	import Admin from '$lib/icons/Admin.svelte';
-	import Logout from '$lib/icons/Logout.svelte';
 	import Actions from '$lib/icons/Actions.svelte';
+	import { banUser } from '../queries/useAdmin';
+	import { getNotificationsContext } from 'svelte-notifications';
 
 	let dropdownOpen = false;
+
+	const { addNotification } = getNotificationsContext();
+
+	export let useruuid = '';
 
 	const showDropdown = () => {
 		dropdownOpen = !dropdownOpen;
@@ -18,6 +21,19 @@
 
 	const toggleDropdown = () => {
 		dropdownOpen = !dropdownOpen;
+	};
+
+	const banUserId = () => {
+		banUser(useruuid).then(
+			(response) => {
+				addNotification({
+					text: response.data,
+					type: 'error',
+					position: 'bottom-center',
+					removeAfter: 4000,
+				});
+			}
+		);
 	};
 </script>
 
@@ -35,15 +51,9 @@
 	<div class="absolute right-0 -z-10 mr-3 -mt-2 w-5 rotate-45 bg-white shadow-md">&nbsp;</div>
 
 	<div class="cursor-pointer px-4 py-2 hover:bg-bgSecondary">
-		<a class="flex w-full gap-2" href="/profile" on:click={closeDropdown}>
+		<a class="flex w-full gap-2" on:click={banUser}>
 			<Placeholder class="inline w-4 items-center justify-center fill-black" />
-			<span class="text-lg"> Profil </span>
-		</a>
-	</div>
-	<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
-		<a class="flex w-full gap-2" href="/user-announcements" on:click={closeDropdown}>
-			<ViewList class="inline w-4 items-center justify-center fill-black" />
-			<span class="text-lg"> Lista ogłoszeń </span>
+			<span class="text-lg" on:click={banUserId}> Zablokuj </span>
 		</a>
 	</div>
 </div>

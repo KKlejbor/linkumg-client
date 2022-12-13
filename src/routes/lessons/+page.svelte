@@ -14,6 +14,7 @@
 	import type { SearchPrivateLesson } from 'src/models/PrivateLesson';
 	import { useGetPrivateLesson } from 'src/queries/usePrivateLesson';
 	import LessonCard from 'src/components/Lesson/LessonCard.svelte';
+	import Modal from 'src/components/Modal.svelte';
 
 	const queryClient = useQueryClient();
 	let searchRequest: SearchJobOffer = {};
@@ -41,7 +42,9 @@
 		paginatePropsState.set(e.detail.page);
 		invalidateJobOffer(queryClient);
 	};
+
 </script>
+
 
 <div class="w-full bg-bgSecondary">
 	<form on:submit|preventDefault={submit}>

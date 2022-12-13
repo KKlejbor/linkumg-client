@@ -19,6 +19,8 @@
 				userType = '';
 		}
 	};
+
+
 </script>
 
 <div class="flex flex-col lg:flex-row lg:h-10 w-full items-center lg:gap-24 gap-6 px-28 py-16">

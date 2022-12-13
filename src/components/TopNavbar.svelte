@@ -26,7 +26,7 @@
 	</a>
 	<div class="my-auto flex h-2/5 gap-16 overflow-x-auto">
 		{#if ($userInfo.data && $userInfo.isSuccess)}
-		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name} {$userInfo.data.lastName}</a>
+		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name} {$userInfo.data.lastName ? $userInfo.data.lastName : ''}</a>
 		{:else}
 		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Jan Kowalski</a>
 		{/if}
@@ -40,7 +40,7 @@
 		use:clickOutside
 		on:click_outside={closeDropdown}
 		class={dropdownOpen
-			? 'absolute right-0 mt-[100px] mr-10 bg-white text-white text-black shadow-md'
+			? 'absolute right-0 mt-[100px] z-10 mr-10 bg-white text-white text-black shadow-md'
 			: 'right-0 mt-[100px] mr-10 hidden bg-white text-white text-black shadow-md'}
 	>
 		<div class="absolute right-0 z-10 mr-3 -mt-2 w-5 rotate-45 bg-white">&nbsp;</div>
@@ -51,12 +51,14 @@
 				<span class="text-lg"> Profil </span>
 			</a>
 		</div>
+		<!--
 		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
 			<a class="flex w-full gap-2" href="/user-announcements" on:click={closeDropdown}>
 				<ViewList class="inline w-4 items-center justify-center fill-black" />
 				<span class="text-lg"> Lista ogłoszeń </span>
 			</a>
 		</div>
+		-->
 		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
 			<a class="flex w-full gap-2 items-center" href="/admin" on:click={closeDropdown}>
 				<Admin class="inline w-4 h-4 items-center justify-center fill-black" />

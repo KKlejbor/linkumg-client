@@ -18,9 +18,9 @@
 	let error = '';
 
 	const postLogin = usePostLogin(queryClient, {
-		onError: () => {
+		onError: (response) => {
 			addNotification({
-				text: 'Błędne dane logowania',
+				text: response.response.data,
 				type: 'error',
 				position: 'bottom-center',
 				removeAfter: 4000,

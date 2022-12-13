@@ -24,3 +24,8 @@ export interface RegisterCompany {
     name: string;
     nip: string;
 }
+
+export interface SearchUser {
+    email?: string;
+    type?: string;
+}
