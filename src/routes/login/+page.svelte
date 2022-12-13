@@ -2,13 +2,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { useQueryClient } from '@sveltestack/svelte-query';
-	import { storagedAuth } from 'src/api/Auth';
+	import { storagedAuth, storagedToken } from 'src/api/Auth';
 	import Button from 'src/components/Form/Button.svelte';
 	import Input from 'src/components/Form/Input.svelte';
 	import type { Login } from 'src/models/User';
 	import { usePostLogin } from 'src/queries/useUser';
 	import LogoBlack from '$lib/icons/LogoBlack.svelte';
 	import { getNotificationsContext } from 'svelte-notifications';
+	import jwt_decode from "jwt-decode";
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	
 	const queryClient = useQueryClient();
 	const { addNotification } = getNotificationsContext();
@@ -18,15 +20,16 @@
 	let error = '';
 
 	const postLogin = usePostLogin(queryClient, {
-		onError: (response) => {
+		onError: (error) => {
 			addNotification({
-				text: response.response.data,
+				text: error.response?.data,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
 		onSuccess: (response) => {
+			$storagedToken = jwt_decode(response.accessToken)
 			$storagedAuth = response;
 			goto('/');
 		}

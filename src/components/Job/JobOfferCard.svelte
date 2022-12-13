@@ -12,6 +12,9 @@
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { getNotificationsContext } from 'svelte-notifications';
 	import Clock from '../../lib/icons/Clock.svelte';
+	import { notification } from 'src/locales/pl/common.json';
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
+	import { storagedUser } from 'src/api/Auth';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -23,18 +26,18 @@
 		onSuccess: () => {
 			deleteForm();
 			addNotification({
-				text: 'Pomyślnie usunięto ofertę',
+				text: notification.jobOffer.delete.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		},
 		onError: () => {
 			addNotification({
-				text: 'Wystąpił błąd podczas usuwania oferty',
+				text: notification.jobOffer.delete.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -43,18 +46,24 @@
 		onSuccess: () => {
 			editForm();
 			addNotification({
-				text: 'Pomyślnie zaktualizowano ofertę',
+				text: notification.jobOffer.update.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		},
-		onError: (response) => {
+		onError: (error) => {
 			addNotification({
-				text: response.response.data,
+				text: error.response?.data,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+			addNotification({
+				text: notification.jobOffer.update.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -114,12 +123,14 @@
 	</div>
 	<div class="col-span-2 flex flex-col justify-between text-right">
 		<div>
-			<button on:click={editForm} class="mr-2 outline-none">
-				<Edit class="h-5 w-5" />
-			</button>
-			<button on:click={deleteForm} class="outline-none">
-				<Trash class="h-5 w-5" />
-			</button>
+			{#if $storagedUser?.id === jobOffer.companyDto.id}
+				<button on:click={editForm} class="mr-2 outline-none">
+					<Edit class="h-5 w-5" />
+				</button>
+				<button on:click={deleteForm} class="outline-none">
+					<Trash class="h-5 w-5" />
+				</button>
+			{/if}
 		</div>
 		<div class="text-2xl">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
 		<span>{new Date(jobOffer.createdAt).toLocaleDateString('pl-PL')}</span>
@@ -169,7 +180,7 @@
 					{jobOffer.description}
 				</p>
 			</div>
-			<div class="text-4xl lg:col-span-2">{jobOffer.salaryDown} - {jobOffer.salaryUp}  zł</div>
+			<div class="text-4xl lg:col-span-2">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
 		</div>
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">

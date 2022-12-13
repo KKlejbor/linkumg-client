@@ -15,11 +15,12 @@
 	import { usePostAnnouncement } from 'src/queries/useAnnouncement';
 	import type { AnnouncementPost } from 'src/models/Announcement';
 	import { getNotificationsContext } from 'svelte-notifications';
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
+	import { notification } from 'src/locales/pl/common.json';
 
 	export let advertType: AdvertType;
-
-	const queryClient = useQueryClient();
 	const { addNotification } = getNotificationsContext();
+	const queryClient = useQueryClient();
 
 	let jobAnnoucementModal = false;
 	let lessonAnnoucementModal = false;
@@ -41,13 +42,25 @@
 	const postJobOffer = usePostJobOffers(queryClient, {
 		onSuccess: () => {
 			jobAnnoucementModal = false;
-		},
-		onError: (response) => {
 			addNotification({
-				text: response.response.data,
+				text: notification.jobOffer.add.success,
+				type: 'success',
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+		},
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+			addNotification({
+				text: notification.jobOffer.add.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -77,13 +90,25 @@
 	const postPrivateLesson = usePostPrivateLesson(queryClient, {
 		onSuccess: () => {
 			lessonAnnoucementModal = false;
-		},
-		onError: (response) => {
 			addNotification({
-				text: response.response.data,
+				text: notification.privateLesson.add.success,
+				type: 'success',
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+		},
+		onError: (error) => {
+			addNotification({
+				text: notification.privateLesson.add.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -113,13 +138,25 @@
 	const postAnnouncement = usePostAnnouncement(queryClient, {
 		onSuccess: () => {
 			collegeAnnoucementModal = false;
-		},
-		onError: (response) => {
 			addNotification({
-				text: response.response.data,
+				text: notification.announcement.add.success,
+				type: 'success',
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+		},
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
+			addNotification({
+				text: notification.announcement.add.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -222,12 +259,20 @@
 			<div class="my-5 flex flex-col gap-5">
 				<Input label="Tytuł ogłoszenia" required={true} bind:value={newAnnouncementForm.title} />
 				<div class="h-40">
-					<TextArea label="Opis ogłoszenia" required={true} bind:value={newAnnouncementForm.description} />
+					<TextArea
+						label="Opis ogłoszenia"
+						required={true}
+						bind:value={newAnnouncementForm.description}
+					/>
 				</div>
 				<div class="w-1/2">
 					<label>Zdjęcie ogłoszenia:</label>
 					<img src={user} alt="user" />
-					<Input label="temp: adres zdjęcia" required={true} bind:value={newAnnouncementForm.pathToAnnouncementImage} />
+					<Input
+						label="temp: adres zdjęcia"
+						required={true}
+						bind:value={newAnnouncementForm.pathToAnnouncementImage}
+					/>
 				</div>
 			</div>
 			<div>
