@@ -12,7 +12,11 @@
 	import Clock from '../../lib/icons/Clock.svelte';
 	import type { PrivateLesson, PrivateLessonPost } from 'src/models/PrivateLesson';
 	import { useDeletePrivateLesson, usePatchPrivateLesson } from 'src/queries/usePrivateLesson';
+	import { notification } from 'src/locales/pl/common.json';
 	import InputNumber from '../Form/InputNumber.svelte';
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
+	import { storagedUser } from 'src/api/Auth';
+
 
 	const { addNotification } = getNotificationsContext();
 
@@ -24,18 +28,18 @@
 		onSuccess: () => {
 			deleteForm();
 			addNotification({
-				text: 'Pomyślnie usunięto ofertę',
+				text: notification.privateLesson.delete.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
 		onError: () => {
 			addNotification({
-				text: 'Wystąpił błąd podczas usuwania oferty',
+				text: notification.privateLesson.delete.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		}
 	});
@@ -44,18 +48,24 @@
 		onSuccess: () => {
 			editForm();
 			addNotification({
-				text: 'Pomyślnie zaktualizowano ofertę',
+				text: notification.privateLesson.update.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
-		onError: (response) => {
+		onError: (error) => {
 			addNotification({
-				text: response.response.data,
+				text: error.response?.data,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
+			addNotification({
+				text: notification.privateLesson.update.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		}
 	});
@@ -99,6 +109,8 @@
 
 		$patchPrivateLesson.mutate(editPrivateLesson);
 	};
+	console.log($storagedUser?.id);
+	console.log(privateLesson.studentDto.id);
 </script>
 
 <div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
@@ -117,12 +129,14 @@
 	</div>
 	<div class="col-span-2 flex flex-col justify-between text-right">
 		<div>
+			{#if $storagedUser?.id === privateLesson.studentDto.id}
 			<button on:click={editForm} class="mr-2 outline-none">
 				<Edit class="h-5 w-5" />
 			</button>
 			<button on:click={deleteForm} class="outline-none">
 				<Trash class="h-5 w-5" />
 			</button>
+			{/if}
 		</div>
 		<div class="text-2xl">{privateLesson.pricePerHour}/h zł</div>
 		<span>{new Date(privateLesson.lastUpdateAt).toLocaleString()}</span>

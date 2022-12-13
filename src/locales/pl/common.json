@@ -1,0 +1,60 @@
+{
+	"notification": {
+		"jobOffer": {
+			"add": {
+				"success": "Pomyślnie dodano ofertę pracy.",
+        "error": "Wystąpił błąd przy dodawaniu oferty o pracę!"
+			},
+			"update": {
+				"success": "Pomyślnie zaktualizowano ofertę pracy.",
+				"error": "Wystąpił błąd przy edycji oferty o pracę!"
+			},
+			"delete": {
+				"success": "Pomyślnie usunięto ofertę pracy.",
+				"error": "Wystąpił błąd przy usuwaniu oferty o pracę!"
+			}
+		},
+		"privateLesson": {
+			"add": {
+				"success": "Pomyślnie dodano ofertę korepetycji.",
+        "error": "Wystąpił błąd przy dodawaniu korepetycji!"
+			},
+			"update": {
+				"success": "Pomyślnie zaktualizowano ofertę korepetycji.",
+				"error": "Wystąpił błąd przy edycji korepetycji!"
+			},
+			"delete": {
+				"success": "Pomyślnie usunięto ofertę korepetycji.",
+				"error": "Wystąpił błąd przy usuwaniu korepetycji!"
+			}
+		},
+		"announcement": {
+			"add": {
+				"success": "Pomyślnie dodano ogłoszenie uczelni.",
+        "error": "Wystąpił błąd przy dodawaniu ogłoszenia uczelni!"
+			},
+			"update": {
+				"success": "Pomyślnie zaktualizowano ogłoszenie uczelni.",
+				"error": "Wystąpił błąd przy edycji ogłoszenia uczelni!"
+			},
+			"delete": {
+				"success": "Pomyślnie usunięto ogłoszenie uczelni.",
+				"error": "Wystąpił błąd przy usuwaniu ogłoszenia uczelni!"
+			}
+		},
+		"user": {
+			"add": {
+				"success": "Pomyślnie dodano użytkownika.",
+        "error": "Wystąpił błąd podczas dodawania użytkownika!"
+			},
+			"update": {
+				"success": "Pomyślnie zaktualizowano użytkownika.",
+				"error": "Wystąpił błąd przy edycji użytkownika!"
+			},
+			"delete": {
+				"success": "Pomyślnie usunięto użytkownika.",
+				"error": "Wystąpił błąd przy usuwaniu użytkownika!"
+			}
+		}
+	}
+}

@@ -13,6 +13,8 @@
 	import Input from 'src/components/Form/Input.svelte';
 	import Range from 'src/components/Form/Range.svelte';
 	import JobOfferCard from 'src/components/Job/JobOfferCard.svelte';
+	import { storagedToken } from 'src/api/Auth';
+	import { Role } from 'src/utils/role';
 
 	const queryClient = useQueryClient();
 	let searchRequest: SearchJobOffer = {};
@@ -36,7 +38,6 @@
 	};
 
 	const changePage = (e: CustomEvent<any>) => {
-		console.log(e.detail.page);
 		paginatePropsState.set(e.detail.page);
 		invalidateJobOffer(queryClient);
 	};
@@ -60,7 +61,7 @@
 			<span>Loading Data</span>
 		{:else if $jobs.isError}
 			<span>Error Loading Data</span>
-		{:else if ($jobs.isSuccess && $jobs.data)}
+		{:else if ($jobs.isSuccess && $jobs.data.content)}
 			{#each $jobs.data.content as jobOffer}
 				<JobOfferCard {jobOffer} />
 			{/each}
@@ -77,5 +78,8 @@
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	<AddAdvert advertType={AdvertType.JOB} />
+	{#if $storagedToken !==null && $storagedToken.scope === Role.COMPANY }
+		<AddAdvert advertType={AdvertType.JOB} />
+	{/if}
+	
 </div>

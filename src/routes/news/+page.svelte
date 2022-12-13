@@ -9,6 +9,8 @@
 	import { SortBy } from 'src/enums/SortBy';
 	import { LightPaginationNav } from 'svelte-paginate';
 	import { pageSize } from 'src/utils/globalState';
+	import { storagedToken } from 'src/api/Auth';
+	import { Role } from 'src/utils/role';
 
 	const queryClient = useQueryClient();
 	let page = 1;
@@ -52,5 +54,7 @@
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	<AddAdvert advertType={AdvertType.COLLEGE} />
+	{#if $storagedToken !==null && $storagedToken.scope === Role.COLLEGE }
+		<AddAdvert advertType={AdvertType.COLLEGE} />
+	{/if}	
 </div>
