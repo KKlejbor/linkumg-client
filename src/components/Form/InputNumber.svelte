@@ -10,6 +10,7 @@
 	<label class="block text-lg">{label} {required ? '*' : ''}</label>
 	<input
 		name={name} 
+    min="0"
 		type="number"
 		required={required}
 		placeholder={placeholder}
