@@ -12,6 +12,8 @@
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { getNotificationsContext } from 'svelte-notifications';
 	import Clock from '../../lib/icons/Clock.svelte';
+	import { notification } from 'src/locales/pl/common.json';
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -23,18 +25,18 @@
 		onSuccess: () => {
 			deleteForm();
 			addNotification({
-				text: 'Pomyślnie usunięto ofertę',
+				text: notification.jobOffer.delete.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
 		onError: () => {
 			addNotification({
-				text: 'Błąd',
+				text: notification.jobOffer.delete.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		}
 	});
@@ -43,18 +45,18 @@
 		onSuccess: () => {
 			editForm();
 			addNotification({
-				text: 'Pomyślnie zaktualizowano ofertę',
+				text: notification.jobOffer.update.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
 		onError: () => {
 			addNotification({
-				text: 'Błąd',
+				text: notification.jobOffer.update.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		}
 	});

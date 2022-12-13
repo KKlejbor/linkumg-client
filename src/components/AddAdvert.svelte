@@ -14,9 +14,12 @@
 	import type { PrivateLesson, PrivateLessonPost } from 'src/models/PrivateLesson';
 	import { usePostAnnouncement } from 'src/queries/useAnnouncement';
 	import type { AnnouncementPost } from 'src/models/Announcement';
+	import { getNotificationsContext } from 'svelte-notifications';
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
+	import { notification } from 'src/locales/pl/common.json';
 
 	export let advertType: AdvertType;
-
+	const { addNotification } = getNotificationsContext();
 	const queryClient = useQueryClient();
 
 	let jobAnnoucementModal = false;
@@ -39,8 +42,21 @@
 	const postJobOffer = usePostJobOffers(queryClient, {
 		onSuccess: () => {
 			jobAnnoucementModal = false;
+			addNotification({
+				text: notification.jobOffer.add.success,
+				type: 'success',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
 		},
-		onError: () => {}
+		onError: () => {
+			addNotification({
+				text: notification.jobOffer.add.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
+		}
 	});
 
 	let newJobsForm: JobOfferPost = {
@@ -68,8 +84,21 @@
 	const postPrivateLesson = usePostPrivateLesson(queryClient, {
 		onSuccess: () => {
 			lessonAnnoucementModal = false;
+			addNotification({
+				text: notification.privateLesson.add.success,
+				type: 'success',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
 		},
-		onError: () => {}
+		onError: () => {
+			addNotification({
+				text: notification.privateLesson.add.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
+		}
 	});
 
 	let newPrivateLessonForm: PrivateLessonPost = {
@@ -97,8 +126,21 @@
 	const postAnnouncement = usePostAnnouncement(queryClient, {
 		onSuccess: () => {
 			collegeAnnoucementModal = false;
+			addNotification({
+				text: notification.announcement.add.success,
+				type: 'success',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
 		},
-		onError: () => {}
+		onError: () => {
+			addNotification({
+				text: notification.announcement.add.error,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
+		}
 	});
 
 	let newAnnouncementForm: AnnouncementPost = {

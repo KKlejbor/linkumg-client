@@ -11,14 +11,14 @@ export const invalidateUser = (queryClient: QueryClient) => {
 };
 
 export const useGetUserInfo = () => {
-  return useQuery<Student>(
+  return useQuery<Student | College | Company>(
     ['UserInfo'],
     () => fetchUserInfo(),
   );
 };
 
 const fetchUserInfo = async () => {
-  const response = await axiosInstance.get<Student>(`/users/info`);
+  const response = await axiosInstance.get<Student | College | Company>(`/users/info`);
   return response.data;
 };
 

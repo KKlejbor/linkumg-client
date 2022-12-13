@@ -21,3 +21,10 @@ export interface CompanyPost {
     nip: string;
     password: string;
 }
+
+export interface CompanyPatch {
+	 about: string;
+	 phone: string;
+	 socials: Socials;
+	 avatar: string;
+}

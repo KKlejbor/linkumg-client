@@ -15,3 +15,8 @@ export interface CollegePost {
 	name: string;
 	password: string;
 }
+
+export interface CollegePatch {
+	about: string;
+	avatar: string;
+}

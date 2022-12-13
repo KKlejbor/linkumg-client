@@ -12,7 +12,9 @@
 	import Clock from '../../lib/icons/Clock.svelte';
 	import type { PrivateLesson, PrivateLessonPost } from 'src/models/PrivateLesson';
 	import { useDeletePrivateLesson, usePatchPrivateLesson } from 'src/queries/usePrivateLesson';
+	import { notification } from 'src/locales/pl/common.json';
 	import InputNumber from '../Form/InputNumber.svelte';
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -24,18 +26,18 @@
 		onSuccess: () => {
 			deleteForm();
 			addNotification({
-				text: 'Pomyślnie usunięto ofertę',
+				text: notification.privateLesson.delete.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
 		onError: () => {
 			addNotification({
-				text: 'Błąd',
+				text: notification.privateLesson.delete.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		}
 	});
@@ -44,18 +46,18 @@
 		onSuccess: () => {
 			editForm();
 			addNotification({
-				text: 'Pomyślnie zaktualizowano ofertę',
+				text: notification.privateLesson.update.success,
 				type: 'success',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		},
 		onError: () => {
 			addNotification({
-				text: 'Błąd',
+				text: notification.privateLesson.update.error,
 				type: 'error',
-				position: 'bottom-center',
-				removeAfter: 4000,
+				position: notificationLocation,
+				removeAfter: notificationTime,
 			});
 		}
 	});

@@ -24,3 +24,11 @@ export interface RegisterCompany {
     name: string;
     nip: string;
 }
+
+export interface TokenDecoded {
+    iss: string;
+    sub: string;
+    exp: number;
+    iat: number;
+    scope: string;
+}
