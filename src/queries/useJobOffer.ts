@@ -6,6 +6,7 @@ import type { PaginateResults } from 'src/models/PaginateResults';
 import { pageSize } from 'src/utils/globalState';
 import { get, type Writable } from 'svelte/store';
 import axiosInstance from '../api/Axios';
+import type { AxiosError } from 'axios/index';
 
 export const invalidateJobOffer = (queryClient: QueryClient) => {
 	queryClient.invalidateQueries('jobOffers');
@@ -56,7 +57,7 @@ export const usePostJobOffers = (
 	queryClient: QueryClient,
 	callbacks?: {
 		onSuccess?: () => void;
-		onError?: () => void;
+		onError?: (error : AxiosError) => void;
 		onSettled?: () => void;
 	}
 ) => {
@@ -65,8 +66,8 @@ export const usePostJobOffers = (
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 			invalidateJobOffer(queryClient);
 		},
-		onError: () => {
-			if (callbacks?.onError) callbacks.onError();
+		onError: (error : AxiosError) => {
+			if (callbacks?.onError) callbacks.onError(error);
 		},
 		onSettled: () => {
 			if (callbacks?.onSettled) callbacks.onSettled();
@@ -85,7 +86,7 @@ export const usePatchJobOffers = (
 	id: string,
 	callbacks?: {
 		onSuccess?: () => void;
-		onError?: () => void;
+		onError?: (error: AxiosError) => void;
 		onSettled?: () => void;
 	}
 ) => {
@@ -94,8 +95,8 @@ export const usePatchJobOffers = (
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 			invalidateJobOffer(queryClient);
 		},
-		onError: () => {
-			if (callbacks?.onError) callbacks.onError();
+		onError: (error : AxiosError) => {
+			if (callbacks?.onError) callbacks.onError(error);
 		},
 		onSettled: () => {
 			if (callbacks?.onSettled) callbacks.onSettled();

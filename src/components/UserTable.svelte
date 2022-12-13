@@ -1,5 +1,9 @@
 <script lang="ts">
 	import DropdownUser from 'src/components/DropdownUser.svelte';
+
+	export let users;
+
+
 </script>
 
 <table class="relative ml-5 w-full table-fixed border-collapse overflow-x-auto">

@@ -29,7 +29,7 @@
 				text: notification.jobOffer.delete.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
 		onError: () => {
@@ -37,7 +37,7 @@
 				text: notification.jobOffer.delete.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -49,15 +49,21 @@
 				text: notification.jobOffer.update.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
-		onError: () => {
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
 			addNotification({
 				text: notification.jobOffer.update.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -118,16 +124,16 @@
 	<div class="col-span-2 flex flex-col justify-between text-right">
 		<div>
 			{#if $storagedUser?.id === jobOffer.companyDto.id}
-			<button on:click={editForm} class="mr-2 outline-none">
-				<Edit class="h-5 w-5" />
-			</button>
-			<button on:click={deleteForm} class="outline-none">
-				<Trash class="h-5 w-5" />
-			</button>
+				<button on:click={editForm} class="mr-2 outline-none">
+					<Edit class="h-5 w-5" />
+				</button>
+				<button on:click={deleteForm} class="outline-none">
+					<Trash class="h-5 w-5" />
+				</button>
 			{/if}
 		</div>
 		<div class="text-2xl">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
-		<span>{jobOffer.createdAt}</span>
+		<span>{new Date(jobOffer.createdAt).toLocaleDateString('pl-PL')}</span>
 	</div>
 </div>
 
@@ -174,12 +180,12 @@
 					{jobOffer.description}
 				</p>
 			</div>
-			<div class="text-4xl lg:col-span-2">4000 - 6000 zł</div>
+			<div class="text-4xl lg:col-span-2">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
 		</div>
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
 			<Clock class="h-5 w-5" />
-			29.10.2020 | 21:34
+			{new Date(jobOffer.createdAt).toLocaleDateString('pl-PL')}
 		</div>
 	</Modal>
 {/if}

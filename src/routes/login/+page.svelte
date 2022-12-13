@@ -8,17 +8,25 @@
 	import type { Login } from 'src/models/User';
 	import { usePostLogin } from 'src/queries/useUser';
 	import LogoBlack from '$lib/icons/LogoBlack.svelte';
+	import { getNotificationsContext } from 'svelte-notifications';
 	import jwt_decode from "jwt-decode";
+	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	
 	const queryClient = useQueryClient();
+	const { addNotification } = getNotificationsContext();
 
 	let email = '';
 	let password = '';
 	let error = '';
 
 	const postLogin = usePostLogin(queryClient, {
-		onError: () => {
-			error = "Błędne dane logowania";
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
 		},
 		onSuccess: (response) => {
 			$storagedToken = jwt_decode(response.accessToken)
@@ -47,7 +55,6 @@
 				<Input label="Login" name="email" required={true} bind:value={email} />
 				<Input label="Hasło" name="password" required={true} bind:value={password} type="password" /> <br/>
 				<Button value="Zaloguj się" type="submit" />
-				{error}
 			</form>
 			<a class="register" href="/register">Zarejestruj się na LinkUMG</a>
 		</div>

@@ -25,6 +25,11 @@ export interface RegisterCompany {
     nip: string;
 }
 
+export interface SearchUser {
+    email?: string;
+    type?: string;
+}
+
 export interface TokenDecoded {
     iss: string;
     sub: string;

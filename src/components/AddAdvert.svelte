@@ -46,15 +46,21 @@
 				text: notification.jobOffer.add.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
-		onError: () => {
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
 			addNotification({
 				text: notification.jobOffer.add.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -88,15 +94,21 @@
 				text: notification.privateLesson.add.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
-		onError: () => {
+		onError: (error) => {
 			addNotification({
 				text: notification.privateLesson.add.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
+			});
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -130,15 +142,21 @@
 				text: notification.announcement.add.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
-		onError: () => {
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime
+			});
 			addNotification({
 				text: notification.announcement.add.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -241,12 +259,20 @@
 			<div class="my-5 flex flex-col gap-5">
 				<Input label="Tytuł ogłoszenia" required={true} bind:value={newAnnouncementForm.title} />
 				<div class="h-40">
-					<TextArea label="Opis ogłoszenia" required={true} bind:value={newAnnouncementForm.description} />
+					<TextArea
+						label="Opis ogłoszenia"
+						required={true}
+						bind:value={newAnnouncementForm.description}
+					/>
 				</div>
 				<div class="w-1/2">
 					<label>Zdjęcie ogłoszenia:</label>
 					<img src={user} alt="user" />
-					<Input label="temp: adres zdjęcia" required={true} bind:value={newAnnouncementForm.pathToAnnouncementImage} />
+					<Input
+						label="temp: adres zdjęcia"
+						required={true}
+						bind:value={newAnnouncementForm.pathToAnnouncementImage}
+					/>
 				</div>
 			</div>
 			<div>

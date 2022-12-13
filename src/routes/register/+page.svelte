@@ -5,6 +5,7 @@
 	import type { RegisterCompany, RegisterStudent } from 'src/models/User';
 	import { usePostRegisterCompany, usePostRegisterStudent } from '../../queries/useUser';
 	import { useQueryClient } from '@sveltestack/svelte-query';
+	import { getNotificationsContext } from 'svelte-notifications';
 
 	const registerOptions = ['Wybierz rodzaj konta', 'Student', 'Firma'];
 	const facultyOptions = ['Wybierz wydział', 'WE', 'WM', 'WN', 'WZNiJ'];
@@ -12,6 +13,7 @@
 	let facultySelected = 'Wybierz wydział';
 
 	const queryClient = useQueryClient();
+	const { addNotification } = getNotificationsContext();
 
 	let email = '';
 	let password = '';
@@ -24,8 +26,14 @@
 	let success = false;
 
 	const postRegisterStudent = usePostRegisterStudent(queryClient, {
-		onError: () => {
+		onError: (response) => {
 			error = "Błędne dane użytkownika";
+			addNotification({
+				text: response.response.data,
+				type: 'error',
+				position: 'bottom-center',
+				removeAfter: 4000,
+			});
 		},
 		onSuccess: () => {
 			success = true;
@@ -34,8 +42,14 @@
 	});
 
 	const postRegisterCompany = usePostRegisterCompany(queryClient, {
-		onError: () => {
+		onError: (response) => {
 			error = "Błędne dane użytkownika";
+			addNotification({
+				text: response.response.data,
+				type: 'error',
+				position: 'bottom-center',
+				removeAfter: 4000,
+			});
 		},
 		onSuccess: () => {
 			success = true;
@@ -49,7 +63,12 @@
 		if(selected === 'Student') {
 			if(facultySelected === 'Wybierz wydział')
 			{
-				error = 'Błędne dane użytkownika';
+				addNotification({
+					text: "Musisz wybrać wydział",
+					type: 'error',
+					position: 'bottom-center',
+					removeAfter: 4000,
+				});
 				return;
 			}
 

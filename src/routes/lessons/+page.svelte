@@ -14,6 +14,7 @@
 	import type { SearchPrivateLesson } from 'src/models/PrivateLesson';
 	import { invalidatePrivateLesson, useGetPrivateLesson } from 'src/queries/usePrivateLesson';
 	import LessonCard from 'src/components/Lesson/LessonCard.svelte';
+	import Modal from 'src/components/Modal.svelte';
 	import { storagedToken } from 'src/api/Auth';
 	import { Role } from 'src/utils/role';
 
@@ -43,7 +44,9 @@
 		paginatePropsState.set(e.detail.page);
 		invalidatePrivateLesson(queryClient);
 	};
+
 </script>
+
 
 <div class="w-full bg-bgSecondary">
 	<form on:submit|preventDefault={submit}>

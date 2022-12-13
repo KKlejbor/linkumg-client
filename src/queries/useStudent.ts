@@ -35,7 +35,7 @@ export const usePatchStudent = (
 	queryClient: QueryClient,
 	callbacks?: {
 		onSuccess?: () => void;
-		onError?: (error: AxiosError) => void;
+		onError?: (error : AxiosError) => void;
 		onSettled?: () => void;
 	}
 ) => {
@@ -43,7 +43,7 @@ export const usePatchStudent = (
 		onSuccess: () => {
 			if (callbacks?.onSuccess) callbacks.onSuccess();
 		},
-		onError: (error: AxiosError) => {
+		onError: (error : AxiosError) => {
 			if (callbacks?.onError) callbacks.onError(error);
 		},
 		onSettled: () => {

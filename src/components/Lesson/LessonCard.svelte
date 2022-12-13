@@ -54,7 +54,13 @@
 				removeAfter: notificationTime,
 			});
 		},
-		onError: () => {
+		onError: (error) => {
+			addNotification({
+				text: error.response?.data,
+				type: 'error',
+				position: notificationLocation,
+				removeAfter: notificationTime,
+			});
 			addNotification({
 				text: notification.privateLesson.update.error,
 				type: 'error',
@@ -133,7 +139,7 @@
 			{/if}
 		</div>
 		<div class="text-2xl">{privateLesson.pricePerHour}/h zł</div>
-		<span>{privateLesson.createdAt}</span>
+		<span>{new Date(privateLesson.lastUpdateAt).toLocaleString()}</span>
 	</div>
 </div>
 
@@ -181,7 +187,7 @@
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
 			<Clock class="h-5 w-5" />
-			{privateLesson.createdAt}
+			{new Date(privateLesson.lastUpdateAt).toLocaleString()}
 		</div>
 	</Modal>
 {/if}
