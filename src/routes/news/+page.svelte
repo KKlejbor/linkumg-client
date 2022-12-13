@@ -9,6 +9,8 @@
 	import { SortBy } from 'src/enums/SortBy';
 	import { LightPaginationNav } from 'svelte-paginate';
 	import { pageSize } from 'src/utils/globalState';
+	import { storagedToken } from 'src/api/Auth';
+	import { Role } from 'src/utils/role';
 
 	const queryClient = useQueryClient();
 	let page = 1;
@@ -31,11 +33,11 @@
 </svelte:head>
 <div class="w-full bg-bgSecondary">
 	<div class="grid w-full gap-12 p-14 lg:grid-cols-2">
-		{#if $annoucement.isLoading || $annoucement.isFetching}
+		{#if $annoucement.isLoading}
 			<span>Loading Data</span>
 		{:else if $annoucement.isError}
 			<span>Error Loading Data</span>
-		{:else if ($annoucement.isSuccess && $annoucement.data) || ($annoucement.isFetched && $annoucement.isSuccess)}
+		{:else if ($annoucement.isSuccess && $annoucement.data)}
 			{#each $annoucement.data.content as annoucement}
 				<CollegeAnnocement {annoucement} />
 			{/each}
@@ -52,5 +54,7 @@
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	<AddAdvert advertType={AdvertType.COLLEGE} />
+	{#if $storagedToken !==null && $storagedToken.scope === Role.COLLEGE }
+		<AddAdvert advertType={AdvertType.COLLEGE} />
+	{/if}	
 </div>

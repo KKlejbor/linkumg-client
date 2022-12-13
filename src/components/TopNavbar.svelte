@@ -5,6 +5,9 @@
 	import Logout from '$lib/icons/Logout.svelte';
 	import { clickOutside } from '../utils/clickOutside.js';
 	import Admin from '$lib/icons/Admin.svelte';
+	import { useGetUserInfo } from 'src/queries/useUser';
+	import { storagedAuth } from 'src/api/Auth';
+	import { goto } from '$app/navigation';
 
 	let dropdownOpen = false;
 
@@ -15,6 +18,14 @@
 	const closeDropdown = () => {
 		dropdownOpen = false;
 	};
+
+	const logout = () => {
+		dropdownOpen = false;
+		$storagedAuth = null;
+		goto('/login');
+	};
+
+	const userInfo= useGetUserInfo();
 </script>
 
 <div class="flex h-full justify-between bg-bgPrimary pr-10 pl-[100px]">
@@ -22,7 +33,11 @@
 		<Logo class="w-24" />
 	</a>
 	<div class="my-auto flex h-2/5 gap-16 overflow-x-auto">
-		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Jan Kowalski</a>
+		{#if ($userInfo.data && $userInfo.isSuccess)}
+		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name}</a>
+		{:else}
+		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Loading...</a>
+		{/if}
 		<div on:click={showDropdown}>
 			<Placeholder class="w-10 cursor-pointer fill-white" />
 		</div>
@@ -57,10 +72,10 @@
 			</a>
 		</div>
 		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
-			<a class="flex w-full gap-2" href="/" on:click={closeDropdown}>
+			<button class="flex w-full gap-2" on:click={logout}>
 				<Logout class="inline w-4 items-center justify-center fill-black" />
 				<span class="text-lg"> Wyloguj się </span>
-			</a>
+			</button>
 		</div>
 	</div>
 </div>

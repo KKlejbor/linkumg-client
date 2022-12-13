@@ -2,12 +2,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { useQueryClient } from '@sveltestack/svelte-query';
-	import { storagedAuth } from 'src/api/Auth';
+	import { storagedAuth, storagedToken } from 'src/api/Auth';
 	import Button from 'src/components/Form/Button.svelte';
 	import Input from 'src/components/Form/Input.svelte';
 	import type { Login } from 'src/models/User';
 	import { usePostLogin } from 'src/queries/useUser';
 	import LogoBlack from '$lib/icons/LogoBlack.svelte';
+	import jwt_decode from "jwt-decode";
 	
 	const queryClient = useQueryClient();
 
@@ -20,6 +21,7 @@
 			error = "Błędne dane logowania";
 		},
 		onSuccess: (response) => {
+			$storagedToken = jwt_decode(response.accessToken)
 			$storagedAuth = response;
 			goto('/');
 		}

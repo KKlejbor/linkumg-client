@@ -12,8 +12,10 @@
 	import Button from 'src/components/Form/Button.svelte';
 	import Input from 'src/components/Form/Input.svelte';
 	import type { SearchPrivateLesson } from 'src/models/PrivateLesson';
-	import { useGetPrivateLesson } from 'src/queries/usePrivateLesson';
+	import { invalidatePrivateLesson, useGetPrivateLesson } from 'src/queries/usePrivateLesson';
 	import LessonCard from 'src/components/Lesson/LessonCard.svelte';
+	import { storagedToken } from 'src/api/Auth';
+	import { Role } from 'src/utils/role';
 
 	const queryClient = useQueryClient();
 	let searchRequest: SearchJobOffer = {};
@@ -33,13 +35,13 @@
 
 	const submit = () => {
 		searchBodyState.set(searchBody);
-		invalidateJobOffer(queryClient);
+		invalidatePrivateLesson(queryClient);
 	};
 
 	const changePage = (e: CustomEvent<any>) => {
 		console.log(e.detail.page);
 		paginatePropsState.set(e.detail.page);
-		invalidateJobOffer(queryClient);
+		invalidatePrivateLesson(queryClient);
 	};
 </script>
 
@@ -53,11 +55,11 @@
 		</div>
 	</form>
 	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[40px]">
-		{#if $lessons.isLoading || $lessons.isFetching}
+		{#if $lessons.isLoading}
 			<span>Loading Data</span>
 		{:else if $lessons.isError}
 			<span>Error Loading Data</span>
-		{:else if ($lessons.isSuccess && $lessons.data) || ($lessons.isFetched && $lessons.isSuccess)}
+		{:else if ($lessons.isSuccess && $lessons.data)}
 			{#each $lessons.data.content as lesson}
 				<LessonCard privateLesson={lesson} />
 			{/each}
@@ -74,5 +76,7 @@
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	<AddAdvert advertType={AdvertType.LESSON} />
+	{#if $storagedToken !==null && $storagedToken.scope === Role.STUDENT }
+		<AddAdvert advertType={AdvertType.LESSON} />
+	{/if}	
 </div>
