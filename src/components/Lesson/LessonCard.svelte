@@ -15,6 +15,8 @@
 	import { notification } from 'src/locales/pl/common.json';
 	import InputNumber from '../Form/InputNumber.svelte';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
+	import { storagedUser } from 'src/api/Auth';
+
 
 	const { addNotification } = getNotificationsContext();
 
@@ -101,6 +103,8 @@
 
 		$patchPrivateLesson.mutate(editPrivateLesson);
 	};
+	console.log($storagedUser?.id);
+	console.log(privateLesson.studentDto.id);
 </script>
 
 <div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
@@ -119,12 +123,14 @@
 	</div>
 	<div class="col-span-2 flex flex-col justify-between text-right">
 		<div>
+			{#if $storagedUser?.id === privateLesson.studentDto.id}
 			<button on:click={editForm} class="mr-2 outline-none">
 				<Edit class="h-5 w-5" />
 			</button>
 			<button on:click={deleteForm} class="outline-none">
 				<Trash class="h-5 w-5" />
 			</button>
+			{/if}
 		</div>
 		<div class="text-2xl">{privateLesson.pricePerHour}/h zł</div>
 		<span>{privateLesson.createdAt}</span>

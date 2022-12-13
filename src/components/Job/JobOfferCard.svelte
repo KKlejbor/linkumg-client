@@ -14,6 +14,7 @@
 	import Clock from '../../lib/icons/Clock.svelte';
 	import { notification } from 'src/locales/pl/common.json';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
+	import { storagedUser } from 'src/api/Auth';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -116,12 +117,14 @@
 	</div>
 	<div class="col-span-2 flex flex-col justify-between text-right">
 		<div>
+			{#if $storagedUser?.id === jobOffer.companyDto.id}
 			<button on:click={editForm} class="mr-2 outline-none">
 				<Edit class="h-5 w-5" />
 			</button>
 			<button on:click={deleteForm} class="outline-none">
 				<Trash class="h-5 w-5" />
 			</button>
+			{/if}
 		</div>
 		<div class="text-2xl">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
 		<span>{jobOffer.createdAt}</span>
