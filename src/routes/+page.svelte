@@ -17,7 +17,7 @@
 	<title>Strona główna</title>
 </svelte:head>
 
-<div class="h-full flex flex-col">
+<div class="h-full flex flex-col w-full">
 	<MainPageCategory
 		text="Ogłoszenia Uniwersytetu Morskiego w Gdyni"
 		image={announcements}

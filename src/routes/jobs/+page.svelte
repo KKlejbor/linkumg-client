@@ -22,7 +22,7 @@
 
 	export let searchBodyState: Writable<SearchJobOffer> = writable(searchRequest);
 	export let paginatePropsState: Writable<number> = writable(page);
-		
+
 	const jobs = useGetJobOffers(
 		SortDirection.ASCENDING,
 		paginatePropsState,
@@ -43,7 +43,7 @@
 	};
 </script>
 
-<div class="w-full bg-bgSecondary">
+<div class="w-full bg-bgSecondary flex flex-col">
 	<form on:submit|preventDefault={submit}>
 		<div class="flex w-full flex-col items-end gap-[70px] bg-white p-[40px] lg:flex-row">
 			<Input label="Tytuł oferty" bind:value={searchBody.contain} />
@@ -56,30 +56,31 @@
 			<Button value="Wyszukaj" icon={true} type="submit" />
 		</div>
 	</form>
-	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[40px]">
+	<div class="flex flex-wrap gap-[40px] p-[40px] lg:p-[40px] flex-1 overflow-y-auto">
 		{#if $jobs.isLoading}
-			<span>Loading Data</span>
+			<span class="flex-1 text-center text-xl">Loading Data</span>
 		{:else if $jobs.isError}
-			<span>Error Loading Data</span>
-		{:else if ($jobs.isSuccess && $jobs.data.content)}
+			<span class="flex-1 text-center text-xl">Error Loading Data</span>
+		{:else if $jobs.data?.content.length === 0}
+			<span class="flex-1 text-center text-xl">Brak ogłoszeń sprawdź to miejsce później</span>
+		{:else if $jobs.isSuccess && $jobs.data.content}
 			{#each $jobs.data.content as jobOffer}
 				<JobOfferCard {jobOffer} />
 			{/each}
 		{:else}
-			<span>Ogłoszenia o pracę</span>
+			<span class="flex-1 text-center text-xl">Ogłoszenia o pracę</span>
 		{/if}
 	</div>
 	{#if $jobs.data && $jobs.isSuccess}
 		<LightPaginationNav
 			totalItems={$jobs.data.totalPages}
-			pageSize={get(paginatePropsState)}
+			pageSize={50}
 			currentPage={get(pageSize)}
 			limit={1}
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	{#if $storagedToken !==null && $storagedToken.scope === Role.COMPANY }
+	{#if $storagedToken !== null && $storagedToken.scope === Role.COMPANY}
 		<AddAdvert advertType={AdvertType.JOB} />
 	{/if}
-	
 </div>

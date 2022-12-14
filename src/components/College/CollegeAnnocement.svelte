@@ -1,5 +1,5 @@
 <script lang="ts">
-	import user from '$lib/images/user.png';
+	import university from '$lib/images/university.png';
 	import type { Announcement } from 'src/models/Announcement';
 
 	export let annoucement: Announcement;
@@ -7,8 +7,8 @@
 
 <div class="container">
 	<div class="details">
-		<img src={user} alt="user" />
-			{annoucement.title}
+		<img src={university} alt="user" />
+		{annoucement.title}
 	</div>
 	<div class="date">{new Date(annoucement.createdAt).toLocaleDateString('pl-PL')}</div>
 </div>
@@ -26,6 +26,8 @@
 		background-color: white;
 		border-radius: 15px;
 		word-break: break-word;
+		width: 47%;
+		height: max-content;
 		min-width: 0;
 		-webkit-box-shadow: 0px 0px 7px -4px rgba(66, 68, 90, 1);
 		-moz-box-shadow: 0px 0px 7px -4px rgba(66, 68, 90, 1);

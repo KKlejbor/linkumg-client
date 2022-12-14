@@ -14,7 +14,7 @@
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { useGetUserInfo } from 'src/queries/useUser';
 	import { getNotificationsContext } from 'svelte-notifications';
-  import { notification } from 'src/locales/pl/common.json';
+	import { notification } from 'src/locales/pl/common.json';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	import InputDate from 'src/components/Form/InputDate.svelte';
 	import { useGetUserImage, usePostUserImage } from 'src/queries/useFile';
@@ -75,7 +75,7 @@
 				text: notification.user.update.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
 		onError: (error) => {
@@ -83,13 +83,13 @@
 				text: error.response?.data,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 			addNotification({
 				text: notification.user.update.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -111,7 +111,8 @@
 
 	if ($userInfo.isSuccess && $userInfo.data) {
 		editStudent.about = $userInfo.data.about;
-		editStudent.avatar = ($userInfo.data.avatar) === null ? 'test.jpg' : $userInfo.data.avatar + '.jpg';
+		editStudent.avatar =
+			$userInfo.data.avatar === null ? 'test.jpg' : $userInfo.data.avatar + '.jpg';
 		editStudent.birthDate = $userInfo.data.birthDate;
 		editStudent.phone = $userInfo.data.phone;
 		editStudent.socials = $userInfo.data.socials;
@@ -197,12 +198,12 @@
 			<div class="flex flex-col gap-5 px-6">
 				{#if !isEditProfileActive}
 					<UserDetailsProperty heading="Imię" value={$userInfo.data.name} />
-					<UserDetailsProperty heading="Nazwisko" value={$userInfo.data.lastName}/>
+					<UserDetailsProperty heading="Nazwisko" value={$userInfo.data.lastName} />
 					<UserDetailsProperty heading="Data urodzenia" value={$userInfo.data.birthDate} />
 					<UserDetailsProperty heading="E-mail" value={$userInfo.data.email} />
 					<UserDetailsProperty heading="Kontakt" value={$userInfo.data.phone} />
 				{:else}
-					<Input label="Imię" disabled={true} bind:value={$userInfo.data.name}/>
+					<Input label="Imię" disabled={true} bind:value={$userInfo.data.name} />
 					<Input label="Nazwisko" disabled={true} bind:value={$userInfo.data.name} />
 					<InputDate label="Wiek" bind:value={editStudent.birthDate} />
 					<Input label="E-mail" disabled={true} bind:value={$userInfo.data.email} />
@@ -228,7 +229,9 @@
 				<Input label="Link do Linkedin'a" bind:value={editStudent.socials.linkedin} />
 			</div>
 			<div class="flex-end flex flex-row-reverse gap-6">
-				<button on:click={closeLinkedinModal} class="font-medium uppercase text-blue-600">Zapisz</button>
+				<button on:click={closeLinkedinModal} class="font-medium uppercase text-blue-600"
+					>Zapisz</button
+				>
 				<button on:click={closeLinkedinModal} class="font-medium uppercase text-red-600"
 					>Anuluj</button
 				>
@@ -241,7 +244,9 @@
 				<Input label="Link do Github'a" bind:value={editStudent.socials.github} />
 			</div>
 			<div class="flex-end flex flex-row-reverse gap-6">
-				<button on:click={closeGithubModal} class="font-medium uppercase text-blue-600">Zapisz</button>
+				<button on:click={closeGithubModal} class="font-medium uppercase text-blue-600"
+					>Zapisz</button
+				>
 				<button on:click={closeGithubModal} class="font-medium uppercase text-red-600"
 					>Anuluj</button
 				>
@@ -254,7 +259,9 @@
 				<Input label="Link do Facebooka" bind:value={editStudent.socials.facebook} />
 			</div>
 			<div class="flex-end flex flex-row-reverse gap-6">
-				<button on:click={closeFacebookModal} class="font-medium uppercase text-blue-600">Zapisz</button>
+				<button on:click={closeFacebookModal} class="font-medium uppercase text-blue-600"
+					>Zapisz</button
+				>
 				<button on:click={closeFacebookModal} class="font-medium uppercase text-red-600"
 					>Anuluj</button
 				>

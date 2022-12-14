@@ -10,8 +10,8 @@
 <div class="flex w-full flex-col gap-3">
 	<span>{label} {required ? '*' : ''}</span>
 	<div class="flex gap-4">
-		<InputNumber label="Od" bind:value={fromRange} />
+		<InputNumber label="" bind:value={fromRange} />
 		<span class="self-center font-bold">&ndash;</span>
-		<InputNumber label="Do" bind:value={toRange} />
+		<InputNumber label="" bind:value={toRange} />
 	</div>
 </div>
