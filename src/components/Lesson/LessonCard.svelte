@@ -17,7 +17,6 @@
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	import { storagedUser } from 'src/api/Auth';
 
-
 	const { addNotification } = getNotificationsContext();
 
 	export let privateLesson: PrivateLesson;
@@ -31,7 +30,7 @@
 				text: notification.privateLesson.delete.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
 		onError: () => {
@@ -39,7 +38,7 @@
 				text: notification.privateLesson.delete.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -51,7 +50,7 @@
 				text: notification.privateLesson.update.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
 		onError: (error) => {
@@ -59,13 +58,13 @@
 				text: error.response?.data,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 			addNotification({
 				text: notification.privateLesson.update.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -78,11 +77,11 @@
 		showMoreModal = !showMoreModal;
 	};
 
-	const deleteForm = () => {
+	const deleteForm = (e) => {
 		deleteModal = !deleteModal;
 	};
 
-	const editForm = () => {
+	const editForm = (e) => {
 		editModal = !editModal;
 	};
 
@@ -90,13 +89,13 @@
 		$deletePrivateLesson.mutate(privateLesson.lessonId);
 	};
 
-  let privateLessonForm: PrivateLessonPost = {
-	  description: privateLesson.description,
-	  location: privateLesson.location,
-	  title: privateLesson.title,
-	  pricePerHour: privateLesson.pricePerHour,
-	  category: privateLesson.category,
-  }
+	let privateLessonForm: PrivateLessonPost = {
+		description: privateLesson.description,
+		location: privateLesson.location,
+		title: privateLesson.title,
+		pricePerHour: privateLesson.pricePerHour,
+		category: privateLesson.category
+	};
 
 	const editPrivateLesson = () => {
 		const editPrivateLesson: PrivateLessonPost = {
@@ -109,17 +108,18 @@
 
 		$patchPrivateLesson.mutate(editPrivateLesson);
 	};
-	console.log($storagedUser?.id);
-	console.log(privateLesson.studentDto.id);
 </script>
 
-<div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
-	<div class="col-span-2">
+<div class="w-[47%] h-max flex break-words rounded-lg bg-white p-4 shadow-md">
+	<div
+		class="imgContainer text-center flex flex-col justify-center  cursor-pointer"
+		on:click={showMore}
+	>
 		<img src={user} alt="user" class="mb-2 rounded-full" />
 		<span>{privateLesson.studentDto.name}</span>
 	</div>
-	<div class="col-span-6 flex flex-col justify-between text-xl">
-		<span class="cursor-pointer text-3xl" on:click={showMore}>{privateLesson.title}</span>
+	<div class="content px-2 flex flex-col justify-center  cursor-pointer" on:click={showMore}>
+		<span class="text-3xl">{privateLesson.title}</span>
 		<span>{privateLesson.category}</span>
 		<span>{privateLesson.studentDto.about}</span>
 		<span class="flex items-center gap-1.5">
@@ -127,18 +127,18 @@
 			{privateLesson.location}
 		</span>
 	</div>
-	<div class="col-span-2 flex flex-col justify-between text-right">
+	<div class="price flex flex-col justify-center text-right">
 		<div>
 			{#if $storagedUser?.id === privateLesson.studentDto.id}
-			<button on:click={editForm} class="mr-2 outline-none">
-				<Edit class="h-5 w-5" />
-			</button>
-			<button on:click={deleteForm} class="outline-none">
-				<Trash class="h-5 w-5" />
-			</button>
+				<button on:click={editForm} class="mr-2 outline-none hover:text-slate-400">
+					<Edit class="h-5 w-5" />
+				</button>
+				<button on:click={deleteForm} class="outline-none">
+					<Trash class="h-5 w-5" />
+				</button>
 			{/if}
 		</div>
-		<div class="text-2xl">{privateLesson.pricePerHour}/h zł</div>
+		<div class="text-2xl">{privateLesson.pricePerHour} zł/h</div>
 		<span>{new Date(privateLesson.lastUpdateAt).toLocaleString()}</span>
 	</div>
 </div>
@@ -146,11 +146,13 @@
 {#if deleteModal}
 	<Modal heading="Usuń" bind:open={deleteModal}>
 		<p class="whitespace-pre-line pt-6 pb-12">
-			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>{privateLesson.title}</q>? Pamiętaj nie
-			bedzie już można tego cofnąć.
+			Czy jesteś pewny/a, że chcesz usunać swoje ogłoszenie <q>{privateLesson.title}</q>? Pamiętaj
+			nie bedzie już można tego cofnąć.
 		</p>
 		<div class="flex-end flex flex-row-reverse gap-6">
-			<button class="font-medium uppercase text-red-600" on:click={deletePrivateLessonId}>Usuń</button>
+			<button class="font-medium uppercase text-red-600" on:click={deletePrivateLessonId}
+				>Usuń</button
+			>
 			<button class="font-medium uppercase text-blue-600" on:click={deleteForm}>Anuluj</button>
 		</div>
 	</Modal>
@@ -158,31 +160,31 @@
 
 {#if showMoreModal}
 	<Modal heading="" bind:open={showMoreModal}>
-		<div class="grid auto-cols-fr gap-y-4 lg:grid-cols-10 lg:gap-y-0 lg:gap-x-9">
-			<div class="text-center lg:col-span-2">
-				<div class="flex flex-col py-4 text-xl">
+		<div class="flex flex-wrap">
+			<div class="text-center w-1/3 px-5">
+				<div class="flex flex-col text-xl">
 					<img class="rounded-full" src={user} alt="user" />
 					<span>{privateLesson.studentDto.name}</span>
 					<span>Email: {privateLesson.studentDto.email}</span>
 					<span>Nr tel.: {privateLesson.studentDto.phone}</span>
 				</div>
 			</div>
-			<div class="flex flex-col gap-4 lg:col-span-6">
+			<div class="flex flex-col gap-2 flex-1">
 				<div class="text-4xl">{privateLesson.title}</div>
 
-				<div class="ml-5">
-					<span class="mr-3 text-2xl">Kategoria:</span>
+				<div class="">
+					<span class=" text-xl">Kategoria:</span>
 					{privateLesson.category}
 				</div>
-				<div class="ml-5">
-					<span class="mr-3 text-2xl">Lokalizacja:</span>
+				<div class="">
+					<span class=" text-xl">Lokalizacja:</span>
 					{privateLesson.location}
 				</div>
-				<p class="break-words text-justify text-2xl">
+				<p class="break-words text-justify text-xl">
 					{privateLesson.description}
 				</p>
 			</div>
-			<div class="text-4xl lg:col-span-2">{privateLesson.pricePerHour}/h zł</div>
+			<div class="text-xl text-right w-full">{privateLesson.pricePerHour}/h zł</div>
 		</div>
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
@@ -200,7 +202,11 @@
 					<Input label="Tytuł oferty" required={true} bind:value={privateLessonForm.title} />
 					<Input label="Kategoria" required={true} bind:value={privateLessonForm.category} />
 					<Input label="Lokalizacja" required={true} bind:value={privateLessonForm.location} />
-          <InputNumber label="Lokalizacja" required={true} bind:value={privateLessonForm.pricePerHour} />
+					<InputNumber
+						label="Lokalizacja"
+						required={true}
+						bind:value={privateLessonForm.pricePerHour}
+					/>
 				</div>
 				<div class="grid col-span-2 h-40">
 					<TextArea label="Opis oferty" bind:value={privateLessonForm.description} />
@@ -212,3 +218,17 @@
 		</form>
 	</Modal>
 {/if}
+
+<style>
+	.imgContainer {
+		width: 25%;
+	}
+
+	.content {
+		width: 50%;
+	}
+
+	.price {
+		width: 25%;
+	}
+</style>

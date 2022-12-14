@@ -1,5 +1,5 @@
 <script lang="ts">
-	import user from '$lib/images/user.png';
+	import university from '$lib/images/university.png';
 	import UserDetailsProperty from 'src/components/UserDetailsProperty.svelte';
 	import Input from 'src/components/Form/Input.svelte';
 	import TextArea from 'src/components/Form/TextArea.svelte';
@@ -58,7 +58,8 @@
 
 	if ($userInfo.isSuccess && $userInfo.data) {
 		editCollege.about = $userInfo.data.about;
-		editCollege.avatar = ($userInfo.data.avatar) === null ? 'test.jpg' : $userInfo.data.avatar + '.jpg';
+		editCollege.avatar =
+			$userInfo.data.avatar === null ? 'test.jpg' : $userInfo.data.avatar + '.jpg';
 	}
 
 	const editCollegeHandler = () => {
@@ -86,7 +87,7 @@
 		</div>
 		<div class="flex flex-col items-center self-center">
 			<div class="relative border-x-0 border-bgPrimary px-10 lg:border-x-2">
-				<img src={user} alt="user" class="mx-auto rounded-full" />
+				<img src={university} alt="user" class="mx-auto rounded-full" />
 				{#if isEditProfileActive}
 					<Camera class="absolute right-0 mr-10 -mt-10 h-10 w-10 cursor-pointer" />
 				{/if}

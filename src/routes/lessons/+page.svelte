@@ -44,11 +44,9 @@
 		paginatePropsState.set(e.detail.page);
 		invalidatePrivateLesson(queryClient);
 	};
-
 </script>
 
-
-<div class="w-full bg-bgSecondary">
+<div class="w-full bg-bgSecondary flex flex-col">
 	<form on:submit|preventDefault={submit}>
 		<div class="flex w-full flex-col items-end gap-[70px] bg-white p-[40px] lg:flex-row">
 			<Input label="Tytuł oferty" bind:value={searchBody.contain} />
@@ -57,29 +55,33 @@
 			<Button value="Wyszukaj" icon={true} type="submit" />
 		</div>
 	</form>
-	<div class="grid gap-[40px] p-[40px] lg:grid-cols-2 lg:p-[40px]">
+	<div class="flex flex-wrap gap-[40px] p-[40px] lg:p-[40px] flex-1 overflow-y-auto">
 		{#if $lessons.isLoading}
-			<span>Loading Data</span>
+			<span class="flex-1 text-center text-xl">Ładowanie danych</span>
 		{:else if $lessons.isError}
-			<span>Error Loading Data</span>
-		{:else if ($lessons.isSuccess && $lessons.data)}
+			<span class="flex-1 text-center text-xl">
+				Wystąpił problem z ładowaniem danych, spróbuj ponownie później
+			</span>
+		{:else if $lessons.data?.content.length === 0}
+			<span class="flex-1 text-center text-xl">Brak ogłoszeń sprawdź to miejsce później</span>
+		{:else if $lessons.isSuccess && $lessons.data}
 			{#each $lessons.data.content as lesson}
 				<LessonCard privateLesson={lesson} />
 			{/each}
 		{:else}
-			<span>Ogłoszenia o pracę</span>
+			<span class="col-span-2 text-center text-xl">Ogłoszenia o pracę</span>
 		{/if}
 	</div>
 	{#if $lessons.data && $lessons.isSuccess}
 		<LightPaginationNav
 			totalItems={$lessons.data.totalPages}
-			pageSize={get(paginatePropsState)}
+			pageSize={50}
 			currentPage={get(pageSize)}
 			limit={1}
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	{#if $storagedToken !==null && $storagedToken.scope === Role.STUDENT }
+	{#if $storagedToken !== null && $storagedToken.scope === Role.STUDENT}
 		<AddAdvert advertType={AdvertType.LESSON} />
-	{/if}	
+	{/if}
 </div>
