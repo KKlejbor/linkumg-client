@@ -6,7 +6,9 @@
 	import Admin from '$lib/icons/Admin.svelte';
 	import { useGetUserInfo } from 'src/queries/useUser';
 	import { storagedAuth } from 'src/api/Auth';
+	import { storagedToken } from 'src/api/Auth';
 	import { goto } from '$app/navigation';
+	import { Role } from 'src/utils/role';
 
 	let dropdownOpen = false;
 
@@ -21,10 +23,12 @@
 	const logout = () => {
 		dropdownOpen = false;
 		$storagedAuth = null;
+		localStorage.removeItem('auth');
+		localStorage.removeItem('token');
 		goto('/login');
 	};
 
-	const userInfo= useGetUserInfo();
+	const userInfo = useGetUserInfo();
 </script>
 
 <div class="flex h-full justify-between bg-bgPrimary pr-10 pl-[100px]">
@@ -32,10 +36,12 @@
 		<Logo class="w-24" />
 	</a>
 	<div class="my-auto flex h-2/5 gap-16 overflow-x-auto">
-		{#if ($userInfo.data && $userInfo.isSuccess)}
-		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">{$userInfo.data.name}</a>
+		{#if $userInfo.data && $userInfo.isSuccess}
+			<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile"
+				>{$userInfo.data.name}</a
+			>
 		{:else}
-		<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Loading...</a>
+			<a class="my-auto text-2xl text-white hover:text-gray-300" href="/profile">Loading...</a>
 		{/if}
 		<div on:click={showDropdown}>
 			<Placeholder class="w-10 cursor-pointer fill-white" />
@@ -52,12 +58,14 @@
 	>
 		<div class="absolute right-0 z-10 mr-3 -mt-2 w-5 rotate-45 bg-white">&nbsp;</div>
 
-		<div class="cursor-pointer px-4 py-2 hover:bg-bgSecondary">
-			<a class="flex w-full gap-2" href="/profile" on:click={closeDropdown}>
-				<Placeholder class="inline w-4 items-center justify-center fill-black" />
-				<span class="text-lg"> Profil </span>
-			</a>
-		</div>
+		{#if $storagedToken.scope !== Role.ADMIN}
+			<div class="cursor-pointer px-4 py-2 hover:bg-bgSecondary">
+				<a class="flex w-full gap-2" href="/profile" on:click={closeDropdown}>
+					<Placeholder class="inline w-4 items-center justify-center fill-black" />
+					<span class="text-lg"> Profil </span>
+				</a>
+			</div>
+		{/if}
 		<!--
 		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
 			<a class="flex w-full gap-2" href="/user-announcements" on:click={closeDropdown}>
@@ -66,12 +74,14 @@
 			</a>
 		</div>
 		-->
-		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
-			<a class="flex w-full gap-2 items-center" href="/admin" on:click={closeDropdown}>
-				<Admin class="inline w-4 h-4 items-center justify-center fill-black" />
-				<span class="text-lg"> Panel administratora </span>
-			</a>
-		</div>
+		{#if $storagedToken.scope === Role.ADMIN}
+			<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
+				<a class="flex w-full gap-2 items-center" href="/admin" on:click={closeDropdown}>
+					<Admin class="inline w-4 h-4 items-center justify-center fill-black" />
+					<span class="text-lg"> Panel administratora </span>
+				</a>
+			</div>
+		{/if}
 		<div class="flex cursor-pointer gap-2 px-4 py-2 hover:bg-bgSecondary">
 			<button class="flex w-full gap-2" on:click={logout}>
 				<Logout class="inline w-4 items-center justify-center fill-black" />

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import user from '$lib/images/user.png';
+	import companyImg from '$lib/images/company.png';
 	import Localization from '../../lib/icons/Localization.svelte';
 	import Trash from '../../lib/icons/Trash.svelte';
 	import Edit from '../../lib/icons/Edit.svelte';
@@ -107,13 +107,16 @@
 	};
 </script>
 
-<div class="grid grid-cols-10 gap-x-5 break-words rounded-lg bg-white p-4 shadow-md">
-	<div class="col-span-2">
-		<img src={user} alt="user" class="mb-2 rounded-full" />
+<div class="w-[47%] h-max flex break-words rounded-lg bg-white p-4 shadow-md">
+	<div
+		class="imgContainer text-center flex flex-col justify-center  cursor-pointer"
+		on:click={showMore}
+	>
+		<img src={companyImg} alt="user" class="mb-2 rounded-full" />
 		<span>{jobOffer.companyDto.name}</span>
 	</div>
-	<div class="col-span-6 flex flex-col justify-between text-xl">
-		<span class="cursor-pointer text-3xl" on:click={showMore}>{jobOffer.title}</span>
+	<div class="content px-2 flex flex-col justify-center cursor-pointer" on:click={showMore}>
+		<span class="text-3xl">{jobOffer.title}</span>
 		<span>Umowa o prace</span>
 		<span>Pełen etat</span>
 		<span class="flex items-center gap-1.5">
@@ -121,7 +124,7 @@
 			{jobOffer.location}
 		</span>
 	</div>
-	<div class="col-span-2 flex flex-col justify-between text-right">
+	<div class="price flex flex-col justify-center text-right">
 		<div>
 			{#if $storagedUser?.id === jobOffer.companyDto.id}
 				<button on:click={editForm} class="mr-2 outline-none">
@@ -152,35 +155,41 @@
 
 {#if showMoreModal}
 	<Modal heading="" bind:open={showMoreModal}>
-		<div class="grid auto-cols-fr gap-y-4 lg:grid-cols-10 lg:gap-y-0 lg:gap-x-9">
-			<div class="text-center lg:col-span-2">
-				<div class="flex flex-col py-4 text-xl">
-					<img class="rounded-full" src={user} alt="user" />
+		<div class="flex flex-wrap">
+			<div class="text-center w-1/3 px-5">
+				<div class="flex flex-col text-xl">
+					<img class="rounded-full" src={companyImg} alt="user" />
 					<span>{jobOffer.companyDto.name}</span>
-					<span>Email: {jobOffer.companyDto.email}</span>
-					<span>Nr tel.: {jobOffer.companyDto.phone}</span>
+					<span
+						>Email: <a class="hover:underline" href="mailto:{jobOffer.companyDto.email}"
+							>{jobOffer.companyDto.email}</a
+						></span
+					>
+					{#if jobOffer.companyDto.phone}<span>Nr tel.: {jobOffer.companyDto.phone}</span>{/if}
 				</div>
 			</div>
-			<div class="flex flex-col gap-4 lg:col-span-6">
+			<div class="flex flex-col gap-2 flex-1">
 				<div class="text-4xl">{jobOffer.title}</div>
 
-				<div class="ml-5">
-					<span class="mr-3 text-2xl">Typ umowy:</span>
+				<div class="">
+					<span class="mr-3 text-xl">Typ umowy:</span>
 					Umowa o pracę
 				</div>
-				<div class="ml-5">
-					<span class="mr-3 text-2xl">Etat:</span>
+				<div class="">
+					<span class="mr-3 text-xl">Etat:</span>
 					Pełen etat
 				</div>
-				<div class="ml-5">
-					<span class="mr-3 text-2xl">Lokalizacja:</span>
+				<div class="">
+					<span class="mr-3 text-xl">Lokalizacja:</span>
 					{jobOffer.location}
 				</div>
-				<p class="break-words text-justify text-2xl">
+				<p class="break-words text-justify text-xl">
 					{jobOffer.description}
 				</p>
 			</div>
-			<div class="text-4xl lg:col-span-2">{jobOffer.salaryDown} - {jobOffer.salaryUp} zł</div>
+			<div class="text-xl text-right w-full">
+				Widełki wyngarodzenia: {jobOffer.salaryDown} - {jobOffer.salaryUp} zł
+			</div>
 		</div>
 
 		<div class="mt-3 flex items-center justify-end gap-2 text-xl font-medium">
@@ -214,3 +223,17 @@
 		</form>
 	</Modal>
 {/if}
+
+<style>
+	.imgContainer {
+		width: 25%;
+	}
+
+	.content {
+		width: 50%;
+	}
+
+	.price {
+		width: 25%;
+	}
+</style>

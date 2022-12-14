@@ -31,30 +31,30 @@
 <svelte:head>
 	<title>Ogłoszenia uczelni</title>
 </svelte:head>
-<div class="w-full bg-bgSecondary">
-	<div class="grid w-full gap-12 p-14 lg:grid-cols-2">
+<div class="w-full flex flex-col bg-bgSecondary">
+	<div class="flex flex-wrap gap-[40px] p-[40px] lg:p-[40px] flex-1 overflow-y-auto">
 		{#if $annoucement.isLoading}
-			<span>Loading Data</span>
+			<span class="flex-1 text-center text-xl">Ładowanie danych...</span>
 		{:else if $annoucement.isError}
-			<span>Error Loading Data</span>
-		{:else if ($annoucement.isSuccess && $annoucement.data)}
+			<span class="flex-1 text-center text-xl">Wystąpił problem, spróbuj ponownie później</span>
+		{:else if $annoucement.isSuccess && $annoucement.data}
 			{#each $annoucement.data.content as annoucement}
 				<CollegeAnnocement {annoucement} />
 			{/each}
 		{:else}
-			<span>Ogłoszenia o pracę</span>
+			<span class="flex-1 text-center text-xl">Ogłoszenia od uczelni</span>
 		{/if}
 	</div>
 	{#if $annoucement.data && $annoucement.isSuccess}
 		<LightPaginationNav
 			totalItems={$annoucement.data.totalPages}
-			pageSize={get(paginatePropsState)}
+			pageSize={50}
 			currentPage={get(pageSize)}
 			limit={1}
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-	{#if $storagedToken !==null && $storagedToken.scope === Role.COLLEGE }
+	{#if $storagedToken !== null && $storagedToken.scope === Role.COLLEGE}
 		<AddAdvert advertType={AdvertType.COLLEGE} />
-	{/if}	
+	{/if}
 </div>

@@ -31,7 +31,6 @@
 
 	export let searchBodyState: Writable<SearchUser> = writable(searchRequest);
 	export let paginatePropsState: Writable<number> = writable(page);
-	;
 	const { addNotification } = getNotificationsContext();
 
 	const users = useGetUsers(
@@ -86,15 +85,15 @@
 				text: response.response.data,
 				type: 'error',
 				position: 'bottom-center',
-				removeAfter: 4000,
+				removeAfter: 4000
 			});
 		},
 		onSuccess: () => {
 			addNotification({
-				text: "Użytkownik został stworzony",
+				text: 'Użytkownik został stworzony',
 				type: 'success',
 				position: 'bottom-center',
-				removeAfter: 4000,
+				removeAfter: 4000
 			});
 		}
 	});
@@ -108,7 +107,7 @@
 		};
 
 		$postCreateCollege.mutate(registerData);
-	}
+	};
 </script>
 
 <div class="w-full bg-white">
@@ -120,32 +119,32 @@
 			<div class="flex cursor-pointer rounded-lg border border-gray-400">
 				<div
 					class={userType === ''
-					? 'rounded-l-lg border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
-					: 'border-r border-gray-500 px-2 py-1'}
+						? 'rounded-l-lg border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
+						: 'border-r border-gray-500 px-2 py-1'}
 					on:click={() => setUserType('all')}
 				>
 					Wszyscy
 				</div>
 				<div
 					class={userType === 'student'
-					? 'border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
-					: 'border-r border-gray-500 px-2 py-1'}
+						? 'border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
+						: 'border-r border-gray-500 px-2 py-1'}
 					on:click={() => setUserType('student')}
 				>
 					Student
 				</div>
 				<div
 					class={userType === 'employer'
-					? 'border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
-					: 'border-r border-gray-500 px-2 py-1'}
+						? 'border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
+						: 'border-r border-gray-500 px-2 py-1'}
 					on:click={() => setUserType('employer')}
 				>
 					Firma
 				</div>
 				<div
 					class={userType === 'college'
-					? 'rounded-r-lg border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
-					: 'px-2 py-1'}
+						? 'rounded-r-lg border-r border-gray-500 bg-bgButton px-2 py-1 text-white'
+						: 'px-2 py-1'}
 					on:click={() => setUserType('college')}
 				>
 					Uczelnia
@@ -169,33 +168,30 @@
 
 	<!-- table -->
 	<div class="mx-auto w-3/4">
-
-		<table class="relative ml-5 w-full table-fixed border-collapse overflow-x-auto">
+		<table class="relative ml-5 w-full table-fixed border-collapse overflow-x-auto text-xs">
 			<thead>
-			<tr class="break-words text-left uppercase">
-				<th class="cursor-pointer border-r border-gray-500 pl-4">e-mail</th>
-				<th class="cursor-pointer border-r border-gray-500 pl-4">imię</th>
-				<th class="cursor-pointer border-r border-gray-500 pl-4">nazwisko</th>
-				<th class="cursor-pointer border-r border-gray-500 pl-4">telefon</th>
-				<th class="w-20 pl-4">akcja</th>
-			</tr>
+				<tr class="break-words text-left uppercase">
+					<th class="cursor-pointer border-r border-gray-500 pl-4">e-mail</th>
+					<th class="cursor-pointer border-r border-gray-500 pl-4">imię</th>
+					<th class="cursor-pointer border-r border-gray-500 pl-4">nazwisko</th>
+					<th class="cursor-pointer border-r border-gray-500 pl-4">telefon</th>
+					<th class="w-20 pl-4">akcja</th>
+				</tr>
 			</thead>
 			<tbody class="break-words">
-			{#if ($users.isSuccess && $users.data)}
-				{#each $users.data.content as user}
-					<tr class={user.banned
-					? 'text-red-500'
-					: ''}>
-						<td class="py-4 pl-4">{user.email}</td>
-						<td class="py-4 pl-4">{user.name}</td>
-						<td class="py-4 pl-4">{user.lastName ? user.lastName : 'brak'}</td>
-						<td class="py-4 pl-4">{user.phone ? user.phone : 'brak'}</td>
-						<td class="py-4 pl-4">
-							<DropdownUser useruuid={user.id} />
-						</td>
-					</tr>
-				{/each}
-			{/if}
+				{#if $users.isSuccess && $users.data}
+					{#each $users.data.content as user}
+						<tr class={user.banned ? 'text-red-500' : ''}>
+							<td class="py-4 pl-4">{user.email}</td>
+							<td class="py-4 pl-4">{user.name}</td>
+							<td class="py-4 pl-4">{user.lastName ? user.lastName : 'brak'}</td>
+							<td class="py-4 pl-4">{user.phone ? user.phone : 'brak'}</td>
+							<td class="py-4 pl-4">
+								<DropdownUser useruuid={user.id} />
+							</td>
+						</tr>
+					{/each}
+				{/if}
 			</tbody>
 		</table>
 	</div>
@@ -203,13 +199,12 @@
 	{#if $users.data && $users.isSuccess}
 		<LightPaginationNav
 			totalItems={$users.data.totalPages}
-			pageSize={get(paginatePropsState)}
+			pageSize={50}
 			currentPage={get(pageSize)}
 			limit={1}
 			on:setPage={(e) => changePage(e)}
 		/>
 	{/if}
-
 
 	{#if collegeForm}
 		<Modal heading="Tworzenie konta uczelni" bind:open={collegeForm}>
@@ -227,5 +222,3 @@
 		</Modal>
 	{/if}
 </div>
-
-
