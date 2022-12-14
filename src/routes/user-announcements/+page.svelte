@@ -4,7 +4,7 @@
 	import Modal from 'src/components/Modal.svelte';
 	import Range from 'src/components/Form/Range.svelte';
 	import TextArea from 'src/components/Form/TextArea.svelte';
-	import user from '$lib/images/user.png';
+	import user from '$lib/images/userDefault.png';
 	import Plus from '$lib/icons/Plus.svelte';
 	import pepe from '$lib/images/pepe.png';
 	import Select from 'src/components/Form/Select.svelte';

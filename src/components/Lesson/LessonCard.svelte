@@ -1,5 +1,5 @@
 <script lang="ts">
-	import user from '$lib/images/user.png';
+	import user from '$lib/images/userDefault.png';
 	import Localization from '../../lib/icons/Localization.svelte';
 	import Trash from '../../lib/icons/Trash.svelte';
 	import Edit from '../../lib/icons/Edit.svelte';
