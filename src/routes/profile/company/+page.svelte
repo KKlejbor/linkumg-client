@@ -1,5 +1,5 @@
 <script lang="ts">
-	import user from '$lib/images/user.png';
+	import companyDefaultAvatar from '$lib/images/company.png';
 	import UserDetailsProperty from 'src/components/UserDetailsProperty.svelte';
 	import Input from 'src/components/Form/Input.svelte';
 	import Modal from 'src/components/Modal.svelte';
@@ -12,10 +12,12 @@
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import { useGetUserInfo } from 'src/queries/useUser';
 	import { getNotificationsContext } from 'svelte-notifications';
-  import { notification } from 'src/locales/pl/common.json';
+	import { notification } from 'src/locales/pl/common.json';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	import { usePatchCompany } from 'src/queries/useCompany';
 	import type { CompanyPatch } from 'src/models/Company';
+	import { usePostUserImage } from 'src/queries/useFile';
+	import config from 'src/utils/config';
 
 	const queryClient = useQueryClient();
 	const { addNotification } = getNotificationsContext();
@@ -25,6 +27,8 @@
 	let editLinkedin = false;
 	let editGitub = false;
 	let editFacebook = false;
+	let fileInput;
+	let files: any;
 
 	const activeEditProfileMode = () => {
 		isEditProfileActive = true;
@@ -73,7 +77,7 @@
 				text: notification.user.update.success,
 				type: 'success',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		},
 		onError: (error) => {
@@ -81,13 +85,13 @@
 				text: error.response?.data,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 			addNotification({
 				text: notification.user.update.error,
 				type: 'error',
 				position: notificationLocation,
-				removeAfter: notificationTime,
+				removeAfter: notificationTime
 			});
 		}
 	});
@@ -108,21 +112,40 @@
 
 	if ($userInfo.isSuccess && $userInfo.data) {
 		editCompany.about = $userInfo.data.about;
-		editCompany.avatar = ($userInfo.data.avatar) === null ? 'test.jpg' : $userInfo.data.avatar + '.jpg';
+		editCompany.avatar = $userInfo.data.avatar;
 		editCompany.socials = $userInfo.data.socials;
-    editCompany.phone = $userInfo.data.phone;
+		editCompany.phone = $userInfo.data.phone;
 	}
 
-	const editStudentHandler = () => {
-		const editCompanyData: CompanyPatch = {
-			about: editCompany.about,
-			phone: editCompany.phone,
-			socials: editCompany.socials,
-			avatar: editCompany.avatar,
-		};
+	const editStudentHandler = async () => {
+		try {
+			const { data: avatarName } = await $postFile.mutateAsync(files[0]);
 
-		$patchCompany.mutate(editCompanyData);
+			const editCompanyData: CompanyPatch = {
+				about: editCompany.about,
+				phone: editCompany.phone,
+				socials: editCompany.socials,
+				avatar: avatarName
+			};
+
+			$patchCompany.mutate(editCompanyData);
+		} catch (e) {
+			console.log(e);
+		}
 	};
+
+	let idUser = '';
+	if ($userInfo.isSuccess && $userInfo.data) {
+		idUser = $userInfo.data.id;
+	}
+	const postFile = usePostUserImage(idUser, {
+		onSuccess: (response) => {
+			console.log(response);
+		},
+		onError: (error, context) => {
+			console.log(error);
+		}
+	});
 </script>
 
 <div class="bg-bgSecondary p-10">
@@ -140,9 +163,23 @@
 		</div>
 		<div class="flex flex-col items-center self-center">
 			<div class="relative border-x-0 border-bgPrimary px-10 lg:border-x-2">
-				<img src={user} alt="user" class="mx-auto rounded-full" />
+				<img
+					src={$userInfo.data?.avatar
+						? `${config.API_PATH}/users/image/${$userInfo.data.avatar}`
+						: companyDefaultAvatar}
+					alt="user"
+					class="mx-auto rounded-full"
+				/>
 				{#if isEditProfileActive}
-					<Camera class="absolute right-0 mr-10 -mt-10 h-10 w-10 cursor-pointer" />
+					<button
+						on:click={() => {
+							fileInput.click();
+						}}
+						class="mr-2 outline-none"
+					>
+						<Camera class="absolute right-0 mr-10 -mt-10 h-10 w-10 cursor-pointer" />
+					</button>
+					<input type="file" bind:files bind:this={fileInput} style={'display: none'} />
 				{/if}
 			</div>
 			{#if isEditProfileActive}
@@ -167,12 +204,12 @@
 				{#if !isEditProfileActive}
 					<UserDetailsProperty heading="Nazwa" value={$userInfo.data.name} />
 					<UserDetailsProperty heading="E-mail" value={$userInfo.data.email} />
-          <UserDetailsProperty heading="NIP" value={$userInfo.data.nip} />
+					<UserDetailsProperty heading="NIP" value={$userInfo.data.nip} />
 					<UserDetailsProperty heading="Kontakt" value={$userInfo.data.phone} />
 				{:else}
-					<Input label="Nazwa" disabled={true} bind:value={$userInfo.data.name}/>
-          <Input label="E-mail" disabled={true} bind:value={$userInfo.data.email}/>
-          <Input label="NIP" disabled={true} bind:value={$userInfo.data.nip}/>
+					<Input label="Nazwa" disabled={true} bind:value={$userInfo.data.name} />
+					<Input label="E-mail" disabled={true} bind:value={$userInfo.data.email} />
+					<Input label="NIP" disabled={true} bind:value={$userInfo.data.nip} />
 					<Input label="Kontakt" bind:value={editCompany.phone} />
 				{/if}
 				<div class="flex gap-6">
@@ -195,7 +232,9 @@
 				<Input label="Link do Linkedin'a" bind:value={editCompany.socials.linkedin} />
 			</div>
 			<div class="flex-end flex flex-row-reverse gap-6">
-				<button on:click={closeLinkedinModal} class="font-medium uppercase text-blue-600">Zapisz</button>
+				<button on:click={closeLinkedinModal} class="font-medium uppercase text-blue-600"
+					>Zapisz</button
+				>
 				<button on:click={closeLinkedinModal} class="font-medium uppercase text-red-600"
 					>Anuluj</button
 				>
@@ -208,7 +247,9 @@
 				<Input label="Link do Github'a" bind:value={editCompany.socials.github} />
 			</div>
 			<div class="flex-end flex flex-row-reverse gap-6">
-				<button on:click={closeGithubModal} class="font-medium uppercase text-blue-600">Zapisz</button>
+				<button on:click={closeGithubModal} class="font-medium uppercase text-blue-600"
+					>Zapisz</button
+				>
 				<button on:click={closeGithubModal} class="font-medium uppercase text-red-600"
 					>Anuluj</button
 				>
@@ -221,7 +262,9 @@
 				<Input label="Link do Facebooka" bind:value={editCompany.socials.facebook} />
 			</div>
 			<div class="flex-end flex flex-row-reverse gap-6">
-				<button on:click={closeFacebookModal} class="font-medium uppercase text-blue-600">Zapisz</button>
+				<button on:click={closeFacebookModal} class="font-medium uppercase text-blue-600"
+					>Zapisz</button
+				>
 				<button on:click={closeFacebookModal} class="font-medium uppercase text-red-600"
 					>Anuluj</button
 				>

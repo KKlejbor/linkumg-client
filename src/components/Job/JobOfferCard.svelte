@@ -15,6 +15,7 @@
 	import { notification } from 'src/locales/pl/common.json';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	import { storagedUser } from 'src/api/Auth';
+	import config from 'src/utils/config';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -108,13 +109,21 @@
 </script>
 
 <div class="w-[47%] h-max flex break-words rounded-lg bg-white p-4 shadow-md">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="imgContainer text-center flex flex-col justify-center  cursor-pointer"
 		on:click={showMore}
 	>
-		<img src={companyImg} alt="user" class="mb-2 rounded-full" />
+		<img
+			src={jobOffer.companyDto.avatar
+				? `${config.API_PATH}/${config.IMAGE_PATH}/${jobOffer.companyDto.avatar}`
+				: companyImg}
+			alt="user"
+			class="mb-2 rounded-full"
+		/>
 		<span>{jobOffer.companyDto.name}</span>
 	</div>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div class="content px-2 flex flex-col justify-center cursor-pointer" on:click={showMore}>
 		<span class="text-3xl">{jobOffer.title}</span>
 		<span>Umowa o prace</span>
@@ -158,7 +167,13 @@
 		<div class="flex flex-wrap">
 			<div class="text-center w-1/3 px-5">
 				<div class="flex flex-col text-xl">
-					<img class="rounded-full" src={companyImg} alt="user" />
+					<img
+						class="rounded-full"
+						src={jobOffer.companyDto.avatar
+							? `${config.API_PATH}/${config.IMAGE_PATH}/${jobOffer.companyDto.avatar}`
+							: companyImg}
+						alt="user"
+					/>
 					<span>{jobOffer.companyDto.name}</span>
 					<span
 						>Email: <a class="hover:underline" href="mailto:{jobOffer.companyDto.email}"

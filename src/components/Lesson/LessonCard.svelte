@@ -16,6 +16,7 @@
 	import InputNumber from '../Form/InputNumber.svelte';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	import { storagedUser } from 'src/api/Auth';
+	import config from 'src/utils/config';
 
 	const { addNotification } = getNotificationsContext();
 
@@ -77,11 +78,11 @@
 		showMoreModal = !showMoreModal;
 	};
 
-	const deleteForm = (e) => {
+	const deleteForm = () => {
 		deleteModal = !deleteModal;
 	};
 
-	const editForm = (e) => {
+	const editForm = () => {
 		editModal = !editModal;
 	};
 
@@ -111,13 +112,21 @@
 </script>
 
 <div class="w-[47%] h-max flex break-words rounded-lg bg-white p-4 shadow-md">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div
 		class="imgContainer text-center flex flex-col justify-center  cursor-pointer"
 		on:click={showMore}
 	>
-		<img src={user} alt="user" class="mb-2 rounded-full" />
+		<img
+			src={privateLesson.studentDto.avatar
+				? `${config.API_PATH}/${config.IMAGE_PATH}/${privateLesson.studentDto.avatar}`
+				: user}
+			alt="user"
+			class="mb-2 rounded-full"
+		/>
 		<span>{privateLesson.studentDto.name}</span>
 	</div>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<div class="content px-2 flex flex-col justify-center  cursor-pointer" on:click={showMore}>
 		<span class="text-3xl">{privateLesson.title}</span>
 		<span>{privateLesson.category}</span>
@@ -163,7 +172,13 @@
 		<div class="flex flex-wrap">
 			<div class="text-center w-1/3 px-5">
 				<div class="flex flex-col text-xl">
-					<img class="rounded-full" src={user} alt="user" />
+					<img
+						class="rounded-full"
+						src={privateLesson.studentDto.avatar
+							? `${config.API_PATH}/${config.IMAGE_PATH}/${privateLesson.studentDto.avatar}`
+							: user}
+						alt="user"
+					/>
 					<span>{privateLesson.studentDto.name}</span>
 					<span>Email: {privateLesson.studentDto.email}</span>
 					<span>Nr tel.: {privateLesson.studentDto.phone}</span>
