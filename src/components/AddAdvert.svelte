@@ -8,7 +8,7 @@
 	import { usePostJobOffers } from 'src/queries/useJobOffer';
 	import { useQueryClient } from '@sveltestack/svelte-query';
 	import Plus from '$lib/icons/Plus.svelte';
-	import user from '$lib/images/user.png';
+	import user from '$lib/images/userDefault.png';
 	import InputNumber from './Form/InputNumber.svelte';
 	import { usePostPrivateLesson } from 'src/queries/usePrivateLesson';
 	import type { PrivateLesson, PrivateLessonPost } from 'src/models/PrivateLesson';

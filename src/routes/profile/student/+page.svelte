@@ -1,5 +1,5 @@
 <script lang="ts">
-	import user from '$lib/images/user.png';
+	import userDefaultAvatar from '$lib/images/userDefault.png';
 	import UserDetailsProperty from 'src/components/UserDetailsProperty.svelte';
 	import Input from 'src/components/Form/Input.svelte';
 	import Modal from 'src/components/Modal.svelte';
@@ -17,6 +17,8 @@
 	import { notification } from 'src/locales/pl/common.json';
 	import { notificationLocation, notificationTime } from 'src/utils/globalState';
 	import InputDate from 'src/components/Form/InputDate.svelte';
+	import { usePostUserImage } from 'src/queries/useFile';
+	import config from 'src/utils/config';
 
 	const queryClient = useQueryClient();
 	const { addNotification } = getNotificationsContext();
@@ -26,6 +28,7 @@
 	let editLinkedin = false;
 	let editGitub = false;
 	let editFacebook = false;
+	let fileInput;
 
 	const activeEditProfileMode = () => {
 		isEditProfileActive = true;
@@ -110,24 +113,42 @@
 
 	if ($userInfo.isSuccess && $userInfo.data) {
 		editStudent.about = $userInfo.data.about;
-		editStudent.avatar =
-			$userInfo.data.avatar === null ? 'test.jpg' : $userInfo.data.avatar + '.jpg';
+		editStudent.avatar = $userInfo.data.avatar;
 		editStudent.birthDate = $userInfo.data.birthDate;
 		editStudent.phone = $userInfo.data.phone;
 		editStudent.socials = $userInfo.data.socials;
 	}
 
-	const editStudentHandler = () => {
-		const editStudentData: StudentPatch = {
-			birthDate: editStudent.birthDate,
-			phone: editStudent.phone,
-			about: editStudent.about,
-			socials: editStudent.socials,
-			avatar: editStudent.avatar
-		};
+	const editStudentHandler = async () => {
+		try {
+			const { data: avatarName } = await $postFile.mutateAsync(files[0]);
+			const editStudentData: StudentPatch = {
+				birthDate: editStudent.birthDate,
+				phone: editStudent.phone,
+				about: editStudent.about,
+				socials: editStudent.socials,
+				avatar: avatarName
+			};
 
-		$patchStudent.mutate(editStudentData);
+			$patchStudent.mutate(editStudentData);
+		} catch (e) {
+			console.log(e);
+		}
 	};
+
+	let files: any;
+	let idUser = '';
+	if ($userInfo.isSuccess && $userInfo.data) {
+		idUser = $userInfo.data.id;
+	}
+	const postFile = usePostUserImage(idUser, {
+		onSuccess: (response) => {
+			console.log(response);
+		},
+		onError: (error, context) => {
+			console.log(error);
+		}
+	});
 </script>
 
 <div class="bg-bgSecondary p-10">
@@ -145,9 +166,23 @@
 		</div>
 		<div class="flex flex-col items-center self-center">
 			<div class="relative border-x-0 border-bgPrimary px-10 lg:border-x-2">
-				<img src={user} alt="user" class="mx-auto rounded-full" />
+				<img
+					src={$userInfo.data?.avatar
+						? `${config.API_PATH}/users/image/${$userInfo.data.avatar}`
+						: userDefaultAvatar}
+					alt="user"
+					class="mx-auto rounded-full"
+				/>
 				{#if isEditProfileActive}
-					<Camera class="absolute right-0 mr-10 -mt-10 h-10 w-10 cursor-pointer" />
+					<button
+						on:click={() => {
+							fileInput.click();
+						}}
+						class="mr-2 outline-none"
+					>
+						<Camera class="absolute right-0 mr-10 -mt-10 h-10 w-10 cursor-pointer" />
+					</button>
+					<input type="file" bind:files bind:this={fileInput} style={'display: none'} />
 				{/if}
 			</div>
 			{#if isEditProfileActive}
